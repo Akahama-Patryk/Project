@@ -1,8 +1,11 @@
 <?php
-include "classdatabaseICTAC.php";
-$dbopen = new DB();
-$sql = 'SELECT * FROM product';
-$data = $dbopen->query($sql);
+session_start();
+if(empty($_SESSION['login']))
+    header('Location: login.php');
+$results = array();
+include "Class/Product.php";
+$products = new Product();
+$results = $products->GetProduct();
 ?>
 <html>
 <head>
@@ -14,19 +17,19 @@ $data = $dbopen->query($sql);
             <a class="nav-link active" href="#">Homepage</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="login.php">Login page test</a>
+            <a class="nav-link" href="login.php">Login page</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="#">Link</a>
+            <a class="nav-link" href="#">Contact Page</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
+            <a class="nav-link" href="dashboard.php">Dashboard</a>
         </li>
     </ul>
     <div class="container">
         <div class="row">
             <?php
-            foreach ($data as $result) :
+                foreach ($results as $result) :
             ?>
             <div class="col-sm-6">
                 <div class="card" style="width: 18rem;">
@@ -41,7 +44,7 @@ $data = $dbopen->query($sql);
                 </div>
             </div>
             <?php
-            endforeach;
+                endforeach;
             ?>
         </div>
     </div>

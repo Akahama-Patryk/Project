@@ -21,10 +21,11 @@ class DB
             )
         );
     }
-public function Query($SQL, $params = array())
+    public function Select($SQL, $params = null)
     {
         $DB = $this->connection;
         $DB->beginTransaction();
+        $result = null;
         try
         {
             if ($params === array())
@@ -35,16 +36,8 @@ public function Query($SQL, $params = array())
             {
                 $Query = $DB->prepare($SQL);
                 if($Query->execute($params)){
+                    $result = $Query->fetchAll();
                 }
-                else
-                {
-                    return null;
-                }
-            }
-            $result = array();
-            foreach ($Query as $record)
-            {
-                array_push($result, $record);
             }
             $DB->commit();
             $Query->closeCursor();
@@ -56,7 +49,18 @@ public function Query($SQL, $params = array())
             return $e->getMessage();
         }
     }
-    public function QueryPut($SQL, $params = array())
+
+    public function Insert($SQL, $params)
+    {
+        $this->Update($SQL, $params);
+    }
+
+    public function Delete($SQL, $params)
+    {
+        $this->Update($SQL, $params);
+    }
+
+    public function Update($SQL, $params = array())
     {
         $DB = $this->connection;
         $DB->beginTransaction();
@@ -69,12 +73,7 @@ public function Query($SQL, $params = array())
             else
             {
                 $Query = $DB->prepare($SQL);
-                if($Query->execute($params)){
-                }
-                else
-                {
-                    return null;
-                }
+                $Query->execute($params);
             }
             $DB->commit();
             $Query->closeCursor();

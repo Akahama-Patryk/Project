@@ -1,6 +1,4 @@
 <?php
-//Fix database or make new one {Shit framework}
-include "../classdatabaseICTAC.php";
 
 class User
 {
@@ -8,25 +6,42 @@ class User
 
     public function __construct()
     {
+        include('DB.php');
         $this->db = new DB();
     }
 
-    public function Login($name, $pass){
-        if(!empty($name) && !empty($pass)){
-            $dbquery = $this->db->prepare("select * from users where name=? and pass=?");
-            $dbquery->bindParam(1, $name);
-            $dbquery->bindParam(2, $pass);
-            $dbquery->execute();
+    public function Login($name, $pass)
+    {
+        if (!empty($name) && !empty($pass)) {
+            $params = array(":login" => $name, ":pass" => $pass);
+            $SQL = "select * from users where `name` like :login and pass like :pass;";
+            $DBQuery = $this->db->Select($SQL, $params);
 
-            if($dbquery->rowCount() == 1){
+            if (count($DBQuery) === 1) {
+
+                $_SESSION['login'] = $DBQuery['user'];
+                header('Location: index.php');
                 echo "User verified, Access granted.";
-            }else{
+            } else {
                 echo "Incorrect username or password";
             }
-            }else{
-                echo "Logging data is missing. Please enter username and password";
+        } else {
+            echo "Logging data is missing. Please enter username and password";
 
         }
     }
 
+    public function Register($name, $pass)
+    {
+        if (!empty($name) && !empty($pass)) {
+            $params = array(":login" => $name, ":pass" => $pass);
+            $SQL = "INSERT INTO users (name,pass,isAdmin)values (:login, :pass, '0');";
+            $DBQuery = $this->db->Insert($SQL, $params);
+            var_dump($DBQuery);
+
+        } else {
+            echo "Logging data is missing. Please enter username and password";
+
+        }
+    }
 }

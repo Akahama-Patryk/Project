@@ -1,12 +1,11 @@
 <?php
-include ('Class/User.php');
+include_once "Class/User.php";
 
 if(isset($_POST['submit'])){
     $name = $_POST['user'];
     $pass = $_POST['pass'];
-
     $object = new User();
-    $object->Login($name, $pass);
+    $class = $object->register($name, $pass);
 }
 ?>
 <html>
@@ -19,19 +18,19 @@ if(isset($_POST['submit'])){
         <a class="nav-link" href="index.php">Homepage</a>
     </li>
     <li class="nav-item">
-        <a class="nav-link active" href="#">Login page</a>
+        <a class="nav-link" href="login.php">Login page</a>
     </li>
     <li class="nav-item">
         <a class="nav-link" href="#">Contact Page</a>
     </li>
     <li class="nav-item">
-        <a class="nav-link" href="dashboard.php">Dashboard</a>
+        <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Dashboard</a>
     </li>
 </ul>
-    <form method="post" action="">
-        Gebruikersnaam: <input type="text" name="user"/>
-        Wachtwoord: <input type="text" name="pass"/>
-        <input type="submit" name="submit" value="Login"/>
-    </form>
+<form method="post" action="">
+    Gebruikersnaam: <input type="text" name="user"/>
+    Wachtwoord: <input type="text" name="pass"/>
+    <input type="submit" name="submit" value="Register"/>
+</form>
 </body>
 </html>
