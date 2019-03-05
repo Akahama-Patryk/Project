@@ -33,5 +33,6 @@ if(isset($_POST['submit'])){
         Wachtwoord: <input type="text" name="pass"/>
         <input type="submit" name="submit" value="Login"/>
     </form>
+<a href="register.php">Register</a>
 </body>
 </html>
