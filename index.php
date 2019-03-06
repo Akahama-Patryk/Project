@@ -1,7 +1,5 @@
 <?php
 session_start();
-if(empty($_SESSION['login']))
-    header('Location: login.php');
 $results = array();
 include "Class/Product.php";
 $products = new Product();
@@ -14,7 +12,7 @@ $results = $products->GetProduct();
 <body>
     <ul class="nav nav-pills nav-fill">
         <li class="nav-item">
-            <a class="nav-link active" href="#">Homepage</a>
+            <a class="nav-link active" href="index.php">Homepage</a>
         </li>
         <li class="nav-item">
             <a class="nav-link" href="login.php">Login page</a>
@@ -38,8 +36,8 @@ $results = $products->GetProduct();
                         <h5 class="card-title"><?= $result["name"] ?></h5>
                         <p class="card-text"><?= $result["description"] ?></p>
                         <p class="card-text"><?= $result["quantity"] ?></p>
-                        <p class="card-text"><?= $result["price"] ?></p>
-                        <a href="#" class="btn btn-primary align-items-md-end">Buy my shit!!!</a>
+                        <p class="card-text">€ <?= $result["price"] ?></p>
+                        <a href="#" class="btn btn-primary align-items-md-end">Buy it</a>
                     </div>
                 </div>
             </div>

@@ -12,36 +12,37 @@ class User
 
     public function Login($name, $pass)
     {
+        session_start();
         if (!empty($name) && !empty($pass)) {
-            $params = array(":login" => $name, ":pass" => $pass);
-            $SQL = "select * from users where `name` like :login and pass like :pass;";
+            $params = array(":login" => $name);
+            $SQL = "select * from users where `name` like :login;";
             $DBQuery = $this->db->Select($SQL, $params);
-
             if (count($DBQuery) === 1) {
-
-                $_SESSION['login'] = $DBQuery['user'];
-                header('Location: index.php');
-                echo "User verified, Access granted.";
+                foreach ($DBQuery as $row) {
+                    if (password_verify($pass, $row["pass"])) {
+                        $_SESSION['login'] = $name;
+                        header('Location: dashboard.php');
+                    } else {
+                        echo "Incorrect password.";
+                    }
+                }
             } else {
-                echo "Incorrect username or password";
+                echo "What?";
             }
         } else {
             echo "Logging data is missing. Please enter username and password";
-
         }
     }
 
     public function Register($name, $pass)
     {
         if (!empty($name) && !empty($pass)) {
+            $pass = password_hash($pass, PASSWORD_BCRYPT);
             $params = array(":login" => $name, ":pass" => $pass);
             $SQL = "INSERT INTO users (name,pass,isAdmin)values (:login, :pass, '0');";
             $DBQuery = $this->db->Insert($SQL, $params);
-            var_dump($DBQuery);
-
         } else {
-            echo "Logging data is missing. Please enter username and password";
-
+            echo "Error";
         }
     }
 }
