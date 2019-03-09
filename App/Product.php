@@ -12,7 +12,7 @@ class Product
 
     public function GetProduct(){
             $params = null;
-            $SQL = "SELECT * FROM `product`,`category` where product.category_id = category.category_id ;";
+            $SQL = "SELECT * FROM `product`,`category` where product.category_id = category.category_id;";
             $DBQuery = $this->db->Select($SQL, $params);
             $result = null;
             if(count($DBQuery) > 0)
@@ -21,7 +21,7 @@ class Product
     }
     public function GetCategory(){
         $params = null;
-        $SQL = "SELECT category_name FROM category`;";
+        $SQL = "SELECT category_name,COUNT('product') as quantity_products FROM category, product WHERE category.category_id = product.category_id GROUP BY category_name;";
         $DBQuery = $this->db->Select($SQL, $params);
         $result2 = null;
         if(count($DBQuery) > 0)
