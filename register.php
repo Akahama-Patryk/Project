@@ -1,7 +1,10 @@
 <?php
-include_once "Class/User.php";
+include_once "App/Autoloader.php";
+Autoloader::sessionStarter();
+if (!empty($_SESSION['login']))
+    header('Location: login.php');
 
-if(isset($_POST['submit'])){
+if (isset($_POST['submit'])) {
     $name = $_POST['user'];
     $pass = $_POST['pass'];
     $object = new User();
@@ -27,10 +30,28 @@ if(isset($_POST['submit'])){
         <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Dashboard</a>
     </li>
 </ul>
-<form method="post" action="">
-    Gebruikersnaam: <input type="text" name="user"/>
-    Wachtwoord: <input type="text" name="pass"/>
-    <input type="submit" name="submit" value="Register"/>
-</form>
+<div class="card rounded-0">
+    <div class="card-header">
+        <h3 class="mb-0">Register</h3>
+    </div>
+    <div class="card-body">
+        <form class="form" role="form" autocomplete="off" id="formLogin" novalidate="" method="POST">
+            <div class="form-group">
+                <label for="user">Username</label>
+                <input type="text" class="form-control form-control-lg rounded-0" name="user" id="user" required=""
+                       placeholder="Type your username.">
+                <div class="invalid-feedback">Oops, you missed this one.</div>
+            </div>
+            <div class="form-group">
+                <label>Password</label>
+                <input type="password" class="form-control form-control-lg rounded-0" id="pass" name="pass" required=""
+                       autocomplete="new-password" placeholder="Type your password.">
+                <div class="invalid-feedback">Enter your password too!</div>
+            </div>
+            <button type="submit" name="submit" class="btn btn-success btn-lg float-right" id="btnLogin">Register
+            </button>
+        </form>
+    </div>
+</div>
 </body>
 </html>

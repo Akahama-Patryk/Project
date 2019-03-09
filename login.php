@@ -1,7 +1,10 @@
 <?php
-include ('Class/User.php');
-
-if(isset($_POST['submit'])){
+include_once('App/Autoloader.php');
+Autoloader::sessionStarter();
+if (User::LoginStatus() == true) {
+    session_destroy();
+}
+if (isset($_POST['submit'])) {
     $name = $_POST['user'];
     $pass = $_POST['pass'];
 
@@ -28,27 +31,28 @@ if(isset($_POST['submit'])){
         <a class="nav-link" href="dashboard.php">Dashboard</a>
     </li>
 </ul>
-<div class="card-body">
-<form method="post" action="">
-    <div class="form-group row">
-        <label for="user" class="col-md-4 col-form-label text-md-right">Username</label>
-        <div class="col-md-6">
-            <input id="user" type="text"
-                   class="form-control}}"
-                   name="user">
-        </div>
+<div class="card rounded-0">
+    <div class="card-header">
+        <h3 class="mb-0">Login</h3>
     </div>
-
-    <div class="form-group row">
-        <label for="pass" class="col-md-4 col-form-label text-md-right">Password</label>
-        <div class="col-md-6">
-            <input id="pass" type="password"
-                   class="form-control}}"
-                   name="pass">
-            <input type="submit" name="submit" value="Login"/>
-        </div>
+    <div class="card-body bg-light">
+        <form class="form" role="form" autocomplete="off" id="formLogin" novalidate="" method="POST">
+            <div class="form-group">
+                <label for="user">Username</label>
+                <input type="text" class="form-control form-control-lg rounded-0" name="user" id="user" required=""
+                       placeholder="Type your username.">
+                <div class="invalid-feedback">Oops, you missed this one.</div>
+            </div>
+            <div class="form-group">
+                <label>Password</label>
+                <input type="password" class="form-control form-control-lg rounded-0" id="pass" name="pass" required=""
+                       autocomplete="new-password" placeholder="Type your password.">
+                <div class="invalid-feedback">Enter your password too!</div>
+            </div>
+            <a href="register.php" class="btn btn-primary btn-lg float-left" id="btnLogin">Register</a>
+            <button type="submit" name="submit" class="btn btn-success btn-lg float-right" id="btnLogin">Login</button>
+        </form>
     </div>
-</form>
-<a href="register.php">Register</a>
+</div>
 </body>
 </html>

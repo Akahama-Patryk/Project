@@ -1,5 +1,5 @@
 <?php
-require_once ('App/Autoloader.php');
+include_once ('App/Autoloader.php');
 Autoloader::sessionStarter();
 if(empty($_SESSION['login']))
     header('Location: login.php');

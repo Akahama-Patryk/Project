@@ -10036,3 +10036,6 @@ a.text-dark:hover, a.text-dark:focus {
   }
 }
 /*# sourceMappingURL=bootstrap.css.map */
+.customcolor{
+background-color: rgba(129, 207, 224, 1) !important;
+}
