@@ -31,7 +31,7 @@ class User
                     }
                 }
             } else {
-                echo "What?";
+                echo "Please, input correct username and password or make an account.";
             }
         } else {
             echo "Logging data is missing. Please enter username and password";
@@ -46,7 +46,7 @@ class User
             $SQL = "INSERT INTO users (name,pass,isAdmin)values (:login, :pass, '0');";
             $DBQuery = $this->db->Insert($SQL, $params);
         } else {
-            echo "Error";
+            echo "Please put login and password to register.";
         }
     }
     public static function LoginStatus(){

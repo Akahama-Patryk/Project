@@ -56,14 +56,17 @@ $results2 = $products->GetCategory();
                     <img class="img-thumbnail align-self-center" style="width:100px;height:100px;"
                          src="<?= $record["image"] ?>" alt="Missing image data">
                     <div class="card-body">
-                        <input type="hidden" class="product_id" name="product_id" value="<?= $record["id_product"]?>"
                         <h5 class="card-title"><?= $record["name"] ?></h5>
                         <p class="card-text">Category: <?= $record["category_id"] ?> <?= $record["category_name"] ?></p>
                         <p class="card-text">Description: <?= $record["description"] ?></p>
                         <p class="card-text">In stock: <?= $record["quantity"] ?></p>
                         <p class="card-text">Price in € <?= $record["price"] ?></p>
+                        <form action="shopping_cart.php" method="POST">
+                        <input type="hidden" class="product_id" name="product_id" value="<?= $record["id_product"]?>">
                         <input class="form-control product_quantity" type="number" min="1" max="<?= $record["quantity"]?>" name="user_quantity" value="1" required>
+                            <input type="submit" name="submit">
                         <a href="shopping_cart.php" class="btn btn-primary align-items-md-end addToCart">Buy it 🛒</a>
+                        </form>
                     </div>
                 </div>
             </div>
@@ -75,14 +78,14 @@ $results2 = $products->GetCategory();
 </body>
 </html>
 <script type="text/javascript" src="script/jquery-3.3.1.js"></script>
-<script>
-    $(document).ready(function () {
-        $(".addToCart").on("click", function () {
-            let id = $(this).find('.product_id').val();
-            let quantity = $(this).find('.product_quantity').val();
-            window.location.href = "shopping_cart.php?id=" + id + "&quantity" + quantity;
-            return false;
-        });
-    });
-</script>
+<!--<script>-->
+<!--    $(document).ready(function () {-->
+<!--        $(".addToCart").on("click", function () {-->
+<!--            let id = $(this).find('.product_id').val();-->
+<!--            let quantity = $(this).find('.product_quantity').val();-->
+<!--            window.location.href = "shopping_cart.php?id=" + id + "&quantity" + quantity;-->
+<!--            return false;-->
+<!--        });-->
+<!--    });-->
+// </script>
 
