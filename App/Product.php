@@ -6,7 +6,7 @@ class Product
 
     public function __construct()
     {
-        include('DB.php');
+        include_once ('DB.php');
         $this->db = new DB();
     }
 

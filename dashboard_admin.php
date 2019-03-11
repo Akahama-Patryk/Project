@@ -3,6 +3,9 @@ include_once ('App/Autoloader.php');
 Autoloader::sessionStarter();
 if(empty($_SESSION['login']))
     header('Location: login.php');
+if($_SESSION['isAdmin'] = false) {
+  header("Location: dashboard.php");
+};
 ?>
 <html>
 <head>

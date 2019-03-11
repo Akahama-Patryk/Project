@@ -6,7 +6,7 @@ class User
 
     public function __construct()
     {
-        include('DB.php');
+        include_once ('DB.php');
         $this->db = new DB();
     }
 
@@ -20,10 +20,11 @@ class User
                 foreach ($DBQuery as $row) {
                     if (password_verify($pass, $row["pass"])) {
                         $_SESSION['login'] = $name;
-                        $_SESSION['isAdmin'] = $row['isAdmin'];
                         if ($row["isAdmin"] == true) {
+                            $_SESSION['isAdmin'] = $row['isAdmin'];
                             header('Location: dashboard_admin.php');
                         }else{
+                            $_SESSION['isAdmin'] = $row['isAdmin'];
                             header('Location: dashboard.php');
                         }
                     } else {

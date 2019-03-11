@@ -9,11 +9,14 @@ if (isset($_POST['submit'])) {
     echo "I DID NOT SAVE!!!";
 }
 //checks if data exist in session which gets but only from one which is enough.
-//Now we need to make a session cart which saves all data to one basket to not lose data.
-//this will go to App/cart.phpclass
 if(isset($_SESSION['p_id']) && isset($_SESSION['qty'])){
+    $p_id = $_SESSION['p_id'];
+    $qty = $_SESSION['qty'];
     echo "Data gottem";
-    var_dump($_SESSION['p_id'],$_SESSION['qty']);
+    var_dump($_SESSION['p_id'],$_SESSION['qty'],$_SESSION['cart_inventory']);
+    ShoppingCart::addToCart($p_id,$qty);
+    ShoppingCart::cartInventory();
+
 }else{
-    echo "Data lost";
+    header('Location: index.php');
 }

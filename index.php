@@ -3,9 +3,14 @@ include_once("App/Autoloader.php");
 Autoloader::sessionStarter();
 $results = array();
 $results2 = array();
+$results3 = array();
+$stuff = array();
+$stuff = $_SESSION['cart_inventory'];
+$items = new ShoppingCart();
 $products = new Product();
 $results = $products->GetProduct();
 $results2 = $products->GetCategory();
+$results3 = $items->fetchCartInventory($stuff);
 ?>
 <html>
 <head>
@@ -73,6 +78,29 @@ $results2 = $products->GetCategory();
         <?php
         endforeach;
         ?>
+        <?php
+        foreach ($results3 as $records) :
+            ?>
+            <div class="col-sm-6">
+                <div class="card" style="width: 18rem;">
+                    <img class="img-thumbnail align-self-center" style="width:100px;height:100px;"
+                         src="<?= $records["image"] ?>" alt="Missing image data">
+                    <div class="card-body">
+                        <h5 class="card-title"><?= $records["name"] ?></h5>
+                        <p class="card-text">Category: <?= $records["category_id"] ?> <?= $records["category_name"] ?></p>
+                        <p class="card-text">Description: <?= $records["description"] ?></p>
+                        <p class="card-text">In stock: <?= $stuff["p_qty"] ?></p>
+                        <p class="card-text">Price in € <?= $records["price"] ?></p>
+                            <input type="hidden" class="product_id" name="product_id" value="<?= $records["id_product"]?>">
+                            <input class="form-control product_quantity" type="number" min="1" max="<?= $records["quantity"]?>" name="user_quantity" value="1" required>
+                            <a href="shopping_cart.php" class="btn btn-primary align-items-md-end addToCart">Buy it 🛒</a>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        <?php
+        endforeach;
+        ?>
     </div>
 </div>
 </body>
@@ -87,5 +115,8 @@ $results2 = $products->GetCategory();
 <!--            return false;-->
 <!--        });-->
 <!--    });-->
-// </script>
+<!-- </script>-->
+<?php
+        ShoppingCart::cartInventory();
+?>
 
