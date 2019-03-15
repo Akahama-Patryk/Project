@@ -12,62 +12,89 @@ class ShoppingCart
 
     public function __construct()
     {
-        include_once ('DB.php');
+        include_once('DB.php');
         $this->db = new DB();
     }
-    public static function cartInventory(){
-        if(isset($_SESSION['cart_inventory']) && (!empty($_SESSION['cart_inventory']))){
+
+    public static function cartInventory()
+    {
+        if (isset($_SESSION['cart_inventory']) && (!empty($_SESSION['cart_inventory']))) {
+            echo "<div class='col-md-12'>";
+            echo "<table class='table'>";
+            echo "<thead class='thead-dark'>";
+            echo "<tr>";
+            echo "<th scope='col'>Product id</th>";
+            echo "<th scope='col'>Aantal</th>";
+            echo "<th scope='col'><a href='empty_shopping_cart.php'>Empty cart</a></th>";
+            echo "</tr>";
+            echo "<tbody>";
             foreach ($_SESSION['cart_inventory'] as $item) {
-                if (is_array($item) || is_object($item)){
-                    foreach ($item as $key => $value){
-                        echo $key . " " . $value;
-                        echo "<br />";
-                    }
+                echo "<tr>";
+                if (is_array($item) || is_object($item)) {
+                    echo "<td>" . $item['p_id'] . "</td>";
+                    echo "<td>" . $item['p_qty'] . "</td>";
+                    echo "<td><a class='bg-dark' href='remove_from_shopping_cart.php?remove_p_id=" . $item['p_id'] . "'></a></td>";
                 }
+                echo "</tr>";
             }
-            return true;
-        }else{
+        } else {
             echo "Shopping Cart is empty. Please full it up!";
-            return false;
         }
     }
-    public function fetchCartInventory($stuff){
-        if (!empty($stuff)) {
-            foreach ($stuff as $stuffs) {
-                $params = array(":id" => $stuffs['p_id']);
-                $SQL = "SELECT * FROM `product`,`category` where id_product = :id AND product.category_id = category.category_id;";
-                $DBQuery = $this->db->Select($SQL, $params);
-                $result3 = null;
-                var_dump($DBQuery);
-                if (count($DBQuery) > 0)
-                    $result3 = $DBQuery;
-                return $result3;
-            }
-        }else{
-            echo "there is nothing to fetch kiddo";
+
+    public static function addToCart($p_id, $p_qty)
+    {
+        if (!isset($_SESSION['cart_inventory'])) {
+            $_SESSION['cart_inventory'][] = array();
         }
-    }
-    public static function addToCart($p_id,$p_qty){
-        if(!empty($p_id && $p_qty)) {
-            if (isset($_SESSION['cart_inventory']) && (!empty($_SESSION['cart_inventory']))){
-                if (array_search($p_id, array_column($_SESSION['cart_inventory'], 'p_id'))){
-                }else{
-                    $_SESSION['cart_inventory'][] = array(
-                      "p_id" => $p_id, "p_qty" => $p_qty
-                    );
-                }
+        if (!empty($p_id && $p_qty)) {
+            $new_item = array(
+                'p_id' => $p_id,
+                'p_qty' => $p_qty
+            );
+
+            $item_exist = self::checkCartForItem($p_id, $_SESSION['cart_inventory']);
+
+            if ($item_exist !== false){
+                $_SESSION['cart_inventory'][$item_exist]['p_qty'] = $p_qty + $_SESSION['cart_inventory'][$item_exist]['p_qty'];
             }else{
-                $_SESSION['cart_inventory'] = array(
-                    "p_id" => $p_id, "p_qty" => $p_qty
-                );
+                $_SESSION['cart_inventory'][] = $new_item;
+            }
+            header('Location: ' . $_SERVER['PHP_SELF']);
+            die;
+        }
+    }
+    public static function deleteCartProduct($remove_p_id)
+    {
+        if (!(empty($remove_p_id)) && isset($_SESSION['cart_inventory'])) {
+            $itemExist = self::checkCartForItem($remove_p_id, $_SESSION['cart_inventory']);
+
+            if ($itemExist !== false) {
+                unset($_SESSION['cart_inventory']);
             }
         }
         header('Location: index.php');
+        die;
     }
-    public static function updateCart(){
 
+    public static function emptyCart()
+    {
+     if (isset($_SESSION['cart_inventory'])){
+         unset($_SESSION['cart_inventory']);
+     }
+     header('Location: index.php');
+     die;
     }
-    public static function deleteCart(){
 
+    protected static function checkCartForItem($cart_p_id, $cart_items)
+    {
+        if (is_array($cart_items)) {
+            foreach ($cart_items as $key => $item) {
+                if ($item['p_id'] === $cart_p_id)
+                    return $key;
+            }
+        }
+        return false;
     }
+
 }
