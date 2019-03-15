@@ -6,7 +6,7 @@ class User
 
     public function __construct()
     {
-        include_once ('DB.php');
+        include_once('DB.php');
         $this->db = new DB();
     }
 
@@ -23,7 +23,7 @@ class User
                         if ($row["isAdmin"] == true) {
                             $_SESSION['isAdmin'] = $row['isAdmin'];
                             header('Location: dashboard_admin.php');
-                        }else{
+                        } else {
                             $_SESSION['isAdmin'] = $row['isAdmin'];
                             header('Location: dashboard.php');
                         }
@@ -50,11 +50,54 @@ class User
             echo "Please put login and password to register.";
         }
     }
-    public static function LoginStatus(){
-        if (isset($_SESSION['login']) && $_SESSION['login'] == true){
+
+    public static function LoginStatus()
+    {
+        if (isset($_SESSION['login']) && $_SESSION['login'] == true) {
             return true;
         } else {
             return false;
+        }
+    }
+
+    public static function AdminStatus()
+    {
+        if (isset($_SESSION['isAdmin']) && $_SESSION['isAdmin'] == true){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    public function fetchUserInformation($user)
+    {
+        if (!empty($user)) {
+            $params = array(":user" => $user);
+            $SQL = "SELECT * FROM users where `name` like :user;";
+            $DBQuery = $this->db->Select($SQL, $params);
+            $userData = null;
+            if (count($DBQuery) === 1) {
+                $userData = $DBQuery;
+                return $userData;
+            }
+        } else {
+            echo "Data non-existent";
+        }
+    }
+
+    public function updateUserInformation($user, $f_name, $honorifics, $surname, $email, $address, $hr_nr, $postcode, $land, $state, $m_nr)
+    {
+        if (!empty($user) && !empty($f_name) && !empty($honorifics) && !empty($surname) && !empty($email) && !empty($address) &&
+                            !empty($hr_nr) && !empty($postcode) && !empty($land) && !empty($state) && !empty($m_nr)){
+        $params = array(":user" => $user, ":f_name" => $f_name, ":honorifics" => $honorifics, ":surname" => $surname, ":email" => $email, ":address" => $address,
+            "hr_nr" => $hr_nr, "postcode" => $postcode, "land" => $land, "state" => $state, "m_nr" => $m_nr);
+        var_dump($params);
+        $SQL = "Update users set first_name = :f_name, honorifics = :honorifics, surname = :surname, email = :email, address = :address, 
+                 `house number` = :hr_nr, postcode = :postcode, land = :land, state = :state, `mobile number` = :m_nr where name = :user;";
+            $DBQuery = $this->db->Update($SQL, $params);
+            header('Location: dashboard.php');
+    }else{
+            echo "Error";
         }
     }
 }

@@ -8,7 +8,11 @@ $stuff = array();
 $stuff = $_SESSION['cart_inventory'];
 $items = new ShoppingCart();
 $products = new Product();
-$results = $products->GetProduct();
+if (isset($_GET['ProductFilter']) && (!empty($_GET['ProductFilter']))){
+    $results = $products->GetProduct($_GET['ProductFilter']);
+}else{
+    $results = $products->GetProduct();
+}
 $results2 = $products->GetCategory();
 $results3 = $items->fetchCartInventory($stuff);
 ?>
@@ -28,7 +32,13 @@ $results3 = $items->fetchCartInventory($stuff);
         <a class="nav-link" href="#">Contact Page</a>
     </li>
     <li class="nav-item">
-        <a class="nav-link" href="dashboard.php">Dashboard</a>
+        <?php
+        if(User::AdminStatus() === true) {
+        echo '<a class="nav-link" href="dashboard_admin.php">Dashboard Admin</a>';
+        }else{
+        echo '<a class="nav-link" href="dashboard.php">Dashboard</a>';
+        };
+        ?>
     </li>
     <a href="shopping_cart.php" class="btn btn-danger align-items-md-end float-right">Go to shopping cart 🛒</a>
     <?php
@@ -43,10 +53,9 @@ $results3 = $items->fetchCartInventory($stuff);
     <?php
     foreach ($results2 as $row) :
         ?>
-        <li class="list-group-item d-xl-inline-flex p-2 justify-content-between align-items-center">
-            <?= $row["category_name"] ?>
-            <span class="badge badge-primary badge-pill"><?= $row["quantity_products"] ?></span>
-        </li>
+    <a class="list-group-item d-xl-inline-flex p-2 justify-content-between align-items-center" href='?ProductFilter=<?= $row["category_name"]?>'><?= $row["category_name"]?>
+        <span class="badge badge-primary badge-pill"><?= $row["quantity_products"] ?></span>
+    </a>
     <?php
     endforeach;
     ?>
