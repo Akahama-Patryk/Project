@@ -11,6 +11,7 @@ if (isset($_GET['ProductFilter']) && (!empty($_GET['ProductFilter']))) {
     $results = $products->GetProduct();
 }
 $results2 = $products->GetCategory();
+
 ?>
 <html>
 <head>

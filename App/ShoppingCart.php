@@ -33,7 +33,7 @@ class ShoppingCart
                 if (is_array($item) || is_object($item)) {
                     echo "<td>" . $item['p_id'] . "</td>";
                     echo "<td>" . $item['p_qty'] . "</td>";
-                    echo "<td><a class='bg-dark' href='remove_from_shopping_cart.php?remove_p_id=" . $item['p_id'] . "'></a></td>";
+                    echo "<td><a class='btn btn-primary align-items-md-end' href='remove_from_shopping_cart.php?remove_p_id=" . $item['p_id'] . "'>Delete product from 🛒</a></td>";
                 }
                 echo "</tr>";
             }
@@ -45,8 +45,9 @@ class ShoppingCart
     public static function addToCart($p_id, $p_qty)
     {
         if (!isset($_SESSION['cart_inventory'])) {
-            $_SESSION['cart_inventory'][] = array();
+            $_SESSION['cart_inventory'] = array();
         }
+
         if (!empty($p_id && $p_qty)) {
             $new_item = array(
                 'p_id' => $p_id,
