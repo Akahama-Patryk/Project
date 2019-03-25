@@ -71,7 +71,7 @@ class ShoppingCart
             $itemExist = self::checkCartForItem($remove_p_id, $_SESSION['cart_inventory']);
 
             if ($itemExist !== false) {
-                unset($_SESSION['cart_inventory']);
+                unset($_SESSION['cart_inventory'][$itemExist]);
             }
         }
         header('Location: index.php');

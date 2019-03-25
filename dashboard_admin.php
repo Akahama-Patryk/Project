@@ -45,6 +45,23 @@ if (isset($_POST['submit'])) {
         <a class="nav-link active" href="dashboard_admin.php">Dashboard</a>
     </li>
 </ul>
+<ul class="list-group-item">
+        <a class="list-group-item d-xl-inline-flex p-2 justify-content-between align-items-center"
+           href="#client">Client
+        </a>
+        <a class="list-group-item d-xl-inline-flex p-2 justify-content-between align-items-center"
+               href="#product">Product
+        </a>
+    <a class="list-group-item d-xl-inline-flex p-2 justify-content-between align-items-center"
+       href="#category">Category
+    </a>
+    <a class="list-group-item d-xl-inline-flex p-2 justify-content-between align-items-center"
+       href="#orders">Orders
+    </a>
+    <a class="list-group-item d-xl-inline-flex p-2 justify-content-between align-items-center"
+       href="#coworkers">Co-workers
+    </a>
+</ul>
 <h4>Dashboard Admin</h4>
 <h2>Welcome, <?= $_SESSION['login'] ?></h2>
 <div class="card rounded-0">

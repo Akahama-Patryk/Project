@@ -37,7 +37,7 @@ $results2 = $products->GetCategory();
         };
         ?>
     </li>
-    <a href="add_shopping_cart.php" class="btn btn-danger align-items-md-end float-right">Go to shopping cart 🛒</a>
+    <a href="shopping_cart.php" class="btn btn-danger align-items-md-end float-right">Go to shopping cart 🛒</a>
     <?php
     if (User::LoginStatus() == true) {
         echo '<a href="login.php" class="btn btn-primary align-items-md-end float-right">Log Off</a>';
@@ -81,9 +81,8 @@ ShoppingCart::cartInventory();
                                    value="<?= $record["id_product"] ?>">
                             <input class="form-control product_quantity" type="number" min="1"
                                    max="<?= $record["quantity"] ?>" name="user_quantity" value="1" required>
-                            <input type="submit" name="submit">
-                            <a href="add_shopping_cart.php" class="btn btn-primary align-items-md-end addToCart">Buy it
-                                🛒</a>
+                            <button type="submit" class="btn btn-primary align-items-md-end" name="submit">Buy it
+                                🛒</button>
                         </form>
                     </div>
                 </div>

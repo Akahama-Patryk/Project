@@ -45,9 +45,20 @@ if (isset($_POST['submit'])) {
         <a class="nav-link active" href="dashboard.php">Dashboard</a>
     </li>
 </ul>
+<ul class="list-group-item">
+    <a id="userdashboard" class="list-group-item d-xl-inline-flex p-2 justify-content-between align-items-center"
+       href="#">Dashboard
+    </a>
+    <a id="userinfo" class="list-group-item d-xl-inline-flex p-2 justify-content-between align-items-center"
+       href="#userinformation">User Information
+    </a>
+    <a id="userorder" class="list-group-item d-xl-inline-flex p-2 justify-content-between align-items-center"
+       href="#orders">Your Orders
+    </a>
+</ul>
 <h4>Dashboard</h4>
 <h2>Welcome, <?= $_SESSION['login'] ?></h2>
-<div class="card rounded-0">
+<div id="userinfodiv"class="card rounded-0 d-none">
     <div class="card-header">
         <h3 class="mb-0">User Information</h3>
         <h6 class="mb-0">Here you can see your user information where you can edit them everytime you want.</h6>
@@ -133,5 +144,23 @@ if (isset($_POST['submit'])) {
     ?>
 </div>
 </body>
-</head>
 </html>
+<script type="text/javascript" src="script/jquery-3.3.1.js"></script>
+<script>
+    $(document).ready(function () {
+        // if clicked shows userinformation
+        $("#userinfo").on('click', function () {
+            let userinformation = $("#userinfodiv");
+            userinformation.removeClass('d-none');
+            // alert("check");
+        });
+        $("#userdashboard").on('click', function () {
+            let userinformation = $("#userinfodiv");
+            userinformation.addClass('d-none');
+        });
+        // if clicked shows order table/list
+        $("#userorder").click(function () {
+            alert("Handler for .click() called.");
+        })
+    })
+</script>

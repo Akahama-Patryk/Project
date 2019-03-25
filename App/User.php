@@ -91,7 +91,6 @@ class User
                             !empty($hr_nr) && !empty($postcode) && !empty($land) && !empty($state) && !empty($m_nr)){
         $params = array(":user" => $user, ":f_name" => $f_name, ":honorifics" => $honorifics, ":surname" => $surname, ":email" => $email, ":address" => $address,
             "hr_nr" => $hr_nr, "postcode" => $postcode, "land" => $land, "state" => $state, "m_nr" => $m_nr);
-        var_dump($params);
         $SQL = "Update users set first_name = :f_name, honorifics = :honorifics, surname = :surname, email = :email, address = :address, 
                  `house number` = :hr_nr, postcode = :postcode, land = :land, state = :state, `mobile number` = :m_nr where name = :user;";
             $DBQuery = $this->db->Update($SQL, $params);
