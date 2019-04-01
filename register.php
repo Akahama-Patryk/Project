@@ -13,6 +13,7 @@ if (isset($_POST['submit'])) {
 ?>
 <html>
 <head>
+    <link rel="icon" href="img/logo.ico">
     <link rel="stylesheet" type="text/css" href="style/bootstrap.css">
 </head>
 <body>

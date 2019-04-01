@@ -1,0 +1,116 @@
+.admin .bg-blue-left {
+  background: -webkit-gradient(linear, right top, left top, from(#52b3d9), to(#52b3d9));
+  background: linear-gradient(-90deg, #52b3d9, #52b3d9);
+}
+
+.admin .bg-blue-top {
+  background: -webkit-gradient(linear, left top, right top, from(#52b3d9), to(#52b3d9));
+  background: linear-gradient(90deg, #52b3d9, #52b3d9);
+}
+
+.admin nav {
+  min-height: 100vh;
+}
+
+.admin .navbar-brand img {
+  height: 60px;
+}
+
+.admin .navbar-dark .navbar-nav .nav-link {
+  color: white;
+}
+
+.admin nav .navbar-nav li:not(:first-child):hover,
+.admin nav .navbar-nav .active {
+  background-color: #00b5cc;
+  -webkit-box-shadow: 0 1rem 3rem rgba(0, 0, 0, 0.175) !important;
+          box-shadow: 0 1rem 3rem rgba(0, 0, 0, 0.175) !important;
+  -webkit-transform: scale(1.02);
+          transform: scale(1.02);
+}
+
+.admin #records a:link,
+.admin #records a:visited,
+.admin #records a:hover,
+.admin #records a:active {
+  text-decoration: none;
+  color: #ffffff;
+}
+
+.admin #records .card,
+.admin #feeds .card {
+  -webkit-box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15) !important;
+          box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15) !important;
+}
+
+.admin input[type='checkbox'] {
+  max-width: 1%;
+  margin-top: 13px;
+}
+
+#accordion-messages .card-header {
+  background-color: #f4f7f7;
+}
+
+#accordion-messages .card-footer {
+  background-color: transparent;
+}
+
+#accordion-messages button {
+  text-decoration: none;
+}
+
+.note-editor .dropdown-style a {
+  color: black;
+  text-decoration: none;
+}
+
+.note-editor .dropdown-style h1 {
+  font-size: 1.3em;
+}
+
+.note-editor .dropdown-style h2 {
+  font-size: 1.2em;
+}
+
+.note-editor .dropdown-style h3 {
+  font-size: 1.1em;
+}
+
+.note-editor .dropdown-style h4 {
+  font-size: 1.0em;
+}
+
+.note-editor .dropdown-style h5 {
+  font-size: 0.9em;
+}
+
+.note-editor .dropdown-style h6 {
+  font-size: 0.8em;
+}
+
+.note-editor .dropdown-toggle::after {
+  display: none;
+}
+
+.note-editor .dropdown-fontsize a {
+  color: black;
+  text-decoration: none;
+}
+
+.note-editor .note-editable {
+  height: 200px;
+}
+
+.task-object {
+  background-color: #88e29a;
+  border: 1px solid #28a745;
+  padding: 0 5px;
+  border-radius: 5px;
+  margin: 5px;
+}
+
+.pointer {
+  cursor: pointer;
+}
+
