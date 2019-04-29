@@ -38,6 +38,10 @@ $results2 = $products->GetCategory();
         };
         ?>
     </li>
+    <form class="form-inline md-form form-sm active-cyan-2 m-0" method="get">
+        <input class="form-control form-control-sm mr-3 w-75" type="text" placeholder="Search" aria-label="Search">
+        <i class="fas fa-search" aria-hidden="true"></i>
+    </form>
     <a href="shopping_cart.php" class="btn btn-danger align-items-md-end float-right">Go to shopping cart 🛒</a>
     <?php
     if (User::LoginStatus() == true) {

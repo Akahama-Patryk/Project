@@ -1,12 +1,15 @@
 <?php
 require_once('App/Autoloader.php');
 $dataUser = array();
+$result = array();
 Autoloader::sessionStarter();
 if (empty($_SESSION['login']))
     header('Location: login.php');
 if ($_SESSION['isAdmin'] == true) {
     header("Location: dashboard_admin.php");
 };
+$data = new User();
+$result = $data->fetchLand();
 $user = $_SESSION['login'];
 $dataUser = new User();
 $dataUserInfo = $dataUser->fetchUserInformation($user);
@@ -170,11 +173,20 @@ if (isset($_POST['submit'])) {
                                     <div class="form-group">
                                         <label for="land">Land</label>
                                         <h6>Dropdown where you chose Land</h6>
-                                        <input type="text" class="form-control form-control-lg rounded-0" name="land"
-                                               id="land" required
-                                               placeholder="<?= $data['land'] ?>">
-                                        <div class="invalid-feedback">Oops, you missed this one.</div>
-                                    </div>
+                                        <select name="land">
+                                        <?php
+                                        foreach ($result as $land) :
+                                            ?>
+                                            <option value="<?= $land['land_name'] ?>"><?= $land['land_name']?></option>
+                                        <?php
+                                        endforeach;
+                                        ?>
+                                        </select>
+<!--                                        <input type="text" class="form-control form-control-lg rounded-0" name="land"-->
+<!--                                               id="land" required-->
+<!--                                               placeholder="--><?//= $data['land'] ?><!--">-->
+<!--                                        <div class="invalid-feedback">Oops, you missed this one.</div>-->
+<!--                                    </div>-->
                                     <div class="form-group">
                                         <label for="state">State</label>
                                         <input type="text" class="form-control form-control-lg rounded-0" name="state"

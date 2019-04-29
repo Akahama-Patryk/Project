@@ -62,9 +62,9 @@ class User
 
     public static function AdminStatus()
     {
-        if (isset($_SESSION['isAdmin']) && $_SESSION['isAdmin'] == true){
+        if (isset($_SESSION['isAdmin']) && $_SESSION['isAdmin'] == true) {
             return true;
-        }else{
+        } else {
             return false;
         }
     }
@@ -88,15 +88,29 @@ class User
     public function updateUserInformation($user, $f_name, $honorifics, $surname, $email, $address, $hr_nr, $postcode, $land, $state, $m_nr)
     {
         if (!empty($user) && !empty($f_name) && !empty($honorifics) && !empty($surname) && !empty($email) && !empty($address) &&
-                            !empty($hr_nr) && !empty($postcode) && !empty($land) && !empty($state) && !empty($m_nr)){
-        $params = array(":user" => $user, ":f_name" => $f_name, ":honorifics" => $honorifics, ":surname" => $surname, ":email" => $email, ":address" => $address,
-            "hr_nr" => $hr_nr, "postcode" => $postcode, "land" => $land, "state" => $state, "m_nr" => $m_nr);
-        $SQL = "Update users set first_name = :f_name, honorifics = :honorifics, surname = :surname, email = :email, address = :address, 
+            !empty($hr_nr) && !empty($postcode) && !empty($land) && !empty($state) && !empty($m_nr)) {
+            $params = array(":user" => $user, ":f_name" => $f_name, ":honorifics" => $honorifics, ":surname" => $surname, ":email" => $email, ":address" => $address,
+                "hr_nr" => $hr_nr, "postcode" => $postcode, "land" => $land, "state" => $state, "m_nr" => $m_nr);
+            $SQL = "Update users set first_name = :f_name, honorifics = :honorifics, surname = :surname, email = :email, address = :address, 
                  `house number` = :hr_nr, postcode = :postcode, land = :land, state = :state, `mobile number` = :m_nr where name = :user;";
             $DBQuery = $this->db->Update($SQL, $params);
             header('Location: dashboard.php');
-    }else{
+        } else {
             echo "Error";
+        }
+    }
+
+    public function fetchLand()
+    {
+        $params = null;
+        $SQL = "SELECT * FROM land ORDER BY land_name ASC;";
+        $DBQuery = $this->db->Select($SQL, $params);
+        $result = null;
+        if (count($DBQuery) > 1) {
+            $result = $DBQuery;
+            return $result;
+        } else {
+            echo "Failed";
         }
     }
 }
