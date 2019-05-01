@@ -25,7 +25,7 @@ class ShoppingCart
             echo "<tr>";
             echo "<th scope='col'>Product id</th>";
             echo "<th scope='col'>Aantal</th>";
-            echo "<th scope='col'><a href='empty_shopping_cart.php'>Empty cart</a></th>";
+            echo "<th scope='col'><a href='?empty_cart=1'>Empty cart</a></th>";
             echo "</tr>";
             echo "<tbody>";
             foreach ($_SESSION['cart_inventory'] as $item) {
@@ -33,7 +33,7 @@ class ShoppingCart
                 if (is_array($item) || is_object($item)) {
                     echo "<td>" . $item['p_id'] . "</td>";
                     echo "<td>" . $item['p_qty'] . "</td>";
-                    echo "<td><a class='btn btn-primary align-items-md-end' href='remove_from_shopping_cart.php?remove_p_id=" . $item['p_id'] . "'>Delete product from 🛒</a></td>";
+                    echo "<td><a class='btn btn-primary align-items-md-end' href='?remove_p_id=" . $item['p_id'] . "'>Delete product from 🛒</a></td>";
                 }
                 echo "</tr>";
             }
@@ -74,7 +74,6 @@ class ShoppingCart
                 unset($_SESSION['cart_inventory'][$itemExist]);
             }
         }
-        header('Location: index.php');
         die;
     }
 

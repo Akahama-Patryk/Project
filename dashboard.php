@@ -24,6 +24,7 @@ if (isset($_POST['submit'])) {
     $land = $_POST['land'];
     $state = $_POST['state'];
     $m_nr = $_POST['m_nr'];
+    var_dump($land);
 
     $object = new User();
     $object->updateUserInformation($user, $f_name, $honorifics, $surname, $email, $address, $hr_nr, $postcode, $land, $state, $m_nr);

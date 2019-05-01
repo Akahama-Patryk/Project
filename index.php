@@ -100,5 +100,13 @@ ShoppingCart::cartInventory();
 </body>
 </html>
 <script type="text/javascript" src="script/jquery-3.3.1.js"></script>
-
+<?php
+if (isset($_GET['remove_p_id'])){
+    ShoppingCart::deleteCartProduct($_GET['remove_p_id']);
+}
+// Empty cart.
+if (isset($_GET['empty_cart'])) {
+    ShoppingCart::emptyCart();
+}
+?>
 
