@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: orel9
- * Date: 10-3-2019
- * Time: 15:41
- */
 
 class ShoppingCart
 {
@@ -24,8 +18,9 @@ class ShoppingCart
             echo "<thead class='thead-dark'>";
             echo "<tr>";
             echo "<th scope='col'>Product id</th>";
+            //TODO Updateable quantity with refresh button
             echo "<th scope='col'>Aantal</th>";
-            echo "<th scope='col'><a href='?empty_cart=1'>Empty cart</a></th>";
+            echo "<th scope='col'><a href='?EmptyCart=1'>Empty cart</a></th>";
             echo "</tr>";
             echo "<tbody>";
             foreach ($_SESSION['cart_inventory'] as $item) {
@@ -33,7 +28,7 @@ class ShoppingCart
                 if (is_array($item) || is_object($item)) {
                     echo "<td>" . $item['p_id'] . "</td>";
                     echo "<td>" . $item['p_qty'] . "</td>";
-                    echo "<td><a class='btn btn-primary align-items-md-end' href='?remove_p_id=" . $item['p_id'] . "'>Delete product from 🛒</a></td>";
+                    echo "<td><a class='btn btn-primary align-items-md-end' href='?RemoveProduct=" . $item['p_id'] . "'>Delete product from 🛒</a></td>";
                 }
                 echo "</tr>";
             }
@@ -61,8 +56,6 @@ class ShoppingCart
             }else{
                 $_SESSION['cart_inventory'][] = $new_item;
             }
-            header('Location: ' . $_SERVER['PHP_SELF']);
-            die;
         }
     }
     public static function deleteCartProduct($remove_p_id)
@@ -74,7 +67,6 @@ class ShoppingCart
                 unset($_SESSION['cart_inventory'][$itemExist]);
             }
         }
-        die;
     }
 
     public static function emptyCart()
@@ -82,8 +74,6 @@ class ShoppingCart
      if (isset($_SESSION['cart_inventory'])){
          unset($_SESSION['cart_inventory']);
      }
-     header('Location: index.php');
-     die;
     }
 
     protected static function checkCartForItem($cart_p_id, $cart_items)

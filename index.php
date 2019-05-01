@@ -5,13 +5,26 @@ $results = array();
 $results2 = array();
 $items = new ShoppingCart();
 $products = new Product();
+// Add product.
+if(isset($_POST['product_id']) && isset($_POST['user_quantity'])){
+    ShoppingCart::addToCart($_POST['product_id'],$_POST['user_quantity']);
+}
+// Remove product.
+if (isset($_GET['RemoveProduct'])) {
+    ShoppingCart::deleteCartProduct($_GET['RemoveProduct']);
+   RedirectHandler::HTTP_301($_SERVER['SCRIPT_NAME']);
+}
+// Empty cart.
+if (isset($_GET['EmptyCart'])) {
+    ShoppingCart::emptyCart();
+    RedirectHandler::HTTP_301($_SERVER['SCRIPT_NAME']);
+}
 if (isset($_GET['ProductFilter']) && (!empty($_GET['ProductFilter']))) {
     $results = $products->GetProduct($_GET['ProductFilter']);
 } else {
     $results = $products->GetProduct();
 }
 $results2 = $products->GetCategory();
-
 ?>
 <html>
 <head>
@@ -81,13 +94,15 @@ ShoppingCart::cartInventory();
                         <p class="card-text">Description: <?= $record["description"] ?></p>
                         <p class="card-text">In stock: <?= $record["quantity"] ?></p>
                         <p class="card-text">Price in € <?= $record["price"] ?></p>
-                        <form action="add_shopping_cart.php" method="GET">
+<!--                      TODO change to save price and name into cart inventory-->
+                        <form method="POST">
                             <input type="hidden" class="product_id" name="product_id"
                                    value="<?= $record["id_product"] ?>">
                             <input class="form-control product_quantity" type="number" min="1"
                                    max="<?= $record["quantity"] ?>" name="user_quantity" value="1" required>
                             <button type="submit" class="btn btn-primary align-items-md-end" name="submit">Buy it
-                                🛒</button>
+                                🛒
+                            </button>
                         </form>
                     </div>
                 </div>
@@ -97,16 +112,6 @@ ShoppingCart::cartInventory();
         ?>
     </div>
 </div>
+<script type="text/javascript" src="script/jquery-3.3.1.js"></script>
 </body>
 </html>
-<script type="text/javascript" src="script/jquery-3.3.1.js"></script>
-<?php
-if (isset($_GET['remove_p_id'])){
-    ShoppingCart::deleteCartProduct($_GET['remove_p_id']);
-}
-// Empty cart.
-if (isset($_GET['empty_cart'])) {
-    ShoppingCart::emptyCart();
-}
-?>
-
