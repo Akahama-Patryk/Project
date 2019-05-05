@@ -2,7 +2,7 @@
 include_once "App/Autoloader.php";
 Autoloader::sessionStarter();
 if (!empty($_SESSION['login']))
-    header('Location: login.php');
+    RedirectHandler::HTTP_301($_SERVER['login.php']);
 
 if (isset($_POST['submit'])) {
     $name = $_POST['user'];

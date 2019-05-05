@@ -3,9 +3,9 @@ include_once('App/Autoloader.php');
 $dataUser = array();
 Autoloader::sessionStarter();
 if (empty($_SESSION['login']))
-    header('Location: login.php');
+    RedirectHandler::HTTP_301('login.php');
 if ($_SESSION['isAdmin'] == false) {
-    header("Location: dashboard.php");
+    RedirectHandler::HTTP_301('dashboard.php');
 };
 $user = $_SESSION['login'];
 $dataUser = new User();

@@ -3,7 +3,7 @@ include_once('App/Autoloader.php');
 Autoloader::sessionStarter();
 if (User::LoginStatus() == true) {
     session_destroy();
-    header('Location: index.php');
+    RedirectHandler::HTTP_301('index.php');
 }
 if (isset($_POST['submit'])) {
     $name = $_POST['user'];

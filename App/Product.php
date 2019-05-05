@@ -10,21 +10,36 @@ class Product
         $this->db = new DB();
     }
 
-    public function GetProduct($filter_category = null)
+    public function GetProduct($filter_category = null, $search_product = null)
     {
-        if ($filter_category !== null) {
-            $filter_category = str_replace('&20', ' ', $filter_category);
-            $params = array(":filter" => $filter_category);
-            $SQL = "SELECT * FROM `product`,`category` where product.category_id = category.category_id AND category_name = :filter;";
+        if ($search_product !== null) {
+            $search_product = "%" . $search_product;
+            $search_product = str_replace(' ', '%', $search_product);
+            $search_product .= "%";
+            $params = array(":search_product" => $search_product);
+            $SQL = "SELECT * FROM `product`,`category` where product.name LIKE :search_product AND product.category_id = category.category_id;";
+            $DBQuery = $this->db->Select($SQL, $params);
+            $result = null;
+            if (count($DBQuery) > 0) {
+                $result = $DBQuery;
+                return $result;
+            } else {
+                return false;
+            }
         } else {
-            $params = null;
-            $SQL = "SELECT * FROM `product`,`category` where product.category_id = category.category_id;";
+            if ($filter_category !== null) {
+                $params = array(":filter" => $filter_category);
+                $SQL = "SELECT * FROM `product`,`category` where product.category_id = category.category_id AND category_name = :filter;";
+            } else {
+                $params = null;
+                $SQL = "SELECT * FROM `product`,`category` where product.category_id = category.category_id;";
+            }
+            $DBQuery = $this->db->Select($SQL, $params);
+            $result = null;
+            if (count($DBQuery) > 0)
+                $result = $DBQuery;
+            return $result;
         }
-        $DBQuery = $this->db->Select($SQL, $params);
-        $result = null;
-        if (count($DBQuery) > 0)
-            $result = $DBQuery;
-        return $result;
     }
 
     public function GetCategory()
