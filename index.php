@@ -70,7 +70,7 @@ $results2 = $products->GetCategory();
     <a href="shopping_cart.php" class="btn btn-danger align-items-md-end float-right">Go to shopping cart 🛒</a>
     <?php
     if (User::LoginStatus() == true) {
-        echo '<a href="login.php" class="btn btn-primary align-items-md-end float-right">Log Off</a>';
+        echo '<a href="login.php" class="btn btn-primary align-items-md-end float-right">Log Out</a>';
     } else {
         echo '<a href="login.php" class="btn btn-primary align-items-md-end float-right">Log In</a>';
     }
@@ -135,7 +135,7 @@ if (isset($_SESSION['cart_inventory'])) {
 ?>
 <div id="cookieConsent">
     <div id="closeCookieConsent">x</div>
-    This website is using cookies. <a href="#" target="_blank">More info</a>. <a class="cookieConsentOK">I accept</a>
+    This website is using cookies. <a href="http://www.whatarecookies.com/" target="_blank">More info</a>. <a class="cookieConsentOK">I accept</a>
 </div>
 <script type="text/javascript" src="script/jquery-3.3.1.js"></script>
 <script type="text/javascript" src="script/font-awesome/font-awesome.js"></script>
