@@ -21,10 +21,10 @@ if (isset($_POST['submit'])) {
 <body>
 <ul class="nav nav-pills nav-fill">
     <li class="nav-item">
-        <a class="nav-link" href="index.php">Homepage</a>
+        <a class="nav-link" href="index">Homepage</a>
     </li>
     <li class="nav-item">
-        <a class="nav-link active" href="login.php">Login page</a>
+        <a class="nav-link active" href="login">Login page</a>
     </li>
     <li class="nav-item">
         <a class="nav-link" href="#">Contact Page</a>

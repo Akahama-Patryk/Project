@@ -10,8 +10,18 @@ class Product
         $this->db = new DB();
     }
 
-    public function GetProduct($filter_category = null, $search_product = null)
+    public function GetProduct($data = null, $filter_flag = false)
     {
+        $search_product = null;
+        $filter_category = null;
+        if (is_string($data)) {
+            $search_product = $data;
+        }
+        if(is_string($data) && $filter_flag)
+        {
+            $filter_category = $data;
+            $search_product = null;
+        }
         if ($search_product !== null) {
             $search_product = "%" . $search_product;
             $search_product = str_replace(' ', '%', $search_product);
@@ -26,20 +36,38 @@ class Product
             } else {
                 return false;
             }
-        } else {
-            if ($filter_category !== null) {
-                $params = array(":filter" => $filter_category);
-                $SQL = "SELECT * FROM `product`,`category` where product.category_id = category.category_id AND category_name = :filter;";
-            } else {
-                $params = null;
-                $SQL = "SELECT * FROM `product`,`category` where product.category_id = category.category_id;";
-            }
-            $DBQuery = $this->db->Select($SQL, $params);
-            $result = null;
-            if (count($DBQuery) > 0)
-                $result = $DBQuery;
-            return $result;
         }
+        if ($filter_category !== null) {
+
+            $params = array(":filter" => $data);
+            $SQL = "SELECT * FROM `product`,`category` where product.category_id = category.category_id AND category_name = :filter";
+            /*
+            $params = array();
+            $SQL = "";
+            $i = 1;
+            $var = "temp";
+            foreach ($filter_category as $category)
+            {
+                ${"{$var}{$i}"} = $var.$i;
+                $params[":".${"{$var}{$i}"}] = $category;
+                $SQL .= "SELECT * FROM `product`,`category` where product.category_id = category.category_id AND category_name = :{$var}{$i}";
+                if($i !== count($filter_category))
+                {
+                    $SQL .= " UNION ALL ";
+                }
+                $i++;
+            }
+            */
+        } else {
+            $params = null;
+            $SQL = "SELECT * FROM `product`,`category` where product.category_id = category.category_id;";
+        }
+        $DBQuery = $this->db->Select($SQL, $params);
+        $result = null;
+        if (count($DBQuery) > 0)
+            $result = $DBQuery;
+        return $result;
+
     }
 
     public function GetCategory()

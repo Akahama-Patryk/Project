@@ -24,31 +24,32 @@ if (isset($_POST['new_user_quantity']) && ($_POST['id_for_new_qty'])) {
     ShoppingCart::updateCartProduct($_POST['id_for_new_qty'], $_POST['new_user_quantity']);
 }
 // Search bar
-if (isset($_GET['SearchProduct']) && (!empty($_GET['SearchProduct']))) {
-    $results = $products->GetProduct(null, $_GET['SearchProduct']);
-} else {
+if (isset($_GET['module']) && $_GET['module'] === "search" && isset($_GET['p']))  {
+    $results = $products->GetProduct($_GET['p']);
+}
 // Filter
-    if (isset($_GET['ProductFilter']) && (!empty($_GET['ProductFilter']))) {
-        $results = $products->GetProduct($_GET['ProductFilter'], null);
-    } else {
-        $results = $products->GetProduct();
-    }
+if (isset($_GET['module']) && $_GET['module'] === "filter" && isset($_GET['p'])) {
+    $results = $products->GetProduct($_GET['p'], true);
+} else {
+    $results = $products->GetProduct();
 }
 $results2 = $products->GetCategory();
 ?>
-<html>
+<!doctype HTML>
+<html lang="nl">
 <head>
-    <link rel="icon" href="img/logo.ico">
+    <title>Project Supermarkt --Home--</title>
+    <link rel="icon" href="./img/logo.ico">
     <link rel="stylesheet" type="text/css" href="style/bootstrap.css">
     <link rel="stylesheet" type="text/css" href="style/cookie_warning_style.css">
 </head>
 <body>
 <ul class="nav nav-pills nav-fill rounded-0">
     <li class="nav-item">
-        <a class="nav-link active" href="index.php">Homepage</a>
+        <a class="nav-link active" href="">Homepage</a>
     </li>
     <li class="nav-item">
-        <a class="nav-link" href="login.php">Login page</a>
+        <a class="nav-link" href="login">Login page</a>
     </li>
     <li class="nav-item">
         <a class="nav-link" href="#">Contact Page</a>
@@ -58,7 +59,7 @@ $results2 = $products->GetCategory();
         if (User::AdminStatus() === true) {
             echo '<a class="nav-link" href="dashboard_admin.php">Dashboard Admin</a>';
         } else {
-            echo '<a class="nav-link" href="dashboard.php">Dashboard</a>';
+            echo '<a class="nav-link" href="dashboard">Dashboard</a>';
         };
         ?>
     </li>
@@ -81,7 +82,8 @@ $results2 = $products->GetCategory();
     foreach ($results2 as $row) :
         ?>
         <a class="list-group-item d-xl-inline-flex p-2 justify-content-between align-items-center"
-           href='?ProductFilter=<?= $row["category_name"] ?>'><?= $row["category_name"] ?>
+           href='filter?p=<?= $row["category_name"] ?>'><?= $row["category_name"] ?>
+<!--           href='?ProductFilter=--><?//= $row["category_name"] ?><!--'>--><?//= $row["category_name"] ?>
             <span class="badge badge-primary badge-pill"><?= $row["quantity_products"] ?></span>
         </a>
     <?php
