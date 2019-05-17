@@ -23,15 +23,21 @@ if (isset($_GET['EmptyCart'])) {
 if (isset($_POST['new_user_quantity']) && ($_POST['id_for_new_qty'])) {
     ShoppingCart::updateCartProduct($_POST['id_for_new_qty'], $_POST['new_user_quantity']);
 }
-// Search bar
-if (isset($_GET['module']) && $_GET['module'] === "search" && isset($_GET['p']))  {
-    $results = $products->GetProduct($_GET['p']);
-}
-// Filter
-if (isset($_GET['module']) && $_GET['module'] === "filter" && isset($_GET['p'])) {
-    $results = $products->GetProduct($_GET['p'], true);
-} else {
+
+if (!isset($_GET['module'])) {
     $results = $products->GetProduct();
+} else {
+    switch ($_GET['module']) {
+        case "search":
+            $results = (isset($_GET['p'])) ? $products->GetProduct($_GET['p']) : $products->GetProduct();
+            break;
+        case "filter":
+            $results = (isset($_GET['p'])) ? $products->GetProduct($_GET['p'], true) : $products->GetProduct();
+            break;
+        default:
+            RedirectHandler::HTTP_301("e404");
+            break;
+    }
 }
 $results2 = $products->GetCategory();
 ?>
@@ -57,7 +63,7 @@ $results2 = $products->GetCategory();
     <li class="nav-item">
         <?php
         if (User::AdminStatus() === true) {
-            echo '<a class="nav-link" href="dashboard_admin.php">Dashboard Admin</a>';
+            echo '<a class="nav-link" href="dashboard_admin">Dashboard Admin</a>';
         } else {
             echo '<a class="nav-link" href="dashboard">Dashboard</a>';
         };
@@ -83,7 +89,9 @@ $results2 = $products->GetCategory();
         ?>
         <a class="list-group-item d-xl-inline-flex p-2 justify-content-between align-items-center"
            href='filter?p=<?= $row["category_name"] ?>'><?= $row["category_name"] ?>
-<!--           href='?ProductFilter=--><?//= $row["category_name"] ?><!--'>--><?//= $row["category_name"] ?>
+            <!--           href='?ProductFilter=--><?//= $row["category_name"]
+            ?><!--'>--><?//= $row["category_name"]
+            ?>
             <span class="badge badge-primary badge-pill"><?= $row["quantity_products"] ?></span>
         </a>
     <?php
@@ -137,7 +145,8 @@ if (isset($_SESSION['cart_inventory'])) {
 ?>
 <div id="cookieConsent">
     <div id="closeCookieConsent">x</div>
-    This website is using cookies. <a href="http://www.whatarecookies.com/" target="_blank">More info</a>. <a class="cookieConsentOK">I accept</a>
+    This website is using cookies. <a href="http://www.whatarecookies.com/" target="_blank">More info</a>. <a
+            class="cookieConsentOK">I accept</a>
 </div>
 <script type="text/javascript" src="script/jquery-3.3.1.js"></script>
 <script type="text/javascript" src="script/font-awesome/font-awesome.js"></script>
