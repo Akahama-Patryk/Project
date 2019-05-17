@@ -23,10 +23,10 @@ class User
                         $_SESSION['login'] = $name;
                         if ($row["isAdmin"] == true) {
                             $_SESSION['isAdmin'] = $row['isAdmin'];
-                            RedirectHandler::HTTP_301('dashboard_admin.php');
+                            RedirectHandler::HTTP_301('dashboard_admin');
                         } else {
                             $_SESSION['isAdmin'] = $row['isAdmin'];
-                            RedirectHandler::HTTP_301('dashboard.php');
+                            RedirectHandler::HTTP_301('dashboard');
                         }
                     } else {
                         echo "Incorrect password.";
@@ -95,7 +95,7 @@ class User
             $SQL = "Update users set first_name = :f_name, honorifics = :honorifics, surname = :surname, email = :email, address = :address, 
                  `house number` = :hr_nr, postcode = :postcode, land = :land, state = :state, `mobile number` = :m_nr where name = :user;";
             $DBQuery = $this->db->Update($SQL, $params);
-            RedirectHandler::HTTP_301('dashboard.php');
+            RedirectHandler::HTTP_301('dashboard');
         } else {
             echo "Error";
         }

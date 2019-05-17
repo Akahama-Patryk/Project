@@ -3,7 +3,7 @@ include_once('App/Autoloader.php');
 Autoloader::sessionStarter();
 if (User::LoginStatus() == true) {
     session_destroy();
-    RedirectHandler::HTTP_301('index.php');
+    RedirectHandler::HTTP_301('home');
 }
 if (isset($_POST['submit'])) {
     $name = $_POST['user'];
@@ -30,7 +30,7 @@ if (isset($_POST['submit'])) {
         <a class="nav-link" href="#">Contact Page</a>
     </li>
     <li class="nav-item">
-        <a class="nav-link" href="dashboard.php">Dashboard</a>
+        <a class="nav-link" href="dashboard">Dashboard</a>
     </li>
 </ul>
 <div class="card rounded-0">
@@ -51,7 +51,7 @@ if (isset($_POST['submit'])) {
                        autocomplete="new-password" placeholder="Type your password.">
                 <div class="invalid-feedback">Enter your password too!</div>
             </div>
-            <a href="register.php" class="btn btn-primary btn-lg float-left" id="btnLogin">Register</a>
+            <a href="register" class="btn btn-primary btn-lg float-left" id="btnLogin">Register</a>
             <button type="submit" name="submit" class="btn btn-success btn-lg float-right" id="btnLogin">Login</button>
         </form>
     </div>

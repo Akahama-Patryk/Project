@@ -52,7 +52,7 @@ $results2 = $products->GetCategory();
 <body>
 <ul class="nav nav-pills nav-fill rounded-0">
     <li class="nav-item">
-        <a class="nav-link active" href="">Homepage</a>
+        <a class="nav-link active" href="home">Homepage</a>
     </li>
     <li class="nav-item">
         <a class="nav-link" href="login">Login page</a>
@@ -74,7 +74,7 @@ $results2 = $products->GetCategory();
                name="SearchProduct" aria-label="Search"<input id="submit" type="submit" <i class="fas fa-search"
                                                                                            aria-hidden="true"></i>
     </form>
-    <a href="shopping_cart.php" class="btn btn-danger align-items-md-end float-right">Go to shopping cart 🛒</a>
+    <a href="shoppingcart" class="btn btn-danger align-items-md-end float-right">Go to shopping cart 🛒</a>
     <?php
     if (User::LoginStatus() == true) {
         echo '<a href="login.php" class="btn btn-primary align-items-md-end float-right">Log Out</a>';
@@ -89,9 +89,6 @@ $results2 = $products->GetCategory();
         ?>
         <a class="list-group-item d-xl-inline-flex p-2 justify-content-between align-items-center"
            href='filter?p=<?= $row["category_name"] ?>'><?= $row["category_name"] ?>
-            <!--           href='?ProductFilter=--><?//= $row["category_name"]
-            ?><!--'>--><?//= $row["category_name"]
-            ?>
             <span class="badge badge-primary badge-pill"><?= $row["quantity_products"] ?></span>
         </a>
     <?php

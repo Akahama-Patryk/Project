@@ -1,8 +1,14 @@
 RewriteEngine on
-RewriteRule ^$ index.php [L]
+RewriteRule ^home$ index.php [L]
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule ^e404$ /Projects2019/Project/404.php [L]
-RewriteRule ^login$ /Projects2019/Project/login.php [L]
-RewriteRule ^dashboard$ /Projects2019/Project/dashboard.php [L]
-RewriteRule ^([a-zA-Z0-9]+)$ /Projects2019/Project/index.php?module=$1 [QSA,L]
+RewriteRule ^login$ /Projects2019/helden/Project/login.php [L]
+RewriteRule ^register$ /Projects2019/helden/Project/register.php [L]
+RewriteRule ^shoppingcart$ /Projects2019/helden/Project/shopping_cart.php [L]
+RewriteRule ^dashboard$ /Projects2019/helden/Project/dashboard.php [L]
+RewriteRule ^dashboard_admin$ /Projects2019/helden/Project/dashboard_admin.php [L]
+RewriteRule ^([a-zA-Z0-9]+)$ /Projects2019/helden/Project/index.php?module=$1 [QSA,L]
+RewriteRule ^e404$ /Projects2019/helden/Project/404.php [L]
+RewriteRule ^login$ /Projects2019/Project/helden/login.php [L]
+RewriteRule ^dashboard$ /Projects2019/Project/helden/dashboard.php [L]
+RewriteRule ^([a-zA-Z0-9]+)$ /Projects2019/Project/helden/index.php?module=$1 [QSA,L]

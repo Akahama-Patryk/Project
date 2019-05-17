@@ -3,9 +3,9 @@ include_once('App/Autoloader.php');
 $dataUser = array();
 Autoloader::sessionStarter();
 if (empty($_SESSION['login']))
-    RedirectHandler::HTTP_301('login.php');
+    RedirectHandler::HTTP_301('login');
 if ($_SESSION['isAdmin'] == false) {
-    RedirectHandler::HTTP_301('dashboard.php');
+    RedirectHandler::HTTP_301('dashboard');
 };
 $user = $_SESSION['login'];
 $dataUser = new User();
@@ -39,16 +39,16 @@ if (isset($_POST['submit'])) {
 <body>
 <ul class="nav nav-pills nav-fill">
     <li class="nav-item">
-        <a class="nav-link" href="index.php">Homepage</a>
+        <a class="nav-link" href="home">Homepage</a>
     </li>
     <li class="nav-item">
-        <a class="nav-link" href="login.php">Login page</a>
+        <a class="nav-link" href="login">Login page</a>
     </li>
     <li class="nav-item">
         <a class="nav-link" href="#">Contact Page</a>
     </li>
     <li class="nav-item">
-        <a class="nav-link active" href="dashboard_admin.php">Dashboard</a>
+        <a class="nav-link active" href="dashboard">Dashboard</a>
     </li>
 </ul>
 <ul class="list-group-item">
@@ -75,18 +75,18 @@ if (isset($_POST['submit'])) {
             <nav class="nav flex-column navbar-dark bg-blue-left col-2 pr-0 d-flex">
                 <ul class="navbar-nav">
                     <li class="nav-item">
-                        <a href="dashboard_admin.php" class="nav-link navbar-brand p-3">
+                        <a href="dashboard_admin" class="nav-link navbar-brand p-3">
                             <img src="img/admin.png" class="logo" data-toggle="tooltip" data-placement="right"
                                  title="Dashboard Admin"/>
                             Project Supermarkt
                         </a>
                     </li>
                     <li class="nav-item py-1" id="home">
-                        <a class="nav-link p-3 font-weight-bold" href="index.php"><i class="fas fa-home fa-lg mr-2"></i>&nbspHome
+                        <a class="nav-link p-3 font-weight-bold" href="home"><i class="fas fa-home fa-lg mr-2"></i>&nbspHome
                             Page</a>
                     </li>
                     <li class="nav-item py-1" id="dashboard">
-                        <a class="nav-link p-3 font-weight-bold" href="dashboard_admin.php"><i
+                        <a class="nav-link p-3 font-weight-bold" href="dashboard_admin"><i
                                     class="fas fa-chart-line fa-lg mr-2"></i>&nbspDashboard</a>
                     </li>
                     <li class="nav-item py-1" id="users">
