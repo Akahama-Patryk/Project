@@ -69,10 +69,10 @@ $results2 = $products->GetCategory();
         };
         ?>
     </li>
-    <form class="form-inline md-form form-sm active-cyan-2 m-0" action="?SearchProduct=" method="get">
+    <form class="form-inline md-form form-sm active-cyan-2 m-0" action="search?p=" method="get">
         <input class="form-control form-control-sm mr-3 w-75" type="text" placeholder="Zoek product"
-               name="SearchProduct" aria-label="Search"<input id="submit" type="submit" <i class="fas fa-search"
-                                                                                           aria-hidden="true"></i>
+               name="p" aria-label="Search"<input id="submit" type="submit" <i class="fas fa-search"
+                                                                               aria-hidden="true"></i>
     </form>
     <a href="shoppingcart" class="btn btn-danger align-items-md-end float-right">Go to shopping cart 🛒</a>
     <?php
