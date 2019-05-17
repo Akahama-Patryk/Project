@@ -17,8 +17,7 @@ class Product
         if (is_string($data)) {
             $search_product = $data;
         }
-        if(is_string($data) && $filter_flag)
-        {
+        if (is_string($data) && $filter_flag) {
             $filter_category = $data;
             $search_product = null;
         }

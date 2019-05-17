@@ -24,14 +24,15 @@ if (isset($_POST['new_user_quantity']) && ($_POST['id_for_new_qty'])) {
     ShoppingCart::updateCartProduct($_POST['id_for_new_qty'], $_POST['new_user_quantity']);
 }
 // Search bar
-if (isset($_GET['module']) && $_GET['module'] === "search" && isset($_GET['p']))  {
+if (isset($_GET['module']) && $_GET['module'] === "search" && isset($_GET['p'])) {
     $results = $products->GetProduct($_GET['p']);
-}
-// Filter
-if (isset($_GET['module']) && $_GET['module'] === "filter" && isset($_GET['p'])) {
-    $results = $products->GetProduct($_GET['p'], true);
 } else {
-    $results = $products->GetProduct();
+// Filter
+    if (isset($_GET['module']) && $_GET['module'] === "filter" && isset($_GET['p'])) {
+        $results = $products->GetProduct($_GET['p'], true);
+    } else {
+        $results = $products->GetProduct();
+    }
 }
 $results2 = $products->GetCategory();
 ?>
@@ -46,7 +47,7 @@ $results2 = $products->GetCategory();
 <body>
 <ul class="nav nav-pills nav-fill rounded-0">
     <li class="nav-item">
-        <a class="nav-link active" href="">Homepage</a>
+        <a class="nav-link active" href="home">Homepage</a>
     </li>
     <li class="nav-item">
         <a class="nav-link" href="login">Login page</a>
@@ -57,18 +58,18 @@ $results2 = $products->GetCategory();
     <li class="nav-item">
         <?php
         if (User::AdminStatus() === true) {
-            echo '<a class="nav-link" href="dashboard_admin.php">Dashboard Admin</a>';
+            echo '<a class="nav-link" href="dashboard_admin">Dashboard Admin</a>';
         } else {
             echo '<a class="nav-link" href="dashboard">Dashboard</a>';
         };
         ?>
     </li>
-    <form class="form-inline md-form form-sm active-cyan-2 m-0" action="?SearchProduct=" method="get">
+    <form class="form-inline md-form form-sm active-cyan-2 m-0" action="search?p=" method="get">
         <input class="form-control form-control-sm mr-3 w-75" type="text" placeholder="Zoek product"
-               name="SearchProduct" aria-label="Search"<input id="submit" type="submit" <i class="fas fa-search"
-                                                                                           aria-hidden="true"></i>
+               name="p" aria-label="Search"<input id="submit" type="submit" <i class="fas fa-search"
+                                                                               aria-hidden="true"></i>
     </form>
-    <a href="shopping_cart.php" class="btn btn-danger align-items-md-end float-right">Go to shopping cart 🛒</a>
+    <a href="shoppingcart" class="btn btn-danger align-items-md-end float-right">Go to shopping cart 🛒</a>
     <?php
     if (User::LoginStatus() == true) {
         echo '<a href="login.php" class="btn btn-primary align-items-md-end float-right">Log Out</a>';
@@ -83,7 +84,6 @@ $results2 = $products->GetCategory();
         ?>
         <a class="list-group-item d-xl-inline-flex p-2 justify-content-between align-items-center"
            href='filter?p=<?= $row["category_name"] ?>'><?= $row["category_name"] ?>
-<!--           href='?ProductFilter=--><?//= $row["category_name"] ?><!--'>--><?//= $row["category_name"] ?>
             <span class="badge badge-primary badge-pill"><?= $row["quantity_products"] ?></span>
         </a>
     <?php
@@ -137,7 +137,8 @@ if (isset($_SESSION['cart_inventory'])) {
 ?>
 <div id="cookieConsent">
     <div id="closeCookieConsent">x</div>
-    This website is using cookies. <a href="http://www.whatarecookies.com/" target="_blank">More info</a>. <a class="cookieConsentOK">I accept</a>
+    This website is using cookies. <a href="http://www.whatarecookies.com/" target="_blank">More info</a>. <a
+            class="cookieConsentOK">I accept</a>
 </div>
 <script type="text/javascript" src="script/jquery-3.3.1.js"></script>
 <script type="text/javascript" src="script/font-awesome/font-awesome.js"></script>

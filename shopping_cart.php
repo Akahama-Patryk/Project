@@ -25,10 +25,10 @@ if (isset($_POST['option']) && (!empty($_POST['option']))){
 <body>
 <ul class="nav nav-pills nav-fill">
     <li class="nav-item">
-        <a class="nav-link" href="index.php">Homepage</a>
+        <a class="nav-link" href="home">Homepage</a>
     </li>
     <li class="nav-item">
-        <a class="nav-link" href="login.php">Login page</a>
+        <a class="nav-link" href="login">Login page</a>
     </li>
     <li class="nav-item">
         <a class="nav-link" href="#">Contact Page</a>
@@ -36,9 +36,9 @@ if (isset($_POST['option']) && (!empty($_POST['option']))){
     <li class="nav-item">
         <?php
         if (User::AdminStatus() === true) {
-            echo '<a class="nav-link" href="dashboard_admin.php">Dashboard Admin</a>';
+            echo '<a class="nav-link" href="dashboard_admin">Dashboard Admin</a>';
         } else {
-            echo '<a class="nav-link" href="dashboard.php">Dashboard</a>';
+            echo '<a class="nav-link" href="dashboard">Dashboard</a>';
         };
         ?>
     </li>
@@ -51,6 +51,7 @@ if (isset($_SESSION['cart_inventory'])) {
     echo "Shopping Cart is empty. Please full it up!";
 }
 ?>
+<!--//To diffrent page send-->
 <h6>Producten afhalen of bezorgen</h6>
 <form method="post">
     <div class="form-check form-check-inline">
