@@ -14,7 +14,7 @@ if (isset($_GET['ID']) && !empty($_GET['ID'])) {
     RedirectHandler::HTTP_301($_SERVER['SCRIPT_NAME']);
 }
 $dataClient = new User();
-$result = $dataClient->fetchClientData($_SESSION['isAdmin']);
+$result = $dataClient->fetchClientData();
 ?>
 <html>
 <head>
@@ -149,8 +149,7 @@ $result = $dataClient->fetchClientData($_SESSION['isAdmin']);
                                             <td><?= $row['state'] ?></td>
                                             <td><?= $row['mobile number'] ?></td>
                                             <td><?= $row['email'] ?></td>
-<!--                                            TODO: UPDATE-->
-                                            <td><a href="?ID=<?= $row['name'] ?>">
+                                            <td><a href="dashboard_client_edit?ID=<?= $row['name'] ?>">
                                                     UPDATE
                                                 </a></td>
                                             <td><a href="?ID=<?= $row['name'] ?>">
