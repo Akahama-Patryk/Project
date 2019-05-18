@@ -21,7 +21,7 @@ if (isset($_POST['submit'])) {
 <body>
 <ul class="nav nav-pills nav-fill">
     <li class="nav-item">
-        <a class="nav-link" href="index">Homepage</a>
+        <a class="nav-link" href="home">Homepage</a>
     </li>
     <li class="nav-item">
         <a class="nav-link active" href="login">Login page</a>

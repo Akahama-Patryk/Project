@@ -114,4 +114,26 @@ class User
             echo "Failed";
         }
     }
+
+    public function fetchClientData()
+    {
+        $params = null;
+        $SQL = "SELECT * FROM users WHERE NOT isAdmin = '1';";
+        $DBQuery = $this->db->Select($SQL, $params);
+        $result = null;
+        if (count($DBQuery) >= 1) {
+            $result = $DBQuery;
+            return $result;
+        }else{
+            return null;
+        }
+    }
+
+    public function deleteClient($ID){
+        $params = array("ID" => $ID);
+        $SQL = "DELETE FROM users WHERE name = :ID;";
+        $DBQuery = $this->db->Delete($SQL, $params);
+        RedirectHandler::HTTP_301('dashboard_client');
+        echo "Client has been DELETED!!!";
+    }
 }

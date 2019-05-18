@@ -1,13 +1,20 @@
 <?php
 include_once('App/Autoloader.php');
-$dataUser = array();
+$result = array();
 Autoloader::sessionStarter();
 if (empty($_SESSION['login']))
     RedirectHandler::HTTP_301('login');
 if ($_SESSION['isAdmin'] == false) {
     RedirectHandler::HTTP_301('dashboard');
 };
-$user = $_SESSION['login'];
+//delete client
+if (isset($_GET['ID']) && !empty($_GET['ID'])) {
+    $DeleteClient = new User();
+    $DeleteClient->deleteClient($_GET['ID']);
+    RedirectHandler::HTTP_301($_SERVER['SCRIPT_NAME']);
+}
+$dataClient = new User();
+$result = $dataClient->fetchClientData($_SESSION['isAdmin']);
 ?>
 <html>
 <head>
@@ -107,7 +114,53 @@ $user = $_SESSION['login'];
                     </div>
                 </div>
                 <main class="px-3 mt-3">
-                    <h2>Welcome, <?= $_SESSION['login'] ?></h2>
+                    <div class='col-md-12'>
+                        <form method="get">
+                            <table class='table'>
+                                <thead class='thead-dark'>
+                                <tr>
+                                    <th scope='col'>Username</th>
+                                    <th scope='col'>Honorifics</th>
+                                    <th scope='col'>First Name</th>
+                                    <th scope='col'>Surname</th>
+                                    <th scope='col'>Address</th>
+                                    <th scope='col'>House Number</th>
+                                    <th scope='col'>Postcode</th>
+                                    <th scope='col'>Land</th>
+                                    <th scope='col'>State</th>
+                                    <th scope='col'>Mobile Number</th>
+                                    <th scope='col'>E-mail</th>
+                                    <th scope='col'>Update</th>
+                                    <th scope='col'>Delete</th>
+                                </tr>
+                                <tbody>
+                                <?php
+                                if ($result !== null)
+                                    foreach ($result as $row) : ?>
+                                        <tr>
+                                            <td><?= $row['name'] ?></td>
+                                            <td><?= $row['honorifics'] ?></td>
+                                            <td><?= $row['first_name'] ?></td>
+                                            <td><?= $row['surname'] ?></td>
+                                            <td><?= $row['address'] ?></td>
+                                            <td><?= $row['house number'] ?></td>
+                                            <td><?= $row['postcode'] ?></td>
+                                            <td><?= $row['land'] ?></td>
+                                            <td><?= $row['state'] ?></td>
+                                            <td><?= $row['mobile number'] ?></td>
+                                            <td><?= $row['email'] ?></td>
+<!--                                            TODO: UPDATE-->
+                                            <td><a href="?ID=<?= $row['name'] ?>">
+                                                    UPDATE
+                                                </a></td>
+                                            <td><a href="?ID=<?= $row['name'] ?>">
+                                                    DELETE
+                                                </a></td>
+                                        </tr>
+                                    <?php endforeach; ?>
+                            </table>
+                        </form>
+                    </div>
                 </main>
             </div>
         </div>

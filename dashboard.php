@@ -93,7 +93,7 @@ if (isset($_POST['submit'])) {
             <div class="col-10 px-0">
                 <div class="navbar navbar-dark bg-blue-top justify-content-end">
                     <div class="navbar-nav">
-                        <a href="login.php" class="nav-link font-weight-bold">
+                        <a href="login" class="nav-link font-weight-bold">
                             <i class="fas fa-sign-out-alt fa-lg mr-1"></i> Logout
                         </a>
                     </div>
