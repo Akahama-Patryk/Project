@@ -1,5 +1,4 @@
 <?php
-include_once("App/Autoloader.php");
 
 class User
 {
