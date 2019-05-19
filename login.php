@@ -15,13 +15,14 @@ if (isset($_POST['submit'])) {
 ?>
 <html>
 <head>
+
     <link rel="icon" href="img/logo.ico">
     <link rel="stylesheet" type="text/css" href="style/bootstrap.css">
 </head>
 <body>
 <ul class="nav nav-pills nav-fill">
     <li class="nav-item">
-        <a class="nav-link" href="home">Homepage</a>
+        <a class="nav-link" href="index.php">Homepage</a>
     </li>
     <li class="nav-item">
         <a class="nav-link active" href="login">Login page</a>

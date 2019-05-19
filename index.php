@@ -23,7 +23,6 @@ if (isset($_GET['EmptyCart'])) {
 if (isset($_POST['new_user_quantity']) && ($_POST['id_for_new_qty'])) {
     ShoppingCart::updateCartProduct($_POST['id_for_new_qty'], $_POST['new_user_quantity']);
 }
-
 if (!isset($_GET['module'])) {
     $results = $products->GetProduct();
 } else {
@@ -45,7 +44,7 @@ $results2 = $products->GetCategory();
 <html lang="nl">
 <head>
     <title>Project Supermarkt --Home--</title>
-    <link rel="icon" href="./img/logo.ico">
+    <link rel="icon" href="img/logo.ico">
     <link rel="stylesheet" type="text/css" href="style/bootstrap.css">
     <link rel="stylesheet" type="text/css" href="style/cookie_warning_style.css">
 </head>

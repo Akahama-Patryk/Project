@@ -1,20 +1,14 @@
 <?php
 include_once('App/Autoloader.php');
-$result = array();
+$dataProduct = array();
 Autoloader::sessionStarter();
 if (empty($_SESSION['login']))
     RedirectHandler::HTTP_301('login');
 if ($_SESSION['isAdmin'] == false) {
     RedirectHandler::HTTP_301('dashboard');
 };
-//delete client
-if (isset($_GET['ID']) && !empty($_GET['ID'])) {
-    $DeleteClient = new User();
-    $DeleteClient->deleteClient($_GET['ID']);
-    RedirectHandler::HTTP_301($_SERVER['SCRIPT_NAME']);
-}
-$dataClient = new User();
-$result = $dataClient->fetchClientData();
+$data = new Product();
+$dataProduct = $data->GetProduct();
 ?>
 <html>
 <head>
@@ -72,8 +66,7 @@ $result = $dataClient->fetchClientData();
                         <a class="nav-link p-3 font-weight-bold" href="dashboard_client"><i
                                     class="fas fa-users fa-lg mr-2"></i>&nbspClient</a>
                     </li>
-                    <li class="nav-item py-1 {{ Request::is('admin/vocabularies*') ? 'active' : null }}"
-                        id="vocabularies">
+                    <li class="nav-item py-1" id="vocabularies">
                         <a class="nav-link p-3 font-weight-bold" href="dashboard_product"><i
                                     class="fas fa-font fa-lg mr-2"></i>&nbspProduct</a>
                     </li>
@@ -119,40 +112,35 @@ $result = $dataClient->fetchClientData();
                             <table class='table'>
                                 <thead class='thead-dark'>
                                 <tr>
-                                    <th scope='col'>Username</th>
-                                    <th scope='col'>Honorifics</th>
-                                    <th scope='col'>First Name</th>
-                                    <th scope='col'>Surname</th>
-                                    <th scope='col'>Address</th>
-                                    <th scope='col'>House Number</th>
-                                    <th scope='col'>Postcode</th>
-                                    <th scope='col'>Land</th>
-                                    <th scope='col'>State</th>
-                                    <th scope='col'>Mobile Number</th>
-                                    <th scope='col'>E-mail</th>
+                                    <th scope='col'>Name</th>
+                                    <th scope='col'>Quantity</th>
+                                    <th scope='col'>Price</th>
+                                    <th scope='col'>Image</th>
+                                    <th scope='col'>Description</th>
+                                    <th scope='col'>Category</th>
                                     <th scope='col'>Update</th>
                                     <th scope='col'>Delete</th>
                                 </tr>
                                 <tbody>
                                 <?php
-                                if ($result !== null)
-                                    foreach ($result as $row) : ?>
+                                if ($dataProduct !== null)
+                                    foreach ($dataProduct as $record) :
+                                        ?>
                                         <tr>
-                                            <td><?= $row['name'] ?></td>
-                                            <td><?= $row['honorifics'] ?></td>
-                                            <td><?= $row['first_name'] ?></td>
-                                            <td><?= $row['surname'] ?></td>
-                                            <td><?= $row['address'] ?></td>
-                                            <td><?= $row['house number'] ?></td>
-                                            <td><?= $row['postcode'] ?></td>
-                                            <td><?= $row['land'] ?></td>
-                                            <td><?= $row['state'] ?></td>
-                                            <td><?= $row['mobile number'] ?></td>
-                                            <td><?= $row['email'] ?></td>
-                                            <td><a href="dashboard_client_edit?ID=<?= $row['name'] ?>">
+                                            <td><?= $record['name'] ?></td>
+                                            <td><?= $record['quantity'] ?></td>
+                                            <td><?= $record['price'] ?></td>
+                                            <td><img class="img-thumbnail align-self-center"
+                                                     style="width:100px;height:100px;"
+                                                     src="<?= $record["image"] ?>" alt="Missing image data"></td>
+                                            <td><?= $record['description'] ?></td>
+                                            <td><?= $record['category_name'] ?></td>
+                                            <!--                                            TODO: EDIT PRODUCT plus ADD FOTO TO IMG FOLDER AND DATABASE LINK-->
+                                            <td><a href="dashboard_product_edit?ID=<?= $record['id_product'] ?>">
                                                     UPDATE
                                                 </a></td>
-                                            <td><a href="?ID=<?= $row['name'] ?>">
+                                            <!--                                            TODO: DELETE PRODUCT-->
+                                            <td><a href="?ID=<?= $record['id_product'] ?>">
                                                     DELETE
                                                 </a></td>
                                         </tr>
@@ -160,6 +148,9 @@ $result = $dataClient->fetchClientData();
                             </table>
                         </form>
                     </div>
+                    <!-- TODO: ADD PRODUCT   plus ADD FOTO TO IMG FOLDER AND DATABASE LINK                  -->
+                    <a href="dashboard_product_add" class="btn btn-primary align-items-md-end float-right"><i
+                                class="fas fa-plus"></i> Add Product</a>
                 </main>
             </div>
         </div>

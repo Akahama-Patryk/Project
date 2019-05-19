@@ -91,7 +91,7 @@ if (isset($_POST['submit'])) {
                     </li>
                     <li class="nav-item py-1 {{ Request::is('admin/vocabularies*') ? 'active' : null }}"
                         id="vocabularies">
-                        <a class="nav-link p-3 font-weight-bold" href="{{ route('vocabularies.index') }}"><i
+                        <a class="nav-link p-3 font-weight-bold" href="dashboard_product"><i
                                     class="fas fa-font fa-lg mr-2"></i>&nbspProduct</a>
                     </li>
                     <li class="nav-item py-1 {{ Request::is('admin/tasks*') ? 'active' : null }}" id="tasks">

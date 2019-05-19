@@ -2,6 +2,7 @@ RewriteEngine on
 RewriteRule ^home$ index.php [L]
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^e404$ /Projects2019/helden/Project/view/error/404.php [L]
 RewriteRule ^login$ /Projects2019/helden/Project/login.php [L]
 RewriteRule ^register$ /Projects2019/helden/Project/register.php [L]
 RewriteRule ^shoppingcart$ /Projects2019/helden/Project/shopping_cart.php [L]
@@ -9,5 +10,5 @@ RewriteRule ^dashboard$ /Projects2019/helden/Project/dashboard.php [L]
 RewriteRule ^dashboard_admin$ /Projects2019/helden/Project/dashboard_admin.php [L]
 RewriteRule ^dashboard_client$ /Projects2019/helden/Project/dashboard_admin_client.php [L]
 RewriteRule ^dashboard_client_edit$ /Projects2019/helden/Project/dashboard_admin_client_edit.php?ID=$1 [QSA,L]
+RewriteRule ^dashboard_product$ /Projects2019/helden/Project/dashboard_admin_product.php [L]
 RewriteRule ^([a-zA-Z0-9]+)$ /Projects2019/helden/Project/index.php?module=$1 [QSA,L]
-RewriteRule ^e404$ /Projects2019/helden/Project/404.php [L]
