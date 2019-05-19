@@ -1,14 +1,47 @@
 RewriteEngine on
+#resource directories
+RewriteRule ^$ /style/ [L]
+RewriteRule ^$ /img/ [L]
+RewriteRule ^$ /script/ [L]
+#homepage
 RewriteRule ^home$ index.php [L]
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
+
+#error 404 only
 RewriteRule ^e404$ /Projects2019/helden/Project/view/error/404.php [L]
-RewriteRule ^login$ /Projects2019/helden/Project/login.php [L]
-RewriteRule ^register$ /Projects2019/helden/Project/register.php [L]
-RewriteRule ^shoppingcart$ /Projects2019/helden/Project/shopping_cart.php [L]
-RewriteRule ^dashboard$ /Projects2019/helden/Project/dashboard.php [L]
-RewriteRule ^dashboard_admin$ /Projects2019/helden/Project/dashboard_admin.php [L]
-RewriteRule ^dashboard_client$ /Projects2019/helden/Project/dashboard_admin_client.php [L]
-RewriteRule ^dashboard_client_edit$ /Projects2019/helden/Project/dashboard_admin_client_edit.php?ID=$1 [QSA,L]
-RewriteRule ^dashboard_product$ /Projects2019/helden/Project/dashboard_admin_product.php [L]
+#homepage filter
 RewriteRule ^([a-zA-Z0-9]+)$ /Projects2019/helden/Project/index.php?module=$1 [QSA,L]
+#login and register
+RewriteRule ^login$ /Projects2019/helden/Project/view/user/login.php [L]
+RewriteRule ^register$ /Projects2019/helden/Project/view/user/register.php [L]
+#shoppingcart
+RewriteRule ^shoppingcart$ /Projects2019/helden/Project/view/shoppingcart/shopping_cart.php [L]
+#user dashboard
+RewriteRule ^dashboard$ /Projects2019/helden/Project/view/user/dashboard.php [L]
+#admin dashboard
+RewriteRule ^dashboard_admin$ /Projects2019/helden/Project/view/admin/dashboard_admin.php [L]
+#admin dashboard category
+RewriteRule ^dashboard_admin_category$ /Projects2019/helden/Project/view/admin/category/dashboard_admin_category.php [L]
+#admin dashboard client
+RewriteRule ^dashboard_admin_client$ /Projects2019/helden/Project/view/admin/client/dashboard_admin_client.php [L]
+RewriteRule ^dashboard_admin_client_edit$ /Projects2019/helden/Project/view/admin/client/dashboard_admin_client_edit.php?ID=$1 [QSA,L]
+#admin dashboard client history (SESSION crap)
+RewriteRule ^dashboard_admin_client_history$ /Projects2019/helden/Project/view/admin/client_history/dashboard_admin_client_history.php [L]
+#admin dashboard QR/coupons codes
+RewriteRule ^dashboard_admin_coupons$ /Projects2019/helden/Project/view/admin/coupons/dashboard_admin_coupon_codes.php [L]
+#admin dashboard co-workers
+RewriteRule ^dashboard_admin_coworkers$ /Projects2019/helden/Project/view/admin/coworkers/dashboard_admin_coworkers.php [L]
+RewriteRule ^dashboard_admin_coworkers_add$ /Projects2019/helden/Project/view/admin/coworkers/dashboard_admin_coworkers_add.php [L]
+RewriteRule ^dashboard_admin_coworkers_edit$ /Projects2019/helden/Project/view/admin/coworkers/dashboard_admin_coworkers_edit.php?ID=$1 [QSA,L]
+#admin dashboard help
+RewriteRule ^dashboard_admin_help$ /Projects2019/helden/Project/view/admin/help/dashboard_admin_help.php [L]
+#admin dashboard orders
+RewriteRule ^dashboard_admin_orders$ /Projects2019/helden/Project/view/admin/orders/dashboard_admin_orders.php [L]
+RewriteRule ^dashboard_admin_orders_edit$ /Projects2019/helden/Project/view/admin/orders/dashboard_admin_orders_edit.php?ID=$1 [QSA,L]
+#admin dashboard product
+RewriteRule ^dashboard_admin_product$ /Projects2019/helden/Project/view/admin/product/dashboard_admin_product.php [L]
+RewriteRule ^dashboard_admin_product_add$ /Projects2019/helden/Project/view/admin/product/dashboard_admin_product_add.php [L]
+RewriteRule ^dashboard_admin_product_edit$ /Projects2019/helden/Project/view/admin/product/dashboard_admin_product_edit.php?ID=$1 [QSA,L]
+#admin dashboard sessionreader
+RewriteRule ^dashboard_admin_sessionreader$ /Projects2019/helden/Project/view/admin/sessionreader/dashboard_admin_sessionreader.php [L]

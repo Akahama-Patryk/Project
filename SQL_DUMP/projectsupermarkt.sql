@@ -38,7 +38,7 @@ CREATE TABLE `category` (
 --
 
 INSERT INTO `category` (`category_id`, `category_name`) VALUES
-('D', 'Bakkerij'),
+(RedirectHandlerD', 'Bakkerij'),
 ('O', 'Bewuste voeding'),
 ('I', 'Bier, sterke drank, apertieven'),
 ('M', 'Diepvries'),

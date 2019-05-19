@@ -76,9 +76,9 @@ $results2 = $products->GetCategory();
     <a href="shoppingcart" class="btn btn-danger align-items-md-end float-right">Go to shopping cart 🛒</a>
     <?php
     if (User::LoginStatus() == true) {
-        echo '<a href="login.php" class="btn btn-primary align-items-md-end float-right">Log Out</a>';
+        echo '<a href="login" class="btn btn-primary align-items-md-end float-right">Log Out</a>';
     } else {
-        echo '<a href="login.php" class="btn btn-primary align-items-md-end float-right">Log In</a>';
+        echo '<a href="login" class="btn btn-primary align-items-md-end float-right">Log In</a>';
     }
     ?>
 </ul>

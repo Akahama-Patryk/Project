@@ -1,5 +1,5 @@
 <?php
-include_once("App/Autoloader.php");
+include_once("../../App/Autoloader.php");
 Autoloader::sessionStarter();
 if (isset($_GET['RemoveProduct'])) {
     ShoppingCart::deleteCartProduct($_GET['RemoveProduct']);

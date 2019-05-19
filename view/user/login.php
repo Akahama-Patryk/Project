@@ -1,14 +1,16 @@
 <?php
-include_once "App/Autoloader.php";
+include_once('../../App/Autoloader.php');
 Autoloader::sessionStarter();
-if (!empty($_SESSION['login']))
-    RedirectHandler::HTTP_301($_SERVER['login.php']);
-
+if (User::LoginStatus() == true) {
+    session_destroy();
+    RedirectHandler::HTTP_301('home');
+}
 if (isset($_POST['submit'])) {
     $name = $_POST['user'];
     $pass = $_POST['pass'];
+
     $object = new User();
-    $class = $object->register($name, $pass);
+    $object->Login($name, $pass);
 }
 ?>
 <html>
@@ -19,38 +21,38 @@ if (isset($_POST['submit'])) {
 <body>
 <ul class="nav nav-pills nav-fill">
     <li class="nav-item">
-        <a class="nav-link" href="index.php">Homepage</a>
+        <a class="nav-link" href="home">Homepage</a>
     </li>
     <li class="nav-item">
-        <a class="nav-link" href="login.php">Login page</a>
+        <a class="nav-link active" href="login">Login page</a>
     </li>
     <li class="nav-item">
         <a class="nav-link" href="#">Contact Page</a>
     </li>
     <li class="nav-item">
-        <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Dashboard</a>
+        <a class="nav-link" href="dashboard">Dashboard</a>
     </li>
 </ul>
 <div class="card rounded-0">
     <div class="card-header">
-        <h3 class="mb-0">Register</h3>
+        <h3 class="mb-0">Login</h3>
     </div>
-    <div class="card-body">
+    <div class="card-body bg-light">
         <form class="form" role="form" autocomplete="off" id="formLogin" novalidate="" method="POST">
             <div class="form-group">
                 <label for="user">Username</label>
-                <input type="text" class="form-control form-control-lg rounded-0" name="user" id="user"
-                       placeholder="Type your username." required>
+                <input type="text" class="form-control form-control-lg rounded-0" name="user" id="user" required
+                       placeholder="Type your username.">
                 <div class="invalid-feedback">Oops, you missed this one.</div>
             </div>
             <div class="form-group">
                 <label>Password</label>
-                <input type="password" class="form-control form-control-lg rounded-0" id="pass" name="pass"
-                       autocomplete="new-password" placeholder="Type your password." required>
+                <input type="password" class="form-control form-control-lg rounded-0" id="pass" name="pass" required
+                       autocomplete="new-password" placeholder="Type your password.">
                 <div class="invalid-feedback">Enter your password too!</div>
             </div>
-            <button type="submit" name="submit" class="btn btn-success btn-lg float-right" id="btnLogin">Register
-            </button>
+            <a href="register" class="btn btn-primary btn-lg float-left" id="btnLogin">Register</a>
+            <button type="submit" name="submit" class="btn btn-success btn-lg float-right" id="btnLogin">Login</button>
         </form>
     </div>
 </div>

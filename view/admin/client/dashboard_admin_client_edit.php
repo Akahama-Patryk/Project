@@ -1,18 +1,22 @@
 <?php
-require_once('App/Autoloader.php');
-$dataUser = array();
+include_once('../../../App/Autoloader.php');
+$ReadUpdate = array();
 $result = array();
+$dataUser = array();
 Autoloader::sessionStarter();
 if (empty($_SESSION['login']))
     RedirectHandler::HTTP_301('login');
-if ($_SESSION['isAdmin'] == true) {
-    RedirectHandler::HTTP_301('dashboard_admin');
+if ($_SESSION['isAdmin'] == false) {
+    RedirectHandler::HTTP_301('dashboard');
 };
+// fetch client data
+if (isset($_GET['ID']) && !empty($_GET['ID'])) {
+    $FetchUser = new User();
+    $ReadUpdate = $FetchUser->fetchUserInformation($_GET['ID']);
+}
+//fetch land data
 $data = new User();
 $result = $data->fetchLand();
-$user = $_SESSION['login'];
-$dataUser = new User();
-$dataUserInfo = $dataUser->fetchUserInformation($user);
 if (isset($_POST['submit'])) {
     $f_name = $_POST['f_name'];
     $honorifics = $_POST['option'];
@@ -26,7 +30,7 @@ if (isset($_POST['submit'])) {
     $m_nr = $_POST['m_nr'];
 
     $object = new User();
-    $object->updateUserInformation($user, $f_name, $honorifics, $surname, $email, $address, $hr_nr, $postcode, $land, $state, $m_nr);
+    $object->updateUserInformation($_GET['ID'], $f_name, $honorifics, $surname, $email, $address, $hr_nr, $postcode, $land, $state, $m_nr);
 }
 ?>
 <html>
@@ -51,7 +55,13 @@ if (isset($_POST['submit'])) {
         <a class="nav-link" href="#">Contact Page</a>
     </li>
     <li class="nav-item">
-        <a class="nav-link active" href="dashboard">Dashboard</a>
+        <?php
+        if (User::AdminStatus() === true) {
+            echo '<a class="nav-link active" href="dashboard_admin">Dashboard Admin</a>';
+        } else {
+            echo '<a class="nav-link active" href="dashboard">Dashboard</a>';
+        };
+        ?>
     </li>
 </ul>
 <div id="app" class="admin">
@@ -62,8 +72,8 @@ if (isset($_POST['submit'])) {
                 <ul class="navbar-nav">
                     <li class="nav-item">
                         <a href="dashboard_admin" class="nav-link navbar-brand p-3">
-                            <img src="img/logo.ico" class="logo" data-toggle="tooltip" data-placement="right"
-                                 title="Dashboard"/>
+                            <img src="img/admin.png" class="logo" data-toggle="tooltip" data-placement="right"
+                                 title="Dashboard Admin"/>
                             Project Supermarkt
                         </a>
                     </li>
@@ -72,21 +82,52 @@ if (isset($_POST['submit'])) {
                             Page</a>
                     </li>
                     <li class="nav-item py-1" id="dashboard">
-                        <a class="nav-link p-3 font-weight-bold" href="dashboard"><i
+                        <a class="nav-link p-3 font-weight-bold" href="dashboard_admin"><i
                                     class="fas fa-chart-line fa-lg mr-2"></i>&nbspDashboard</a>
                     </li>
-                    <li class="nav-item py-1" id="userinfo">
-                        <a class="nav-link p-3 font-weight-bold" href="#userinformation"><i
-                                    class="fas fa-users fa-lg mr-2"></i>&nbspUser Information</a>
+                    <li class="nav-item py-1" id="users">
+                        <a class="nav-link p-3 font-weight-bold" href="dashboard_admin_client"><i
+                                    class="fas fa-users fa-lg mr-2"></i>&nbspClient</a>
                     </li>
-                    <li class="nav-item py-1 {{ Request::is('admin/vocabularies*') ? 'active' : null }}"
-                        id="vocabularies">
-                        <a class="nav-link p-3 font-weight-bold" href="{{ route('vocabularies.index') }}"><i
-                                    class="fas fa-font fa-lg mr-2"></i>&nbspOrders</a>
+                    <li class="nav-item py-1
+                      id=" product
+                    ">
+                    <a class="nav-link p-3 font-weight-bold" href="dashboard_admin_product"><i
+                                class="fas fa-font fa-lg mr-2"></i>&nbspProduct</a>
                     </li>
-                    <li class="nav-item py-1 {{ Request::is('admin/help*') ? 'active' : null }}">
-                        <a class="nav-link p-3 font-weight-bold" href="{{ route('help') }}"><i
-                                    class="fa fa-question-circle fa-lg mr-2"></i>&nbspHelp</a>
+                    <li class="nav-item py-1 id=" category
+                    ">
+                    <a class="nav-link p-3 font-weight-bold" href="dashboard_admin_category"><i
+                                class="fas fa-question fa-lg mr-2"></i>&nbspCategory</a>
+                    </li>
+                    <li class="nav-item py-1 id=" orders
+                    ">
+                    <a class="nav-link p-3 font-weight-bold" href="dashboard_admin_orders"><i
+                                class="fas fa-briefcase fa-lg mr-2"></i>&nbspOrders</a>
+                    </li>
+                    <li class="nav-item py-1 id=" client_history
+                    ">
+                    <a class="nav-link p-3 font-weight-bold" href="dashboard_admin_client_history"><i
+                                class="fas fa-briefcase fa-lg mr-2"></i>&nbspClient History</a>
+                    </li>
+                    <li class="nav-item py-1 id=" co_workers
+                    ">
+                    <a class="nav-link p-3 font-weight-bold" href="dashboard_admin_coworkers"><i
+                                class="fas fa-boxes fa-lg mr-2"></i>&nbspCo-workers</a>
+                    </li>
+                    <li class="nav-item py-1 id=" coupons
+                    ">
+                    <a class="nav-link p-3 font-weight-bold" href="dashboard_admin_coupons"><i
+                                class="fas fa-map-signs fa-lg mr-2"></i>&nbspQR codes/Coupons codes</a>
+                    </li>
+                    <li class="nav-item py-1 id=" help
+                    ">
+                    <a class="nav-link p-3 font-weight-bold" href="dashboard_admin_help"><i
+                                class="fa fa-question-circle fa-lg mr-2"></i>&nbspHelp</a>
+                    </li>
+                    <li class="nav-item py-1 id=" sessionreader
+                    "> <a class="nav-link p-3 font-weight-bold" href="dashboard_admin_sessionreader"><i
+                                class="fa fa-question-circle fa-lg mr-2"></i>&nbspSession Reader</a>
                     </li>
                 </ul>
             </nav>
@@ -99,22 +140,16 @@ if (isset($_POST['submit'])) {
                     </div>
                 </div>
                 <main class="px-3 mt-3">
-                    <h2>Welcome, <?= $_SESSION['login'] ?></h2>
-                    <div id="userinfodiv" class="card rounded-0 d-none">
-                        <div class="card-header">
-                            <h3 class="mb-0">User Information</h3>
-                            <h6 class="mb-0">Here you can see your user information where you can edit them everytime
-                                you want.</h6>
-                            <h6 class="mb-0">Please put all data before saving or there will be no changes.</h6>
-                        </div>
-                        <?php foreach ($dataUserInfo as $data) :
-                            ?>
+                    <?php
+                    if ($ReadUpdate !== null)
+                        foreach ($ReadUpdate as $data) : ?>
                             <div class="card-body bg-light">
                                 <form class="form" role="form" autocomplete="off" id="formLogin" novalidate=""
                                       method="POST">
                                     <div class="form-group">
                                         <label for="f_name">First name</label>
-                                        <input type="text" class="form-control form-control-lg rounded-0" name="f_name"
+                                        <input type="text" class="form-control form-control-lg rounded-0"
+                                               name="f_name"
                                                id="f_name" required
                                                placeholder="<?= $data['first_name'] ?>">
                                         <div class="invalid-feedback">Oops, you missed this one.</div>
@@ -137,28 +172,32 @@ if (isset($_POST['submit'])) {
                                     </div>
                                     <div class="form-group">
                                         <label for="surname">Surname</label>
-                                        <input type="text" class="form-control form-control-lg rounded-0" name="surname"
+                                        <input type="text" class="form-control form-control-lg rounded-0"
+                                               name="surname"
                                                id="surname" required
                                                placeholder="<?= $data['surname'] ?>">
                                         <div class="invalid-feedback">Oops, you missed this one.</div>
                                     </div>
                                     <div class="form-group">
                                         <label for="email">E-mail Address</label>
-                                        <input type="email" class="form-control form-control-lg rounded-0" name="email"
+                                        <input type="email" class="form-control form-control-lg rounded-0"
+                                               name="email"
                                                id="email" required
                                                placeholder="<?= $data['email'] ?>">
                                         <div class="invalid-feedback">Oops, you missed this one.</div>
                                     </div>
                                     <div class="form-group">
                                         <label for="address">Address</label>
-                                        <input type="text" class="form-control form-control-lg rounded-0" name="address"
+                                        <input type="text" class="form-control form-control-lg rounded-0"
+                                               name="address"
                                                id="address" required
                                                placeholder="<?= $data['address'] ?>">
                                         <div class="invalid-feedback">Oops, you missed this one.</div>
                                     </div>
                                     <div class="form-group">
                                         <label for="hr_nr">House number</label>
-                                        <input type="text" class="form-control form-control-lg rounded-0" name="hr_nr"
+                                        <input type="text" class="form-control form-control-lg rounded-0"
+                                               name="hr_nr"
                                                id="hr_nr" required
                                                placeholder="<?= $data['house number'] ?>">
                                         <div class="invalid-feedback">Oops, you missed this one.</div>
@@ -199,15 +238,15 @@ if (isset($_POST['submit'])) {
                                                    placeholder="<?= $data['mobile number'] ?>">
                                             <div class="invalid-feedback">Oops, you missed this one.</div>
                                         </div>
-                                        <button type="submit" name="submit" class="btn btn-success btn-lg float-right"
+                                        <button type="submit" name="submit"
+                                                class="btn btn-success btn-lg float-right"
                                                 id="btnLogin">Save
                                         </button>
                                 </form>
                             </div>
                         <?php
                         endforeach;
-                        ?>
-                    </div>
+                    ?>
                 </main>
             </div>
         </div>
@@ -215,22 +254,3 @@ if (isset($_POST['submit'])) {
 </div>
 </body>
 </html>
-<script type="text/javascript" src="script/jquery-3.3.1.js"></script>
-<script>
-    $(document).ready(function () {
-        // if clicked shows userinformation
-        $("#userinfo").on('click', function () {
-            let userinformation = $("#userinfodiv");
-            userinformation.removeClass('d-none');
-            // alert("check");
-        });
-        $("#dashboard").on('click', function () {
-            let userinformation = $("#userinfodiv");
-            userinformation.addClass('d-none');
-        });
-        // if clicked shows order table/list
-        $("#userorder").on('click', function () {
-            alert("Handler for .click() called.");
-        })
-    })
-</script>

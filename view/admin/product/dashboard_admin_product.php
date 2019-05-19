@@ -1,5 +1,5 @@
 <?php
-include_once('App/Autoloader.php');
+include_once('../../../App/Autoloader.php');
 $dataProduct = array();
 Autoloader::sessionStarter();
 if (empty($_SESSION['login']))
@@ -63,38 +63,48 @@ $dataProduct = $data->GetProduct();
                                     class="fas fa-chart-line fa-lg mr-2"></i>&nbspDashboard</a>
                     </li>
                     <li class="nav-item py-1" id="users">
-                        <a class="nav-link p-3 font-weight-bold" href="dashboard_client"><i
+                        <a class="nav-link p-3 font-weight-bold" href="dashboard_admin_client"><i
                                     class="fas fa-users fa-lg mr-2"></i>&nbspClient</a>
                     </li>
-                    <li class="nav-item py-1" id="vocabularies">
-                        <a class="nav-link p-3 font-weight-bold" href="dashboard_product"><i
-                                    class="fas fa-font fa-lg mr-2"></i>&nbspProduct</a>
+                    <li class="nav-item py-1
+                      id=" product
+                    ">
+                    <a class="nav-link p-3 font-weight-bold" href="dashboard_admin_product"><i
+                                class="fas fa-font fa-lg mr-2"></i>&nbspProduct</a>
                     </li>
-                    <li class="nav-item py-1 {{ Request::is('admin/tasks*') ? 'active' : null }}" id="tasks">
-                        <a class="nav-link p-3 font-weight-bold" href="{{ route('tasks.index') }}"><i
-                                    class="fas fa-question fa-lg mr-2"></i>&nbspCategory</a>
+                    <li class="nav-item py-1 id=" category
+                    ">
+                    <a class="nav-link p-3 font-weight-bold" href="dashboard_admin_category"><i
+                                class="fas fa-question fa-lg mr-2"></i>&nbspCategory</a>
                     </li>
-                    <li class="nav-item py-1 {{ Request::is('admin/lessons*') ? 'active' : null }}" id="lessons">
-                        <a class="nav-link p-3 font-weight-bold" href="{{ route('lessons.index') }}"><i
-                                    class="fas fa-briefcase fa-lg mr-2"></i>&nbspOrders</a>
+                    <li class="nav-item py-1 id=" orders
+                    ">
+                    <a class="nav-link p-3 font-weight-bold" href="dashboard_admin_orders"><i
+                                class="fas fa-briefcase fa-lg mr-2"></i>&nbspOrders</a>
                     </li>
-                    <li class="nav-item py-1 {{ Request::is('admin/lessons*') ? 'active' : null }}" id="lessons">
-                        <a class="nav-link p-3 font-weight-bold" href="{{ route('lessons.index') }}"><i
-                                    class="fas fa-briefcase fa-lg mr-2"></i>&nbspClient History</a>
+                    <li class="nav-item py-1 id=" client_history
+                    ">
+                    <a class="nav-link p-3 font-weight-bold" href="dashboard_admin_client_history"><i
+                                class="fas fa-briefcase fa-lg mr-2"></i>&nbspClient History</a>
                     </li>
-                    <li class="nav-item py-1 {{ Request::is('admin/categories*') ? 'active' : null }}"
-                        id="lessons-categories">
-                        <a class="nav-link p-3 font-weight-bold" href="{{ route('categories.index') }}"><i
-                                    class="fas fa-boxes fa-lg mr-2"></i>&nbspCo-workers</a>
+                    <li class="nav-item py-1 id=" co_workers
+                    ">
+                    <a class="nav-link p-3 font-weight-bold" href="dashboard_admin_coworkers"><i
+                                class="fas fa-boxes fa-lg mr-2"></i>&nbspCo-workers</a>
                     </li>
-                    <li class="nav-item py-1 {{ Request::is('admin/hotspotroutes*') ? 'active' : null }}"
-                        id="hotspotroutes">
-                        <a class="nav-link p-3 font-weight-bold" href="{{ route('hotspotroutes.index') }}"><i
-                                    class="fas fa-map-signs fa-lg mr-2"></i>&nbspQR codes/Coupons codes</a>
+                    <li class="nav-item py-1 id=" coupons
+                    ">
+                    <a class="nav-link p-3 font-weight-bold" href="dashboard_admin_coupons"><i
+                                class="fas fa-map-signs fa-lg mr-2"></i>&nbspQR codes/Coupons codes</a>
                     </li>
-                    <li class="nav-item py-1 {{ Request::is('admin/help*') ? 'active' : null }}">
-                        <a class="nav-link p-3 font-weight-bold" href="{{ route('help') }}"><i
-                                    class="fa fa-question-circle fa-lg mr-2"></i>&nbspHelp</a>
+                    <li class="nav-item py-1 id=" help
+                    ">
+                    <a class="nav-link p-3 font-weight-bold" href="dashboard_admin_help"><i
+                                class="fa fa-question-circle fa-lg mr-2"></i>&nbspHelp</a>
+                    </li>
+                    <li class="nav-item py-1 id=" sessionreader
+                    "> <a class="nav-link p-3 font-weight-bold" href="dashboard_admin_sessionreader"><i
+                                class="fa fa-question-circle fa-lg mr-2"></i>&nbspSession Reader</a>
                     </li>
                 </ul>
             </nav>

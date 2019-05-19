@@ -1,5 +1,4 @@
 <?php
-include_once("App/Autoloader.php");
 
 class User
 {
@@ -9,6 +8,24 @@ class User
     {
         include_once('DB.php');
         $this->db = new DB();
+    }
+
+    public static function LoginStatus()
+    {
+        if (isset($_SESSION['login']) && $_SESSION['login'] == true) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public static function AdminStatus()
+    {
+        if (isset($_SESSION['isAdmin']) && $_SESSION['isAdmin'] == true) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     public function Login($name, $pass)
@@ -49,24 +66,6 @@ class User
             $DBQuery = $this->db->Insert($SQL, $params);
         } else {
             echo "Please put login and password to register.";
-        }
-    }
-
-    public static function LoginStatus()
-    {
-        if (isset($_SESSION['login']) && $_SESSION['login'] == true) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    public static function AdminStatus()
-    {
-        if (isset($_SESSION['isAdmin']) && $_SESSION['isAdmin'] == true) {
-            return true;
-        } else {
-            return false;
         }
     }
 
@@ -124,16 +123,16 @@ class User
         if (count($DBQuery) >= 1) {
             $result = $DBQuery;
             return $result;
-        }else{
+        } else {
             return null;
         }
     }
 
-    public function deleteClient($ID){
+    public function deleteClient($ID)
+    {
         $params = array("ID" => $ID);
         $SQL = "DELETE FROM users WHERE name = :ID;";
         $DBQuery = $this->db->Delete($SQL, $params);
-        RedirectHandler::HTTP_301('dashboard_client');
         echo "Client has been DELETED!!!";
     }
 }
