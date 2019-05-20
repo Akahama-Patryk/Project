@@ -1,8 +1,4 @@
 RewriteEngine on
-#resource directories
-RewriteRule ^$ /style/ [L]
-RewriteRule ^$ /img/ [L]
-RewriteRule ^$ /script/ [L]
 #homepage
 RewriteRule ^home$ index.php [L]
 RewriteCond %{REQUEST_FILENAME} !-f
@@ -10,8 +6,6 @@ RewriteCond %{REQUEST_FILENAME} !-d
 
 #error 404 only
 RewriteRule ^e404$ /Projects2019/helden/Project/view/error/404.php [L]
-#homepage filter
-RewriteRule ^([a-zA-Z0-9]+)$ /Projects2019/helden/Project/index.php?module=$1 [QSA,L]
 #login and register
 RewriteRule ^login$ /Projects2019/helden/Project/view/user/login.php [L]
 RewriteRule ^register$ /Projects2019/helden/Project/view/user/register.php [L]
@@ -45,3 +39,5 @@ RewriteRule ^dashboard_admin_product_add$ /Projects2019/helden/Project/view/admi
 RewriteRule ^dashboard_admin_product_edit$ /Projects2019/helden/Project/view/admin/product/dashboard_admin_product_edit.php?ID=$1 [QSA,L]
 #admin dashboard sessionreader
 RewriteRule ^dashboard_admin_sessionreader$ /Projects2019/helden/Project/view/admin/sessionreader/dashboard_admin_sessionreader.php [L]
+#homepage filter
+RewriteRule ^([a-zA-Z0-9]+)$ /Projects2019/helden/Project/index.php?module=$1 [QSA,L]
