@@ -40,23 +40,6 @@ class Product
 
             $params = array(":filter" => $data);
             $SQL = "SELECT * FROM `product`,`category` where product.category_id = category.category_id AND category_name = :filter";
-            /*
-            $params = array();
-            $SQL = "";
-            $i = 1;
-            $var = "temp";
-            foreach ($filter_category as $category)
-            {
-                ${"{$var}{$i}"} = $var.$i;
-                $params[":".${"{$var}{$i}"}] = $category;
-                $SQL .= "SELECT * FROM `product`,`category` where product.category_id = category.category_id AND category_name = :{$var}{$i}";
-                if($i !== count($filter_category))
-                {
-                    $SQL .= " UNION ALL ";
-                }
-                $i++;
-            }
-            */
         } else {
             $params = null;
             $SQL = "SELECT * FROM `product`,`category` where product.category_id = category.category_id;";
@@ -78,5 +61,25 @@ class Product
         if (count($DBQuery) > 0)
             $result2 = $DBQuery;
         return $result2;
+    }
+    public function FetchCategory()
+    {
+        $params = null;
+        $SQL = "SELECT * FROM category ORDER BY category_id ASC;";
+        $DBQuery = $this->db->Select($SQL, $params);
+        $result = null;
+        if (count($DBQuery) > 0)
+            $result = $DBQuery;
+        return $result;
+    }
+    public function addCategory($category_id, $category_name){
+        if (!empty($category_id) && !empty($category_name)){
+            $params = array(":category_id" => $category_id, ":category_name" => $category_name);
+            $SQL = "INSERT INTO category (category_id, category_name) VALUES (:category_id, :category_name)";
+            $DBQuery = $this->db->Insert($SQL, $params);
+            RedirectHandler::HTTP_301('dashboard_admin_category');
+        }else{
+            echo "Fill form please";
+        }
     }
 }
