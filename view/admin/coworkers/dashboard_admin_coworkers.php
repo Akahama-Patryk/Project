@@ -19,7 +19,7 @@ $result = $dataClient->fetchUserData($checkadmin);
 ?>
 <html lang="nl">
 <head>
-    <title>Project Supermarkt --Dashboard Admin:Client--</title>
+    <title>Project Supermarkt --Dashboard Admin:Coworkers--</title>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -68,51 +68,51 @@ $result = $dataClient->fetchUserData($checkadmin);
                     </li>
                     <li class="nav-item py-1" id="dashboard">
                         <a class="nav-link p-3 font-weight-bold" href="dashboard_admin"><i
-                                class="fas fa-chart-line fa-lg mr-2"></i>&nbspDashboard</a>
+                                    class="fas fa-chart-line fa-lg mr-2"></i>&nbspDashboard</a>
                     </li>
                     <li class="nav-item py-1" id="users">
                         <a class="nav-link p-3 font-weight-bold" href="dashboard_admin_client"><i
-                                class="fas fa-users fa-lg mr-2"></i>&nbspClient</a>
+                                    class="fas fa-users fa-lg mr-2"></i>&nbspClient</a>
                     </li>
                     <li class="nav-item py-1
                       id=" product
                     ">
                     <a class="nav-link p-3 font-weight-bold" href="dashboard_admin_product"><i
-                            class="fas fa-font fa-lg mr-2"></i>&nbspProduct</a>
+                                class="fas fa-font fa-lg mr-2"></i>&nbspProduct</a>
                     </li>
                     <li class="nav-item py-1 id=" category
                     ">
                     <a class="nav-link p-3 font-weight-bold" href="dashboard_admin_category"><i
-                            class="fas fa-question fa-lg mr-2"></i>&nbspCategory</a>
+                                class="fas fa-question fa-lg mr-2"></i>&nbspCategory</a>
                     </li>
                     <li class="nav-item py-1 id=" orders
                     ">
                     <a class="nav-link p-3 font-weight-bold" href="dashboard_admin_orders"><i
-                            class="fas fa-briefcase fa-lg mr-2"></i>&nbspOrders</a>
+                                class="fas fa-briefcase fa-lg mr-2"></i>&nbspOrders</a>
                     </li>
                     <li class="nav-item py-1 id=" client_history
                     ">
                     <a class="nav-link p-3 font-weight-bold" href="dashboard_admin_client_history"><i
-                            class="fas fa-briefcase fa-lg mr-2"></i>&nbspClient History</a>
+                                class="fas fa-briefcase fa-lg mr-2"></i>&nbspClient History</a>
                     </li>
                     <li class="nav-item py-1 id=" co_workers
                     ">
                     <a class="nav-link p-3 font-weight-bold" href="dashboard_admin_coworkers"><i
-                            class="fas fa-boxes fa-lg mr-2"></i>&nbspCo-workers</a>
+                                class="fas fa-boxes fa-lg mr-2"></i>&nbspCo-workers</a>
                     </li>
                     <li class="nav-item py-1 id=" coupons
                     ">
                     <a class="nav-link p-3 font-weight-bold" href="dashboard_admin_coupons"><i
-                            class="fas fa-map-signs fa-lg mr-2"></i>&nbspQR codes/Coupons codes</a>
+                                class="fas fa-map-signs fa-lg mr-2"></i>&nbspQR codes/Coupons codes</a>
                     </li>
                     <li class="nav-item py-1 id=" help
                     ">
                     <a class="nav-link p-3 font-weight-bold" href="dashboard_admin_help"><i
-                            class="fa fa-question-circle fa-lg mr-2"></i>&nbspHelp</a>
+                                class="fa fa-question-circle fa-lg mr-2"></i>&nbspHelp</a>
                     </li>
                     <li class="nav-item py-1 id=" sessionreader
                     "> <a class="nav-link p-3 font-weight-bold" href="dashboard_admin_sessionreader"><i
-                            class="fa fa-question-circle fa-lg mr-2"></i>&nbspSession Reader</a>
+                                class="fa fa-question-circle fa-lg mr-2"></i>&nbspSession Reader</a>
                     </li>
                 </ul>
             </nav>
@@ -170,6 +170,8 @@ $result = $dataClient->fetchUserData($checkadmin);
                                     <?php endforeach; ?>
                             </table>
                         </form>
+                        <a href="dashboard_admin_coworkers_add" class="btn btn-primary align-items-md-end float-right"><i
+                                    class="fas fa-plus"></i> Add Coworker</a>
                     </div>
                 </main>
             </div>

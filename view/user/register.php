@@ -7,8 +7,9 @@ if (!empty($_SESSION['login']))
 if (isset($_POST['submit'])) {
     $name = $_POST['user'];
     $pass = $_POST['pass'];
+    $isAdmin = false;
     $object = new User();
-    $class = $object->register($name, $pass);
+    $class = $object->register($name, $pass, $isAdmin);
 }
 ?>
 <html>

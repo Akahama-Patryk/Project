@@ -57,15 +57,46 @@ class User
         }
     }
 
-    public function Register($name, $pass)
+    public function Register($name, $pass, $isAdmin = false)
     {
+        //TODO: check if user exist
         if (!empty($name) && !empty($pass)) {
             $pass = password_hash($pass, PASSWORD_BCRYPT);
-            $params = array(":login" => $name, ":pass" => $pass);
-            $SQL = "INSERT INTO users (name,pass,isAdmin)values (:login, :pass, '0');";
+            $params = array(":login" => $name, ":pass" => $pass, ":isAdmin" => $isAdmin);
+            $SQL = "INSERT INTO users (name,pass,isAdmin)values (:login, :pass, :isAdmin);";
             $DBQuery = $this->db->Insert($SQL, $params);
         } else {
             echo "Please put login and password to register.";
+        }
+    }
+
+    public function changePass($id, $pass, $newpass, $verifynewpass)
+    {
+        if (!empty($id) && !empty($pass) && !empty($newpass) && !empty($verifynewpass)) {
+            $params = array("id" => $id);
+            $SQL = "select * from users where `name` like :id;";
+            $DBQuery = $this->db->Select($SQL, $params);
+            if (count($DBQuery) === 1) {
+                foreach ($DBQuery as $row) {
+                    if (password_verify($pass, $row["pass"])) {
+                        if ($newpass === $verifynewpass) {
+                            $newpass = password_hash($newpass, PASSWORD_BCRYPT);
+                            $params = array("id" => $id, "newpass" => $newpass);
+                            $SQL = "Update users set pass = :newpass where name = :id";
+                            $DBQuery = $this->db->Update($SQL, $params);
+                            RedirectHandler::HTTP_301('dashboard_admin_coworkers');
+                        } else {
+                            echo "new password are not the same";
+                        }
+                    } else {
+                        echo "Wrong current password";
+                    }
+                }
+            } else {
+                echo "User doesnt exist";
+            }
+        } else {
+            echo "Please put old/new password in.";
         }
     }
 
