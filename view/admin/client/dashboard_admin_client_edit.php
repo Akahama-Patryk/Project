@@ -151,7 +151,7 @@ if (isset($_POST['submit'])) {
                                         <input type="text" class="form-control form-control-lg rounded-0"
                                                name="f_name"
                                                id="f_name" required
-                                               placeholder="<?= $data['first_name'] ?>">
+                                               value="<?= $data['first_name'] ?>">
                                         <div class="invalid-feedback">Oops, you missed this one.</div>
                                     </div>
                                     <h6>Mr/Mrs or other</h6>
@@ -175,7 +175,7 @@ if (isset($_POST['submit'])) {
                                         <input type="text" class="form-control form-control-lg rounded-0"
                                                name="surname"
                                                id="surname" required
-                                               placeholder="<?= $data['surname'] ?>">
+                                               value="<?= $data['surname'] ?>">
                                         <div class="invalid-feedback">Oops, you missed this one.</div>
                                     </div>
                                     <div class="form-group">
@@ -183,7 +183,7 @@ if (isset($_POST['submit'])) {
                                         <input type="email" class="form-control form-control-lg rounded-0"
                                                name="email"
                                                id="email" required
-                                               placeholder="<?= $data['email'] ?>">
+                                               value="<?= $data['email'] ?>">
                                         <div class="invalid-feedback">Oops, you missed this one.</div>
                                     </div>
                                     <div class="form-group">
@@ -191,7 +191,7 @@ if (isset($_POST['submit'])) {
                                         <input type="text" class="form-control form-control-lg rounded-0"
                                                name="address"
                                                id="address" required
-                                               placeholder="<?= $data['address'] ?>">
+                                               value="<?= $data['address'] ?>">
                                         <div class="invalid-feedback">Oops, you missed this one.</div>
                                     </div>
                                     <div class="form-group">
@@ -199,14 +199,14 @@ if (isset($_POST['submit'])) {
                                         <input type="text" class="form-control form-control-lg rounded-0"
                                                name="hr_nr"
                                                id="hr_nr" required
-                                               placeholder="<?= $data['house number'] ?>">
+                                               value="<?= $data['house number'] ?>">
                                         <div class="invalid-feedback">Oops, you missed this one.</div>
                                     </div>
                                     <div class="form-group">
                                         <label for="postcode">Postcode</label>
                                         <input type="text" class="form-control form-control-lg rounded-0"
                                                name="postcode" id="postcode" required
-                                               placeholder="<?= $data['postcode'] ?>">
+                                               value="<?= $data['postcode'] ?>">
                                         <div class="invalid-feedback">Oops, you missed this one.</div>
                                     </div>
                                     <div class="form-group">
@@ -227,7 +227,7 @@ if (isset($_POST['submit'])) {
                                             <input type="text" class="form-control form-control-lg rounded-0"
                                                    name="state"
                                                    id="state" required
-                                                   placeholder="<?= $data['state'] ?>">
+                                                   value="<?= $data['state'] ?>">
                                             <div class="invalid-feedback">Oops, you missed this one.</div>
                                         </div>
                                         <div class="form-group">
@@ -235,7 +235,7 @@ if (isset($_POST['submit'])) {
                                             <input type="text" class="form-control form-control-lg rounded-0"
                                                    name="m_nr"
                                                    id="m_nr" required
-                                                   placeholder="<?= $data['mobile number'] ?>">
+                                                   value="<?= $data['mobile number'] ?>">
                                             <div class="invalid-feedback">Oops, you missed this one.</div>
                                         </div>
                                         <button type="submit" name="submit"

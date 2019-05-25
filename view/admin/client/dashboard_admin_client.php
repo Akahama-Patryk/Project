@@ -10,11 +10,12 @@ if ($_SESSION['isAdmin'] == false) {
 //delete client
 if (isset($_GET['ID']) && !empty($_GET['ID'])) {
     $DeleteClient = new User();
-    $DeleteClient->deleteClient($_GET['ID']);
-    RedirectHandler::HTTP_301($_SERVER['SCRIPT_NAME']);
+    $DeleteClient->deleteUser($_GET['ID']);
+    RedirectHandler::HTTP_301('dashboard_admin_client');
 }
+$checkadmin = '0';
 $dataClient = new User();
-$result = $dataClient->fetchClientData();
+$result = $dataClient->fetchUserData($checkadmin);
 ?>
 <html lang="nl">
 <head>

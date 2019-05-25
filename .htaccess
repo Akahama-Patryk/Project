@@ -17,6 +17,7 @@ RewriteRule ^dashboard$ /Projects2019/helden/Project/view/user/dashboard.php [L]
 RewriteRule ^dashboard_admin$ /Projects2019/helden/Project/view/admin/dashboard_admin.php [L]
 #admin dashboard category
 RewriteRule ^dashboard_admin_category$ /Projects2019/helden/Project/view/admin/category/dashboard_admin_category.php [L]
+RewriteRule ^dashboard_admin_category_add$ /Projects2019/helden/Project/view/admin/category/dashboard_admin_category_add.php [L]
 #admin dashboard client
 RewriteRule ^dashboard_admin_client$ /Projects2019/helden/Project/view/admin/client/dashboard_admin_client.php [L]
 RewriteRule ^dashboard_admin_client_edit$ /Projects2019/helden/Project/view/admin/client/dashboard_admin_client_edit.php?ID=$1 [QSA,L]

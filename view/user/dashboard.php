@@ -34,11 +34,11 @@ if (isset($_POST['submit'])) {
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="icon" href="/img/logo.ico">
-    <link rel="stylesheet" type="text/css" href="/style/bootstrap.css">
-    <link rel="stylesheet" type="text/css" href="/style/admin.css">
+    <link rel="icon" href="img/logo.ico">
+    <link rel="stylesheet" type="text/css" href="style/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="style/admin.css">
 </head>
-<script type="text/javascript" src="/script/font-awesome/font-awesome.js"></script>
+<script type="text/javascript" src="script/font-awesome/font-awesome.js"></script>
 <body>
 <ul class="nav nav-pills nav-fill">
     <li class="nav-item">

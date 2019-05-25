@@ -2,7 +2,7 @@
 include_once "../../App/Autoloader.php";
 Autoloader::sessionStarter();
 if (!empty($_SESSION['login']))
-    RedirectHandler::HTTP_301($_SERVER['login.php']);
+    RedirectHandler::HTTP_301('login');
 
 if (isset($_POST['submit'])) {
     $name = $_POST['user'];
@@ -19,10 +19,10 @@ if (isset($_POST['submit'])) {
 <body>
 <ul class="nav nav-pills nav-fill">
     <li class="nav-item">
-        <a class="nav-link" href="../../index.php">Homepage</a>
+        <a class="nav-link" href="home">Homepage</a>
     </li>
     <li class="nav-item">
-        <a class="nav-link" href="login.php">Login page</a>
+        <a class="nav-link" href="login">Login page</a>
     </li>
     <li class="nav-item">
         <a class="nav-link" href="#">Contact Page</a>

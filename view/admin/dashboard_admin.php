@@ -103,7 +103,7 @@ $user = $_SESSION['login'];
                     </li>
                     <li class="nav-item py-1 id=" sessionreader
                     "> <a class="nav-link p-3 font-weight-bold" href="dashboard_admin_sessionreader"><i
-                                class="fa fa-question-circle fa-lg mr-2"></i>&nbspSession Reader</a>
+                                class="fas fa-database fa-lg mr-2"></i>&nbspSession Reader</a>
                     </li>
                 </ul>
             </nav>

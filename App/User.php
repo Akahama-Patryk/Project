@@ -114,10 +114,10 @@ class User
         }
     }
 
-    public function fetchClientData()
+    public function fetchUserData($checkadmin)
     {
-        $params = null;
-        $SQL = "SELECT * FROM users WHERE NOT isAdmin = '1';";
+        $params = array("isAdmin" => $checkadmin);
+        $SQL = "SELECT * FROM users WHERE isAdmin = :isAdmin;";
         $DBQuery = $this->db->Select($SQL, $params);
         $result = null;
         if (count($DBQuery) >= 1) {
@@ -128,11 +128,10 @@ class User
         }
     }
 
-    public function deleteClient($ID)
+    public function deleteUser($ID)
     {
         $params = array("ID" => $ID);
         $SQL = "DELETE FROM users WHERE name = :ID;";
         $DBQuery = $this->db->Delete($SQL, $params);
-        echo "Client has been DELETED!!!";
     }
 }
