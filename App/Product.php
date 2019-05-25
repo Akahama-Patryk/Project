@@ -62,6 +62,7 @@ class Product
             $result2 = $DBQuery;
         return $result2;
     }
+
     public function FetchCategory()
     {
         $params = null;
@@ -72,14 +73,34 @@ class Product
             $result = $DBQuery;
         return $result;
     }
-    public function addCategory($category_id, $category_name){
-        if (!empty($category_id) && !empty($category_name)){
+
+    public function addCategory($category_id, $category_name)
+    {
+        if (!empty($category_id) && !empty($category_name)) {
             $params = array(":category_id" => $category_id, ":category_name" => $category_name);
             $SQL = "INSERT INTO category (category_id, category_name) VALUES (:category_id, :category_name)";
             $DBQuery = $this->db->Insert($SQL, $params);
             RedirectHandler::HTTP_301('dashboard_admin_category');
-        }else{
+        } else {
             echo "Fill form please";
         }
+    }
+
+    public function addProduct($p_name, $p_quantity, $p_price, $p_category, $description, $uploadImage)
+    {
+        if (!empty($p_name) && !empty($p_quantity) && !empty($p_price) && !empty($p_category) && !empty($description) && !empty($uploadImage)) {
+            $params = array(":p_name" => $p_name, ":p_quantity" => $p_quantity, ":p_price" => $p_price, ":p_category" => $p_category, ":description" => $description, ":image" => $uploadImage);
+            $SQL = "INSERT INTO product (name, quantity, price, image, description, category_id, id_product) VALUES (:p_name, :p_quantity, :p_price, :image, :description, :p_category, (SELECT UUID()))";
+            $DBQuery = $this->db->Insert($SQL, $params);
+            RedirectHandler::HTTP_301('dashboard_admin_product');
+        } else {
+            echo "Please fill up the form!!!";
+        }
+    }
+    public function deleteProduct($ID)
+    {
+        $params = array("ID" => $ID);
+        $SQL = "DELETE FROM product WHERE id_product = :ID;";
+        $DBQuery = $this->db->Delete($SQL, $params);
     }
 }

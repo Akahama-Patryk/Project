@@ -103,7 +103,7 @@ $results2 = $products->GetCategory();
                 <div class="col-sm-6">
                     <div class="card" style="width: 18rem;">
                         <img class="img-thumbnail align-self-center" style="width:100px;height:100px;"
-                             src="<?= $record["image"] ?>" alt="Missing image data">
+                             src="img/<?= $record["image"] ?>" alt="Missing image data">
                         <div class="card-body">
                             <h5 class="card-title"><?= $record["name"] ?></h5>
                             <p class="card-text">

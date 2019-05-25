@@ -9,6 +9,11 @@ if ($_SESSION['isAdmin'] == false) {
 };
 $data = new Product();
 $dataProduct = $data->GetProduct();
+if (isset($_GET['ID']) && !empty($_GET['ID'])) {
+    $DeleteProduct = new Product();
+    $DeleteProduct->deleteProduct($_GET['ID']);
+    RedirectHandler::HTTP_301('dashboard_admin_product');
+}
 ?>
 <html>
 <head>
@@ -142,14 +147,13 @@ $dataProduct = $data->GetProduct();
                                             <td><?= $record['price'] ?></td>
                                             <td><img class="img-thumbnail align-self-center"
                                                      style="width:100px;height:100px;"
-                                                     src="<?= $record["image"] ?>" alt="Missing image data"></td>
+                                                     src="img/<?= $record["image"] ?>" alt="Missing image data"></td>
                                             <td><?= $record['description'] ?></td>
                                             <td><?= $record['category_name'] ?></td>
                                             <!--                                            TODO: EDIT PRODUCT plus ADD FOTO TO IMG FOLDER AND DATABASE LINK-->
                                             <td><a href="dashboard_product_edit?ID=<?= $record['id_product'] ?>">
                                                     UPDATE
                                                 </a></td>
-                                            <!--                                            TODO: DELETE PRODUCT-->
                                             <td><a href="?ID=<?= $record['id_product'] ?>">
                                                     DELETE
                                                 </a></td>
@@ -158,8 +162,7 @@ $dataProduct = $data->GetProduct();
                             </table>
                         </form>
                     </div>
-                    <!-- TODO: ADD PRODUCT   plus ADD FOTO TO IMG FOLDER AND DATABASE LINK                  -->
-                    <a href="dashboard_product_add" class="btn btn-primary align-items-md-end float-right"><i
+                    <a href="dashboard_admin_product_add" class="btn btn-primary align-items-md-end float-right"><i
                                 class="fas fa-plus"></i> Add Product</a>
                 </main>
             </div>
