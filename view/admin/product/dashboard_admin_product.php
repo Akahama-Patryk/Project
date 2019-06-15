@@ -150,8 +150,7 @@ if (isset($_GET['ID']) && !empty($_GET['ID'])) {
                                                      src="img/<?= $record["image"] ?>" alt="Missing image data"></td>
                                             <td><?= $record['description'] ?></td>
                                             <td><?= $record['category_name'] ?></td>
-                                            <!--                                            TODO: EDIT PRODUCT plus ADD FOTO TO IMG FOLDER AND DATABASE LINK-->
-                                            <td><a href="dashboard_product_edit?ID=<?= $record['id_product'] ?>">
+                                            <td><a href="dashboard_admin_product_edit?ID=<?= $record['id_product'] ?>">
                                                     UPDATE
                                                 </a></td>
                                             <td><a href="?ID=<?= $record['id_product'] ?>">

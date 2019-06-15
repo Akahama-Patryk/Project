@@ -10,7 +10,7 @@ class Product
         $this->db = new DB();
     }
 
-    public function GetProduct($data = null, $filter_flag = false)
+    public function GetProduct($data = null, $filter_flag = false, $id_product = null)
     {
         $search_product = null;
         $filter_category = null;
@@ -37,12 +37,20 @@ class Product
             }
         }
         if ($filter_category !== null) {
-
             $params = array(":filter" => $data);
             $SQL = "SELECT * FROM `product`,`category` where product.category_id = category.category_id AND category_name = :filter";
         } else {
             $params = null;
             $SQL = "SELECT * FROM `product`,`category` where product.category_id = category.category_id;";
+        }
+        if ($id_product !== null) {
+            $params = array("id_product" => $id_product);
+            $SQL = "SELECT * FROM `product`,`category` where product.category_id = category.category_id and product.id_product = :id_product;";
+            $DBQuery = $this->db->Select($SQL, $params);
+            $result = null;
+            if (count($DBQuery) > 0)
+                $result = $DBQuery;
+            return $result;
         }
         $DBQuery = $this->db->Select($SQL, $params);
         $result = null;
@@ -97,6 +105,18 @@ class Product
             echo "Please fill up the form!!!";
         }
     }
+    public function updateProduct($p_id,$p_name, $p_quantity, $p_price, $p_category, $description, $uploadImage)
+    {
+        if (!empty($p_id) && !empty($p_name) && !empty($p_quantity) && !empty($p_price) && !empty($p_category) && !empty($description) && !empty($uploadImage)) {
+            $params = array("p_id" => $p_id, ":p_name" => $p_name, ":p_quantity" => $p_quantity, ":p_price" => $p_price, ":p_category" => $p_category, ":description" => $description, ":image" => $uploadImage);
+            $SQL = "Update product set name = :p_name, quantity = :p_quantity, price = :p_price, category_id = :p_category, description = :description, image = :image where id_product = :p_id;";
+            $DBQuery = $this->db->Update($SQL, $params);
+            RedirectHandler::HTTP_301('dashboard_admin_product');
+        } else {
+            echo "Please fill up the form!!!";
+        }
+    }
+
     public function deleteProduct($ID)
     {
         $params = array("ID" => $ID);

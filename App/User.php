@@ -114,7 +114,7 @@ class User
                         } else {
                             echo "Wrong current password";
                         }
-                    }else{
+                    } else {
                         echo "ERROR: incorrect data of user";
 //                        RedirectHandler::HTTP_301("e505");
                     }
