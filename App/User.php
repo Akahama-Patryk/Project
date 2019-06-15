@@ -86,18 +86,37 @@ class User
             $DBQuery = $this->db->Select($SQL, $params);
             if (count($DBQuery) === 1) {
                 foreach ($DBQuery as $row) {
-                    if (password_verify($pass, $row["pass"])) {
-                        if ($newpass === $verifynewpass) {
-                            $newpass = password_hash($newpass, PASSWORD_BCRYPT);
-                            $params = array("id" => $id, "newpass" => $newpass);
-                            $SQL = "Update users set pass = :newpass where name = :id";
-                            $DBQuery = $this->db->Update($SQL, $params);
-                            RedirectHandler::HTTP_301('dashboard_admin_coworkers');
+                    if ($row['isAdmin'] === '1') {
+                        if (password_verify($pass, $row["pass"])) {
+                            if ($newpass === $verifynewpass) {
+                                $newpass = password_hash($newpass, PASSWORD_BCRYPT);
+                                $params = array("id" => $id, "newpass" => $newpass);
+                                $SQL = "Update users set pass = :newpass where name = :id";
+                                $DBQuery = $this->db->Update($SQL, $params);
+                                RedirectHandler::HTTP_301('dashboard_admin_coworkers');
+                            } else {
+                                echo "new password are not the same";
+                            }
                         } else {
-                            echo "new password are not the same";
+                            echo "Wrong current password";
                         }
-                    } else {
-                        echo "Wrong current password";
+                    } elseif ($row['isAdmin'] === '0') {
+                        if (password_verify($pass, $row["pass"])) {
+                            if ($newpass === $verifynewpass) {
+                                $newpass = password_hash($newpass, PASSWORD_BCRYPT);
+                                $params = array("id" => $id, "newpass" => $newpass);
+                                $SQL = "Update users set pass = :newpass where name = :id";
+                                $DBQuery = $this->db->Update($SQL, $params);
+                                RedirectHandler::HTTP_301('dashboard_admin_client');
+                            } else {
+                                echo "new password are not the same";
+                            }
+                        } else {
+                            echo "Wrong current password";
+                        }
+                    }else{
+                        echo "ERROR: incorrect data of user";
+//                        RedirectHandler::HTTP_301("e505");
                     }
                 }
             } else {

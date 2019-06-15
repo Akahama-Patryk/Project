@@ -1,25 +1,23 @@
 <?php
 include_once('../../../App/Autoloader.php');
-$result = array();
 Autoloader::sessionStarter();
 if (empty($_SESSION['login']))
     RedirectHandler::HTTP_301('login');
 if ($_SESSION['isAdmin'] == false) {
     RedirectHandler::HTTP_301('dashboard');
 };
-//delete client
-if (isset($_GET['ID']) && !empty($_GET['ID'])) {
-    $DeleteClient = new User();
-    $DeleteClient->deleteUser($_GET['ID']);
-    RedirectHandler::HTTP_301('dashboard_admin_client');
+if (isset($_POST['submit']) && isset($_GET['ID']) && !empty($_GET['ID'])) {
+    $id = $_GET['ID'];
+    $pass = $_POST['pass'];
+    $newpass = $_POST['newpass'];
+    $verifynewpass = $_POST['verifynewpass'];
+    $dataUser = new User();
+    $send = $dataUser->changePass($id, $pass, $newpass, $verifynewpass);
 }
-$checkadmin = '0';
-$dataClient = new User();
-$result = $dataClient->fetchUserData($checkadmin);
 ?>
 <html lang="nl">
 <head>
-    <title>Project Supermarkt --Dashboard Admin:Client--</title>
+    <title>Project Supermarkt --Dashboard Admin:Coworkers--</title>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -125,55 +123,41 @@ $result = $dataClient->fetchUserData($checkadmin);
                     </div>
                 </div>
                 <main class="px-3 mt-3">
-                    <div class='col-md-12'>
-                        <form method="get">
-                            <table class='table'>
-                                <thead class='thead-dark'>
-                                <tr>
-                                    <th scope='col'>Username</th>
-                                    <th scope='col'>Honorifics</th>
-                                    <th scope='col'>First Name</th>
-                                    <th scope='col'>Surname</th>
-                                    <th scope='col'>Address</th>
-                                    <th scope='col'>House Number</th>
-                                    <th scope='col'>Postcode</th>
-                                    <th scope='col'>Land</th>
-                                    <th scope='col'>State</th>
-                                    <th scope='col'>Mobile Number</th>
-                                    <th scope='col'>E-mail</th>
-                                    <th scope='col'>Update</th>
-                                    <th scope='col'>Update password</th>
-                                    <th scope='col'>Delete</th>
-                                </tr>
-                                <tbody>
-                                <?php
-                                if ($result !== null)
-                                    foreach ($result as $row) : ?>
-                                        <tr>
-                                            <td><?= $row['name'] ?></td>
-                                            <td><?= $row['honorifics'] ?></td>
-                                            <td><?= $row['first_name'] ?></td>
-                                            <td><?= $row['surname'] ?></td>
-                                            <td><?= $row['address'] ?></td>
-                                            <td><?= $row['house number'] ?></td>
-                                            <td><?= $row['postcode'] ?></td>
-                                            <td><?= $row['land'] ?></td>
-                                            <td><?= $row['state'] ?></td>
-                                            <td><?= $row['mobile number'] ?></td>
-                                            <td><?= $row['email'] ?></td>
-                                            <td><a href="dashboard_admin_client_edit?ID=<?= $row['name'] ?>">
-                                                    UPDATE
-                                                </a></td>
-                                            <td><a href="dashboard_admin_client_editpass?ID=<?= $row['name'] ?>">
-                                                    UPDATE PASS
-                                                </a></td>
-                                            <td><a href="?ID=<?= $row['name'] ?>">
-                                                    DELETE
-                                                </a></td>
-                                        </tr>
-                                    <?php endforeach; ?>
-                            </table>
-                        </form>
+                    <div class="card rounded-0">
+                        <div class="card-header">
+                            <h3 class="mb-0">Change Password Coworker</h3>
+                        </div>
+                        <div class="card-body">
+                            <form class="form" role="form" autocomplete="off" id="formLogin" novalidate=""
+                                  method="POST">
+                                <div class="form-group">
+                                    <label for="pass">Current Password</label>
+                                    <input type="password" class="form-control form-control-lg rounded-0" name="pass"
+                                           id="pass"
+                                           placeholder="Type your current password." required>
+                                    <div class="invalid-feedback">Oops, you missed this one.</div>
+                                </div>
+                                <div class="form-group">
+                                    <label>New Password</label>
+                                    <input type="password" class="form-control form-control-lg rounded-0" id="newpass"
+                                           name="newpass"
+                                           autocomplete="new-password" placeholder="Type your newpassword." required>
+                                    <div class="invalid-feedback">Enter your password too!</div>
+                                </div>
+                                <div class="form-group">
+                                    <label>New Password</label>
+                                    <input type="password" class="form-control form-control-lg rounded-0"
+                                           id="verifynewpass"
+                                           name="verifynewpass"
+                                           autocomplete="new-password" placeholder="Type your new password again."
+                                           required>
+                                    <div class="invalid-feedback">Enter your password too!</div>
+                                </div>
+                                <button type="submit" name="submit" class="btn btn-success btn-lg float-right"
+                                        id="btnLogin">Change password
+                                </button>
+                            </form>
+                        </div>
                     </div>
                 </main>
             </div>

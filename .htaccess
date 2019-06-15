@@ -21,6 +21,7 @@ RewriteRule ^dashboard_admin_category_add$ /Projects2019/helden/Project/view/adm
 #admin dashboard client
 RewriteRule ^dashboard_admin_client$ /Projects2019/helden/Project/view/admin/client/dashboard_admin_client.php [L]
 RewriteRule ^dashboard_admin_client_edit$ /Projects2019/helden/Project/view/admin/client/dashboard_admin_client_edit.php?ID=$1 [QSA,L]
+RewriteRule ^dashboard_admin_client_editpass$ /Projects2019/helden/Project/view/admin/client/dashboard_admin_client_editpass.php?ID=$1 [QSA,L]
 #admin dashboard client history (SESSION crap)
 RewriteRule ^dashboard_admin_client_history$ /Projects2019/helden/Project/view/admin/client_history/dashboard_admin_client_history.php [L]
 #admin dashboard QR/coupons codes
