@@ -61,10 +61,18 @@ class User
     {
         //TODO: check if user exist
         if (!empty($name) && !empty($pass)) {
-            $pass = password_hash($pass, PASSWORD_BCRYPT);
-            $params = array(":login" => $name, ":pass" => $pass, ":isAdmin" => $isAdmin);
-            $SQL = "INSERT INTO users (name,pass,isAdmin)values (:login, :pass, :isAdmin);";
-            $DBQuery = $this->db->Insert($SQL, $params);
+            $params = array(":login" => $name);
+            $SQL = "SELECT * FROM users where name = :login";
+            $DBQuery = $this->db->Select($SQL, $params);
+            if (count($DBQuery) === 0) {
+                $pass = password_hash($pass, PASSWORD_BCRYPT);
+                $params = array(":login" => $name, ":pass" => $pass, ":isAdmin" => $isAdmin);
+                $SQL = "INSERT INTO users (name,pass,isAdmin)values (:login, :pass, :isAdmin);";
+                $DBQuery = $this->db->Insert($SQL, $params);
+                RedirectHandler::HTTP_301('home');
+            } else {
+                echo "This user exist!!! Check your username or choose another";
+            }
         } else {
             echo "Please put login and password to register.";
         }
