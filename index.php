@@ -6,18 +6,18 @@ $results2 = array();
 $items = new ShoppingCart();
 $products = new Product();
 // Add product.
-if (isset($_POST['product_id']) && isset($_POST['product_name']) && isset($_POST['product_price']) && isset($_POST['user_quantity'])) {
-    ShoppingCart::addToCart($_POST['product_id'], $_POST['product_name'], $_POST['product_price'], $_POST['user_quantity']);
+if (isset($_POST['product_id']) && isset($_POST['product_desc']) && isset($_POST['product_img']) && isset($_POST['product_name']) && isset($_POST['product_price']) && isset($_POST['user_quantity'])) {
+    ShoppingCart::addToCart($_POST['product_id'], $_POST['product_desc'],$_POST['product_img'],$_POST['product_name'], $_POST['product_price'], $_POST['user_quantity']);
 }
 // Remove product.
 if (isset($_GET['RemoveProduct'])) {
     ShoppingCart::deleteCartProduct($_GET['RemoveProduct']);
-    RedirectHandler::HTTP_301($_SERVER['SCRIPT_NAME']);
+    RedirectHandler::HTTP_301('home');
 }
 // Empty cart.
 if (isset($_GET['EmptyCart'])) {
     ShoppingCart::emptyCart();
-    RedirectHandler::HTTP_301($_SERVER['SCRIPT_NAME']);
+    RedirectHandler::HTTP_301('home');
 }
 // Update quantity
 if (isset($_POST['new_user_quantity']) && ($_POST['id_for_new_qty'])) {
@@ -118,6 +118,10 @@ $results2 = $products->GetCategory();
                                        value="<?= $record["id_product"] ?>">
                                 <input type="hidden" class="product_name" name="product_name"
                                        value="<?= $record["name"] ?>">
+                                <input type="hidden" class="product_description" name="product_desc"
+                                       value="<?= $record["description"] ?>">
+                                <input type="hidden" class="product_img" name="product_img"
+                                       value="<?= $record["image"] ?>">
                                 <input type="hidden" class="product_price" name="product_price"
                                        value="<?= $record["price"] ?>">
                                 <input class="form-control product_quantity" type="number" min="1"

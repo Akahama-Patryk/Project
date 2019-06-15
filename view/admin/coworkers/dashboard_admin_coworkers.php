@@ -160,10 +160,10 @@ $result = $dataClient->fetchUserData($checkadmin);
                                             <td><?= $row['state'] ?></td>
                                             <td><?= $row['mobile number'] ?></td>
                                             <td><?= $row['email'] ?></td>
-                                            <td><a href="dashboard_admin_coworkers_edit?ID=<?= $row['name'] ?>">
+                                            <td><a href="dashboard_admin_coworkers_edit?ID=<?= $row['user_id'] ?>">
                                                     UPDATE
                                                 </a></td>
-                                            <td><a href="?ID=<?= $row['name'] ?>">
+                                            <td><a href="?ID=<?= $row['user_id'] ?>">
                                                     DELETE
                                                 </a></td>
                                         </tr>

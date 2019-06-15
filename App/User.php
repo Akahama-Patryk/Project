@@ -32,7 +32,7 @@ class User
     {
         if (!empty($name) && !empty($pass)) {
             $params = array(":login" => $name);
-            $SQL = "select * from users where `name` like :login;";
+            $SQL = "select * from user where `name` like :login;";
             $DBQuery = $this->db->Select($SQL, $params);
             if (count($DBQuery) === 1) {
                 foreach ($DBQuery as $row) {
@@ -59,15 +59,14 @@ class User
 
     public function Register($name, $pass, $isAdmin = false)
     {
-        //TODO: check if user exist
         if (!empty($name) && !empty($pass)) {
             $params = array(":login" => $name);
-            $SQL = "SELECT * FROM users where name = :login";
+            $SQL = "SELECT * FROM user where name = :login";
             $DBQuery = $this->db->Select($SQL, $params);
             if (count($DBQuery) === 0) {
                 $pass = password_hash($pass, PASSWORD_BCRYPT);
                 $params = array(":login" => $name, ":pass" => $pass, ":isAdmin" => $isAdmin);
-                $SQL = "INSERT INTO users (name,pass,isAdmin)values (:login, :pass, :isAdmin);";
+                $SQL = "INSERT INTO user (user_id,name,pass,isAdmin)values ((SELECT UUID()),:login, :pass, :isAdmin);";
                 $DBQuery = $this->db->Insert($SQL, $params);
                 RedirectHandler::HTTP_301('home');
             } else {
@@ -82,7 +81,7 @@ class User
     {
         if (!empty($id) && !empty($pass) && !empty($newpass) && !empty($verifynewpass)) {
             $params = array("id" => $id);
-            $SQL = "select * from users where `name` like :id;";
+            $SQL = "select * from user where `user_id` like :id;";
             $DBQuery = $this->db->Select($SQL, $params);
             if (count($DBQuery) === 1) {
                 foreach ($DBQuery as $row) {
@@ -91,7 +90,7 @@ class User
                             if ($newpass === $verifynewpass) {
                                 $newpass = password_hash($newpass, PASSWORD_BCRYPT);
                                 $params = array("id" => $id, "newpass" => $newpass);
-                                $SQL = "Update users set pass = :newpass where name = :id";
+                                $SQL = "Update user set pass = :newpass where user_id = :id";
                                 $DBQuery = $this->db->Update($SQL, $params);
                                 RedirectHandler::HTTP_301('dashboard_admin_coworkers');
                             } else {
@@ -105,7 +104,7 @@ class User
                             if ($newpass === $verifynewpass) {
                                 $newpass = password_hash($newpass, PASSWORD_BCRYPT);
                                 $params = array("id" => $id, "newpass" => $newpass);
-                                $SQL = "Update users set pass = :newpass where name = :id";
+                                $SQL = "Update user set pass = :newpass where user_id = :id";
                                 $DBQuery = $this->db->Update($SQL, $params);
                                 RedirectHandler::HTTP_301('dashboard_admin_client');
                             } else {
@@ -131,7 +130,7 @@ class User
     {
         if (!empty($user)) {
             $params = array(":user" => $user);
-            $SQL = "SELECT * FROM users where `name` like :user;";
+            $SQL = "SELECT * FROM user where `name` like :user;";
             $DBQuery = $this->db->Select($SQL, $params);
             $userData = null;
             if (count($DBQuery) === 1) {
@@ -149,10 +148,41 @@ class User
             !empty($hr_nr) && !empty($postcode) && !empty($land) && !empty($state) && !empty($m_nr)) {
             $params = array(":user" => $user, ":f_name" => $f_name, ":honorifics" => $honorifics, ":surname" => $surname, ":email" => $email, ":address" => $address,
                 "hr_nr" => $hr_nr, "postcode" => $postcode, "land" => $land, "state" => $state, "m_nr" => $m_nr);
-            $SQL = "Update users set first_name = :f_name, honorifics = :honorifics, surname = :surname, email = :email, address = :address, 
+            $SQL = "Update user set first_name = :f_name, honorifics = :honorifics, surname = :surname, email = :email, address = :address, 
                  `house number` = :hr_nr, postcode = :postcode, land = :land, state = :state, `mobile number` = :m_nr where name = :user;";
             $DBQuery = $this->db->Update($SQL, $params);
             RedirectHandler::HTTP_301('dashboard');
+        } else {
+            echo "Error";
+        }
+    }
+
+    public function fetchClientInformation($user)
+    {
+        if (!empty($user)) {
+            $params = array(":user" => $user);
+            $SQL = "SELECT * FROM user where `user_id` like :user;";
+            $DBQuery = $this->db->Select($SQL, $params);
+            $userData = null;
+            if (count($DBQuery) === 1) {
+                $userData = $DBQuery;
+                return $userData;
+            }
+        } else {
+            echo "Data non-existent";
+        }
+    }
+
+    public function updateClientInformation($user, $f_name, $honorifics, $surname, $email, $address, $hr_nr, $postcode, $land, $state, $m_nr)
+    {
+        if (!empty($user) && !empty($f_name) && !empty($honorifics) && !empty($surname) && !empty($email) && !empty($address) &&
+            !empty($hr_nr) && !empty($postcode) && !empty($land) && !empty($state) && !empty($m_nr)) {
+            $params = array(":user" => $user, ":f_name" => $f_name, ":honorifics" => $honorifics, ":surname" => $surname, ":email" => $email, ":address" => $address,
+                "hr_nr" => $hr_nr, "postcode" => $postcode, "land" => $land, "state" => $state, "m_nr" => $m_nr);
+            $SQL = "Update user set first_name = :f_name, honorifics = :honorifics, surname = :surname, email = :email, address = :address, 
+                 `house number` = :hr_nr, postcode = :postcode, land = :land, state = :state, `mobile number` = :m_nr where user_id = :user;";
+            $DBQuery = $this->db->Update($SQL, $params);
+            RedirectHandler::HTTP_301('dashboard_admin_client');
         } else {
             echo "Error";
         }
@@ -175,7 +205,7 @@ class User
     public function fetchUserData($checkadmin)
     {
         $params = array("isAdmin" => $checkadmin);
-        $SQL = "SELECT * FROM users WHERE isAdmin = :isAdmin;";
+        $SQL = "SELECT * FROM user WHERE isAdmin = :isAdmin;";
         $DBQuery = $this->db->Select($SQL, $params);
         $result = null;
         if (count($DBQuery) >= 1) {
@@ -189,7 +219,7 @@ class User
     public function deleteUser($ID)
     {
         $params = array("ID" => $ID);
-        $SQL = "DELETE FROM users WHERE name = :ID;";
+        $SQL = "DELETE FROM user WHERE user_id = :ID;";
         $DBQuery = $this->db->Delete($SQL, $params);
     }
 }

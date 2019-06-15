@@ -12,7 +12,7 @@ if ($_SESSION['isAdmin'] == false) {
 // fetch client data
 if (isset($_GET['ID']) && !empty($_GET['ID'])) {
     $FetchUser = new User();
-    $ReadUpdate = $FetchUser->fetchUserInformation($_GET['ID']);
+    $ReadUpdate = $FetchUser->fetchClientInformation($_GET['ID']);
 }
 //fetch land data
 $data = new User();
@@ -30,7 +30,7 @@ if (isset($_POST['submit'])) {
     $m_nr = $_POST['m_nr'];
 
     $object = new User();
-    $object->updateUserInformation($_GET['ID'], $f_name, $honorifics, $surname, $email, $address, $hr_nr, $postcode, $land, $state, $m_nr);
+    $object->updateClientInformation($_GET['ID'], $f_name, $honorifics, $surname, $email, $address, $hr_nr, $postcode, $land, $state, $m_nr);
 }
 ?>
 <html>

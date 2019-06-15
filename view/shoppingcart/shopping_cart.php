@@ -3,18 +3,15 @@ include_once("../../App/Autoloader.php");
 Autoloader::sessionStarter();
 if (isset($_GET['RemoveProduct'])) {
     ShoppingCart::deleteCartProduct($_GET['RemoveProduct']);
-    RedirectHandler::HTTP_301($_SERVER['SCRIPT_NAME']);
+    RedirectHandler::HTTP_301('shoppingcart');
 }
 // Empty cart.
 if (isset($_GET['EmptyCart'])) {
     ShoppingCart::emptyCart();
-    RedirectHandler::HTTP_301($_SERVER['SCRIPT_NAME']);
+    RedirectHandler::HTTP_301('shoppingcart');
 }
 if (isset($_POST['new_user_quantity']) && ($_POST['id_for_new_qty'])) {
     ShoppingCart::updateCartProduct($_POST['id_for_new_qty'], $_POST['new_user_quantity']);
-}
-if (isset($_POST['option']) && (!empty($_POST['option']))){
-    setcookie('cookie_option', $_POST['option'], time() + (86400 * 30), "/");
 }
 ?>
 <html>
@@ -51,22 +48,13 @@ if (isset($_SESSION['cart_inventory'])) {
     echo "Shopping Cart is empty. Please full it up!";
 }
 ?>
-<!--//To diffrent page send-->
-<h6>Producten afhalen of bezorgen</h6>
-<form method="post">
-    <div class="form-check form-check-inline">
-        <input class="form-check-input" type="checkbox" name="option"
-               id="inlineCheckbox1" value="pickup">
-        <label class="form-check-label" for="inlineCheckbox1">Producten Afhalen</label>
-    </div>
-    <div class="form-check form-check-inline">
-        <input class="form-check-input" type="checkbox" name="option"
-               id="inlineCheckbox2" value="deliver">
-        <label class="form-check-label" for="inlineCheckbox2">Producten Bezorgen</label>
-    </div>
-    <button type="submit" name="submit" class="btn btn-success btn-lg float-right">Next
-    </button>
-</form>
+<?php
+if (!empty($_SESSION['cart_inventory'])) {
+    echo "<a class='btn btn-primary float-right' href='orderingpage'>Continue with order</a>";
+} else {
+    echo "<a class='btn btn-primary float-right' href='home'>Continue with shopping</a>";
+}
+?>
 <script type="text/javascript" src="script/font-awesome/font-awesome.js"></script>
 </body>
 </html>
