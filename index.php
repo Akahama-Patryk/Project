@@ -97,7 +97,9 @@ $results2 = $products->GetCategory();
 <div class="container">
     <div class="row">
         <?php
-        if ($results !== null)
+        if ($results == null) {
+            echo "There is no such product in our store. Please check your criteria or search for different product";
+        } else
             foreach ($results as $record) :
                 ?>
                 <div class="col-sm-6">
