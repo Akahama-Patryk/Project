@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.8.5
+-- version 4.8.3
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Gegenereerd op: 05 mei 2019 om 21:44
--- Serverversie: 10.1.38-MariaDB
--- PHP-versie: 7.3.3
+-- Gegenereerd op: 15 jun 2019 om 09:25
+-- Serverversie: 10.1.37-MariaDB
+-- PHP-versie: 7.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -38,7 +38,7 @@ CREATE TABLE `category` (
 --
 
 INSERT INTO `category` (`category_id`, `category_name`) VALUES
-(RedirectHandlerD', 'Bakkerij'),
+('D', 'Bakkerij'),
 ('O', 'Bewuste voeding'),
 ('I', 'Bier, sterke drank, apertieven'),
 ('M', 'Diepvries'),
@@ -54,6 +54,7 @@ INSERT INTO `category` (`category_id`, `category_name`) VALUES
 ('E', 'Verse kant-en-klaar maaltijden, salades'),
 ('B', 'Vlees, kip, vis'),
 ('H', 'Wijn'),
+('X', 'Xenio'),
 ('C', 'Zuivel, eieren');
 
 -- --------------------------------------------------------
@@ -292,9 +293,9 @@ CREATE TABLE `product` (
   `quantity` int(225) NOT NULL,
   `price` decimal(10,2) NOT NULL,
   `image` varchar(181) NOT NULL,
-  `description` varchar(181) DEFAULT NULL,
+  `description` varchar(255) DEFAULT NULL,
   `category_id` varchar(1) DEFAULT NULL,
-  `id_product` int(10) NOT NULL
+  `id_product` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -302,13 +303,14 @@ CREATE TABLE `product` (
 --
 
 INSERT INTO `product` (`name`, `quantity`, `price`, `image`, `description`, `category_id`, `id_product`) VALUES
-('Pepsi', 30, '2.05', 'img/cola.jpg', 'Pepsi 2L cola.', 'F', 1),
-('Coca Cola', 12, '0.25', 'img/cola2.jpg', 'Coca Cola 2L cola', 'F', 2),
-('product 3', 6, '13.50', 'img/chocola.jpg', 'Product 2 omschrijving', 'L', 3),
-('product 4', 160, '0.60', 'img/chips.jpg', 'Product 2 omschrijving', 'L', 4),
-('product 5', 74, '1.50', 'img/ijs.png', 'Product 2 omschrijving', 'L', 5),
-('product 6', 500, '5.00', 'img/vlees.jpg', 'Product 2 omschrijving', 'B', 6),
-('Red Apple', 65, '0.25', 'img/appel.jpg', 'Red apple', 'A', 7);
+('Pepsi', 30, '2.05', 'cola.jpg', 'Pepsi 2L cola.', 'F', '1'),
+('Coca Cola', 12, '0.25', 'cola2.jpg', 'Coca Cola 2L cola', 'F', '2'),
+('product 3', 6, '13.50', 'chocola.jpg', 'Product 2 omschrijving', 'L', '3'),
+('product 4', 160, '0.60', 'chips.jpg', 'Product 2 omschrijving', 'L', '4'),
+('product 5', 74, '1.50', 'ijs.png', 'Product 2 omschrijving', 'L', '5'),
+('product 6', 500, '5.00', 'vlees.jpg', 'Product 2 omschrijving', 'B', '6'),
+('Iglo Vissticks', 245, '2.69', '4b9aee37478ca97de4d0f6a344469704.jpg', 'Iglo Vissticks zijn vernieuwd. De vertrouwde iglo kwaliteit, maar met een nog krokanter jasje uit de oven. Onweerstaanbaar lekker en voedzaam, lege borden verzekerd.', 'B', '616cddba-7f2a-11e9-b49e-8c1645254d96'),
+('Red Apple', 65, '0.25', 'appel.jpg', 'Red apple', 'A', '7');
 
 -- --------------------------------------------------------
 
@@ -351,7 +353,10 @@ CREATE TABLE `users` (
 
 INSERT INTO `users` (`name`, `pass`, `isAdmin`, `honorifics`, `surname`, `address`, `house number`, `postcode`, `land`, `state`, `mobile number`, `first_name`, `email`) VALUES
 ('admin123', '$2y$10$F27zTDF5n.aPs4s9MOnv..jxYNUaPeSKHhp3FA1T5qXM6m99Z2EvW', 1, 'Mr', 'Admin', 'admin', '666', '6666 AD', 'Admin', 'Admin', 642839394, 'Admin', 'admin@mail.com'),
+('adminpass', '$2y$10$EvNg99cvboWoye.e9kDvE.nW8sDZ7lAsKETqlL0pRwnP95/cS/DE2', 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
 ('user', '$2y$10$uLt49W/LFxyAKLyO.AftXe3ER6.H6lXQafVkASKnmUkfmGFslSfe2', 0, 'Mr', 'Orlowski', 'Jonckbloetplein 32', '69', '2523AS', 'Netherland', 'Hague', 31232134, 'Patryk', 'mijnemail@gmail.com'),
+('username301', '$2y$10$BOWGV9bGWHJHq4pDs.IX7.zea.FEjPpKZjxO.aZrquTNh4VBD5riW', 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+('userthatisfalse', '$2y$10$YzAgBftJcOFMr/cWTk84EekOUAqFOVvvN89jnV/Ub4miOgw0/4aJ2', 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
 ('user_name', '$2y$10$tz06MGSw1KFqy1bZLoSymuE1395QZNp5b8ObWRvwkiVrSpxbIxAQ6', 0, 'Mr', 'Orlowski', 'Jonckbloetplein', '32', '2523AS', 'England', 'DEN HAAG', 649981444, 'Patryk', 'orel971111@gmail.com');
 
 --
