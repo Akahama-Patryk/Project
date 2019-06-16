@@ -13,10 +13,17 @@ class ShoppingCart
     public static function cartInventory()
     {
         //Total price to pay
+        $subtotaldata = null;
+        $deliverprice = 4.65;
+        if (isset($_SESSION['valid_code']) && $_SESSION['valid_code'] !== false) {
+            $deliverprice = 0;
+        }
         $totaldata = null;
         foreach ($_SESSION['cart_inventory'] as $item) {
             $productmultiplier = $item['p_price'] * $item['p_qty'];
-            $totaldata += $productmultiplier;
+            $subtotaldata += $productmultiplier;
+            $totaldata = $deliverprice + $subtotaldata / 100 * 121;
+            $_SESSION['payment_data'] = array('subtotal' => number_format($subtotaldata, 2), 'deliverprice' => number_format($deliverprice, 2), 'totalprice' => number_format($totaldata, 2));
         }
         if (isset($_SESSION['cart_inventory']) && (!empty($_SESSION['cart_inventory']))) {
             echo "<div class='col-md-12'>";
@@ -33,11 +40,12 @@ class ShoppingCart
             echo "</tr>";
             echo "<tbody>";
             foreach ($_SESSION['cart_inventory'] as $item) {
+                $productmultiplier = $item['p_price'] * $item['p_qty'];
                 echo "<tr>";
                 if (is_array($item) || is_object($item)) {
                     echo "<td hidden>" . $item['p_id'] . "</td>";
                     echo "<td><img class='img-thumbnail align-self-center' style='width:100px;height:100px;'
-                             alt='Missing image data' src=img/". $item['p_img'] . "></td>";
+                             alt='Missing image data' src=img/" . $item['p_img'] . "></td>";
                     echo "<td>" . $item['p_name'] . "</td>";
                     echo "<td>" . $item['p_desc'] . "</td>";
                     echo "<form method='POST'>";
@@ -52,8 +60,13 @@ class ShoppingCart
                 echo "</tr>";
             }
             echo "</table>";
-            echo "<h4>Subtotal price of your Shopping Cart is : € " .  number_format($totaldata, 2)  . "</h4>";
-            echo "<br>";
+            if (strpos($_SERVER['REQUEST_URI'], 'shoppingcart') !== false || strpos($_SERVER['REQUEST_URI'], 'orderingpage')) {
+                echo "<h4>Subtotal: € " . number_format($subtotaldata, 2) . "</h4>";
+                echo "<h4>Delivery cost: € " . number_format($deliverprice, 2) . "</h4>";
+                echo "<h4>Total Price: € " . number_format($totaldata, 2) . "</h4>";
+            } else {
+                echo "<br>";
+            }
         } else {
             echo "Shopping Cart is empty. Please full it up!";
         }
@@ -83,6 +96,17 @@ class ShoppingCart
                 $_SESSION['cart_inventory'][] = $new_item;
             }
         }
+    }
+
+    protected static function checkCartForItem($cart_p_id, $cart_items)
+    {
+        if (is_array($cart_items)) {
+            foreach ($cart_items as $key => $item) {
+                if ($item['p_id'] === $cart_p_id)
+                    return $key;
+            }
+        }
+        return false;
     }
 
     public static function updateCartProduct($update_p_id, $update_p_qty)
@@ -115,14 +139,27 @@ class ShoppingCart
         }
     }
 
-    protected static function checkCartForItem($cart_p_id, $cart_items)
+    public function checkCoupon($c_code, $currentdate = null)
     {
-        if (is_array($cart_items)) {
-            foreach ($cart_items as $key => $item) {
-                if ($item['p_id'] === $cart_p_id)
-                    return $key;
+        if (!empty($c_code) && !empty($currentdate)) {
+            $params = array(':c_code' => $c_code);
+            $SQL = "SELECT * FROM coupon_code WHERE coupon_code = :c_code";
+            $DBQuery = $this->db->Select($SQL, $params);
+            if (count($DBQuery) === 1) {
+                $params = array(':c_code' => $c_code, ":currentdate" => $currentdate);
+                $SQL = "SELECT * FROM coupon_code WHERE coupon_code = :c_code AND expire_date >= :currentdate";
+                $DBQuery2 = $this->db->Select($SQL, $params);
+                if (count($DBQuery2) === 1) {
+                    echo "Congratulations!!! You acquired free delivery/pick-up discount.";
+                    return $_SESSION['valid_code'] = true;
+                } else {
+                    echo "This coupon code has expired! Please try different one!";
+                }
+            } else {
+                echo "Incorrect coupon code. Please try different one!";
             }
+        } else {
+            echo "there is no code given";
         }
-        return false;
     }
 }

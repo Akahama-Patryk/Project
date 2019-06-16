@@ -31,6 +31,7 @@ if (isset($_POST['submit'])) {
 
     $object = new User();
     $object->updateClientInformation($_GET['ID'], $f_name, $honorifics, $surname, $email, $address, $hr_nr, $postcode, $land, $state, $m_nr);
+    RedirectHandler::HTTP_301('dashboard_admin_client');
 }
 ?>
 <html>

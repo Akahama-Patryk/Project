@@ -12,6 +12,7 @@ RewriteRule ^register$ /Projects2019/helden/Project/view/user/register.php [L]
 #shoppingcart
 RewriteRule ^shoppingcart$ /Projects2019/helden/Project/view/shoppingcart/shopping_cart.php [L]
 RewriteRule ^orderingpage$ /Projects2019/helden/Project/view/shoppingcart/ordering_page.php [L]
+RewriteRule ^thank-you$ /Projects2019/helden/Project/view/shoppingcart/thank-you.php [L]
 #user dashboard
 RewriteRule ^dashboard$ /Projects2019/helden/Project/view/user/dashboard.php [L]
 #admin dashboard

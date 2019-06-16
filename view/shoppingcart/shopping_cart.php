@@ -1,4 +1,5 @@
 <?php
+$current_date_filter = date("Y-m-d");
 include_once("../../App/Autoloader.php");
 Autoloader::sessionStarter();
 if (isset($_GET['RemoveProduct'])) {
@@ -12,6 +13,10 @@ if (isset($_GET['EmptyCart'])) {
 }
 if (isset($_POST['new_user_quantity']) && ($_POST['id_for_new_qty'])) {
     ShoppingCart::updateCartProduct($_POST['id_for_new_qty'], $_POST['new_user_quantity']);
+}
+if (isset($_POST['couponcode']) && ($_POST['couponcode'])) {
+    $couponcode = new ShoppingCart();
+    $checkcouponcode = $couponcode->checkCoupon($_POST['couponcode'], $current_date_filter);
 }
 ?>
 <html>
@@ -48,6 +53,12 @@ if (isset($_SESSION['cart_inventory'])) {
     echo "Shopping Cart is empty. Please full it up!";
 }
 ?>
+<br>
+<label>Discount code/Couponcode</label>
+<form action='' method='POST'>
+    <input class='btn-group-sm' type='text' name='couponcode' value=''>
+    <button type='submit' class='btn btn-primary align-items-sm-start' name='submit2'>Send</button>
+</form>
 <?php
 if (!empty($_SESSION['cart_inventory'])) {
     echo "<a class='btn btn-primary float-right' href='orderingpage'>Continue with order</a>";

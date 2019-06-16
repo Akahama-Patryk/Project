@@ -157,6 +157,32 @@ class User
         }
     }
 
+    public function createNonUser($f_name, $honorifics, $surname, $email, $address, $hr_nr, $postcode, $land, $state, $m_nr)
+    {
+        if (!empty($f_name) && !empty($honorifics) && !empty($surname) && !empty($email) && !empty($address) &&
+            !empty($hr_nr) && !empty($postcode) && !empty($land) && !empty($state) && !empty($m_nr)) {
+            $params = array(":f_name" => $f_name, ":honorifics" => $honorifics, ":surname" => $surname, ":email" => $email, ":address" => $address,
+                ":hr_nr" => $hr_nr, ":postcode" => $postcode, ":land" => $land, ":state" => $state, ":m_nr" => $m_nr);
+            $SQL = "INSERT INTO user (isAdmin,honorifics, surname, address, `house number`, postcode, land, state, `mobile number`, first_name, email, user_id) values
+('0',:honorifics, :surname, :address, :hr_nr, :postcode, :land, :state, :m_nr, :f_name, :email, (SELECT UUID()))";
+            $DBQuery = $this->db->Insert($SQL, $params);
+            $params = array(":f_name" => $f_name, ":honorifics" => $honorifics, ":surname" => $surname, ":email" => $email, ":address" => $address,
+                ":hr_nr" => $hr_nr, ":postcode" => $postcode, ":land" => $land, ":state" => $state, ":m_nr" => $m_nr);
+            $SQL = "SELECT * FROM user where first_name = :f_name AND honorifics = :honorifics AND surname = :surname AND email = :email AND address = :address 
+                     AND `house number` = :hr_nr AND postcode = :postcode AND land = :land AND state = :state AND `mobile number` = :m_nr;";
+            $DBQuery = $this->db->Select($SQL, $params);
+            if (count($DBQuery) === 1) {
+                foreach ($DBQuery as $data)
+                $userData = $data['user_id'];
+                return $userData;
+            } else {
+                echo "Data non-existent or are multiple";
+            }
+        } else {
+            echo "Error";
+        }
+    }
+
     public function fetchClientInformation($user)
     {
         if (!empty($user)) {
@@ -182,7 +208,6 @@ class User
             $SQL = "Update user set first_name = :f_name, honorifics = :honorifics, surname = :surname, email = :email, address = :address, 
                  `house number` = :hr_nr, postcode = :postcode, land = :land, state = :state, `mobile number` = :m_nr where user_id = :user;";
             $DBQuery = $this->db->Update($SQL, $params);
-            RedirectHandler::HTTP_301('dashboard_admin_client');
         } else {
             echo "Error";
         }
