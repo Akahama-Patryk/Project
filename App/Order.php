@@ -34,13 +34,48 @@ class Order
         }
     }
 
+    public function FetchOrder($order_id)
+    {
+        if (!empty($order_id)) {
+            $params = array(":o_id" => $order_id);
+            $SQL = "SELECT * FROM shop_order,user where order_id = :o_id AND shop_order.user_id = user.user_id";
+            $DBQuery = $this->db->Select($SQL, $params);
+            $result = null;
+            if (count($DBQuery) > 0)
+                $result = $DBQuery;
+            return $result;
+        } else {
+            $params = null;
+            $SQL = "SELECT * FROM shop_order,user where shop_order.user_id = user.user_id";
+            $DBQuery = $this->db->Select($SQL, $params);
+            $result = null;
+            if (count($DBQuery) > 0)
+                $result = $DBQuery;
+            return $result;
+        }
+    }
+
+    public function UpdateOrder()
+    {
+
+    }
+
+    public function DeleteOrder($o_id)
+    {
+        if (!empty($o_id)) {
+            $params = array(":o_id" => $o_id);
+            $SQL = "DELETE FROM shop_order WHERE order_id = :o_id;";
+            $DBQuery = $this->db->Select($SQL, $params);
+            }
+    }
+
     public function createOrderHistory($order_id, $user_id)
     {
         if (!empty($order_id) && !empty($user_id)) {
             foreach ($_SESSION['cart_inventory'] as $cart_data) {
                 $params = array(':order_id' => $order_id, ':user_id' => $user_id, ':p_id' => $cart_data['p_id'], 'p_qty' => $cart_data['p_qty']);
                 $SQL = "INSERT INTO shop_client_history (history_id, order_id, user_id, id_product, order_quantity) VALUES ((SELECT UUID()),:order_id,:user_id,:p_id,:p_qty)";
-                $DBquery = $this->db->Insert($SQL,$params);
+                $DBquery = $this->db->Insert($SQL, $params);
             }
             RedirectHandler::HTTP_301('thank-you');
         } else {
