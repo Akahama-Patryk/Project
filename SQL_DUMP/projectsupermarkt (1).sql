@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.8.3
+-- version 4.8.5
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Gegenereerd op: 15 jun 2019 om 09:25
--- Serverversie: 10.1.37-MariaDB
--- PHP-versie: 7.2.12
+-- Gegenereerd op: 16 jun 2019 om 22:19
+-- Serverversie: 10.1.38-MariaDB
+-- PHP-versie: 7.3.3
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -56,6 +56,25 @@ INSERT INTO `category` (`category_id`, `category_name`) VALUES
 ('H', 'Wijn'),
 ('X', 'Xenio'),
 ('C', 'Zuivel, eieren');
+
+-- --------------------------------------------------------
+
+--
+-- Tabelstructuur voor tabel `coupon_code`
+--
+
+CREATE TABLE `coupon_code` (
+  `expire_date` date NOT NULL,
+  `coupon_code` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Gegevens worden geëxporteerd voor tabel `coupon_code`
+--
+
+INSERT INTO `coupon_code` (`expire_date`, `coupon_code`) VALUES
+('2019-06-15', '123testing'),
+('2019-06-17', 'testing123');
 
 -- --------------------------------------------------------
 
@@ -305,7 +324,7 @@ CREATE TABLE `product` (
 INSERT INTO `product` (`name`, `quantity`, `price`, `image`, `description`, `category_id`, `id_product`) VALUES
 ('Pepsi', 30, '2.05', 'cola.jpg', 'Pepsi 2L cola.', 'F', '1'),
 ('Coca Cola', 12, '0.25', 'cola2.jpg', 'Coca Cola 2L cola', 'F', '2'),
-('product 3', 6, '13.50', 'chocola.jpg', 'Product 2 omschrijving', 'L', '3'),
+('Milk Chocolate', 5000, '1.50', '8bc944dbd052ef51652e70a5104492e3.jpg', 'Milk Chocolate AH', 'L', '3'),
 ('product 4', 160, '0.60', 'chips.jpg', 'Product 2 omschrijving', 'L', '4'),
 ('product 5', 74, '1.50', 'ijs.png', 'Product 2 omschrijving', 'L', '5'),
 ('product 6', 500, '5.00', 'vlees.jpg', 'Product 2 omschrijving', 'B', '6'),
@@ -320,7 +339,6 @@ INSERT INTO `product` (`name`, `quantity`, `price`, `image`, `description`, `cat
 
 CREATE TABLE `shopping_cart` (
   `cart_id` int(10) NOT NULL,
-  `product_name` varchar(255) NOT NULL,
   `quantity` int(10) NOT NULL,
   `product_id` int(10) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -328,10 +346,71 @@ CREATE TABLE `shopping_cart` (
 -- --------------------------------------------------------
 
 --
--- Tabelstructuur voor tabel `users`
+-- Tabelstructuur voor tabel `shop_client_history`
 --
 
-CREATE TABLE `users` (
+CREATE TABLE `shop_client_history` (
+  `history_id` varchar(255) NOT NULL,
+  `order_id` varchar(255) NOT NULL,
+  `user_id` varchar(255) NOT NULL,
+  `id_product` varchar(255) NOT NULL,
+  `order_quantity` int(20) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Gegevens worden geëxporteerd voor tabel `shop_client_history`
+--
+
+INSERT INTO `shop_client_history` (`history_id`, `order_id`, `user_id`, `id_product`, `order_quantity`) VALUES
+('0191f84d-904b-11e9-a096-d8cb8ae722c6', '018d0b9a-904b-11e9-a096-d8cb8ae722c6', '1', '4', 1),
+('39412b5f-9038-11e9-a096-d8cb8ae722c6', '39385612-9038-11e9-a096-d8cb8ae722c6', '1', '5', 99999),
+('6a4a83d7-9038-11e9-a096-d8cb8ae722c6', '6a40c398-9038-11e9-a096-d8cb8ae722c6', '1', '1', 1),
+('7a163331-9051-11e9-a096-d8cb8ae722c6', '7a0c196e-9051-11e9-a096-d8cb8ae722c6', '7', '2', 1),
+('90fa4fc2-9049-11e9-a096-d8cb8ae722c6', '90f0629a-9049-11e9-a096-d8cb8ae722c6', '1', '616cddba-7f2a-11e9-b49e-8c1645254d96', 1),
+('9105670f-9049-11e9-a096-d8cb8ae722c6', '90f0629a-9049-11e9-a096-d8cb8ae722c6', '1', '7', 3),
+('a0776baf-9051-11e9-a096-d8cb8ae722c6', 'a06a91f3-9051-11e9-a096-d8cb8ae722c6', 'a', '7', 1),
+('c37c29c9-904a-11e9-a096-d8cb8ae722c6', 'c36f0a71-904a-11e9-a096-d8cb8ae722c6', '1', '7', 1),
+('ce2ce6f0-9051-11e9-a096-d8cb8ae722c6', 'ce240003-9051-11e9-a096-d8cb8ae722c6', 'c', '1', 30),
+('ce36a691-9051-11e9-a096-d8cb8ae722c6', 'ce240003-9051-11e9-a096-d8cb8ae722c6', 'c', '2', 12),
+('ce474c16-9051-11e9-a096-d8cb8ae722c6', 'ce240003-9051-11e9-a096-d8cb8ae722c6', 'c', '4', 160),
+('d6586267-9043-11e9-a096-d8cb8ae722c6', 'd6505f51-9043-11e9-a096-d8cb8ae722c6', '1', '616cddba-7f2a-11e9-b49e-8c1645254d96', 1);
+
+-- --------------------------------------------------------
+
+--
+-- Tabelstructuur voor tabel `shop_order`
+--
+
+CREATE TABLE `shop_order` (
+  `order_id` varchar(255) NOT NULL,
+  `user_id` varchar(255) NOT NULL,
+  `orderdate` date NOT NULL,
+  `type_delivery` tinyint(1) NOT NULL,
+  `total_price` decimal(20,2) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Gegevens worden geëxporteerd voor tabel `shop_order`
+--
+
+INSERT INTO `shop_order` (`order_id`, `user_id`, `orderdate`, `type_delivery`, `total_price`) VALUES
+('018d0b9a-904b-11e9-a096-d8cb8ae722c6', '1', '2019-06-16', 2, '5.38'),
+('39385612-9038-11e9-a096-d8cb8ae722c6', '1', '2019-06-16', 2, '181.00'),
+('6a40c398-9038-11e9-a096-d8cb8ae722c6', '1', '2019-06-16', 2, '7.13'),
+('7a0c196e-9051-11e9-a096-d8cb8ae722c6', '7a03b0b1-9051-11e9-a096-d8cb8ae722c6', '2019-06-16', 2, '4.95'),
+('90f0629a-9049-11e9-a096-d8cb8ae722c6', '1', '2019-06-16', 2, '8.81'),
+('a06a91f3-9051-11e9-a096-d8cb8ae722c6', 'a05dff2a-9051-11e9-a096-d8cb8ae722c6', '2019-06-16', 1, '4.95'),
+('c36f0a71-904a-11e9-a096-d8cb8ae722c6', '1', '2019-06-16', 2, '4.95'),
+('ce240003-9051-11e9-a096-d8cb8ae722c6', 'ce1cc657-9051-11e9-a096-d8cb8ae722c6', '2019-06-16', 1, '198.86'),
+('d6505f51-9043-11e9-a096-d8cb8ae722c6', '1', '2019-06-16', 2, '7.90');
+
+-- --------------------------------------------------------
+
+--
+-- Tabelstructuur voor tabel `user`
+--
+
+CREATE TABLE `user` (
   `name` varchar(181) NOT NULL,
   `pass` varchar(181) NOT NULL,
   `isAdmin` tinyint(1) DEFAULT NULL,
@@ -344,20 +423,23 @@ CREATE TABLE `users` (
   `state` varchar(181) DEFAULT NULL,
   `mobile number` int(10) DEFAULT NULL,
   `first_name` varchar(181) DEFAULT NULL,
-  `email` varchar(181) DEFAULT NULL
+  `email` varchar(181) DEFAULT NULL,
+  `user_id` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Gegevens worden geëxporteerd voor tabel `users`
+-- Gegevens worden geëxporteerd voor tabel `user`
 --
 
-INSERT INTO `users` (`name`, `pass`, `isAdmin`, `honorifics`, `surname`, `address`, `house number`, `postcode`, `land`, `state`, `mobile number`, `first_name`, `email`) VALUES
-('admin123', '$2y$10$F27zTDF5n.aPs4s9MOnv..jxYNUaPeSKHhp3FA1T5qXM6m99Z2EvW', 1, 'Mr', 'Admin', 'admin', '666', '6666 AD', 'Admin', 'Admin', 642839394, 'Admin', 'admin@mail.com'),
-('adminpass', '$2y$10$EvNg99cvboWoye.e9kDvE.nW8sDZ7lAsKETqlL0pRwnP95/cS/DE2', 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-('user', '$2y$10$uLt49W/LFxyAKLyO.AftXe3ER6.H6lXQafVkASKnmUkfmGFslSfe2', 0, 'Mr', 'Orlowski', 'Jonckbloetplein 32', '69', '2523AS', 'Netherland', 'Hague', 31232134, 'Patryk', 'mijnemail@gmail.com'),
-('username301', '$2y$10$BOWGV9bGWHJHq4pDs.IX7.zea.FEjPpKZjxO.aZrquTNh4VBD5riW', 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-('userthatisfalse', '$2y$10$YzAgBftJcOFMr/cWTk84EekOUAqFOVvvN89jnV/Ub4miOgw0/4aJ2', 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-('user_name', '$2y$10$tz06MGSw1KFqy1bZLoSymuE1395QZNp5b8ObWRvwkiVrSpxbIxAQ6', 0, 'Mr', 'Orlowski', 'Jonckbloetplein', '32', '2523AS', 'England', 'DEN HAAG', 649981444, 'Patryk', 'orel971111@gmail.com');
+INSERT INTO `user` (`name`, `pass`, `isAdmin`, `honorifics`, `surname`, `address`, `house number`, `postcode`, `land`, `state`, `mobile number`, `first_name`, `email`, `user_id`) VALUES
+('admin123', '$2y$10$7QahgE9WK7z57ZWx3PpVsuPGr4sa8lWUMC7IoaD72PnBDHi.yEAJy', 1, 'Mr', 'Orlowski', 'Jonckbloetplein 32', '32', '2523AS', 'Antigua and Barbuda', 'Netherlands', 649981444, 'Patry', 'orel971111@gmail.com', '1'),
+('adminpass', '$2y$10$EvNg99cvboWoye.e9kDvE.nW8sDZ7lAsKETqlL0pRwnP95/cS/DE2', 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2'),
+('user', '$2y$10$uLt49W/LFxyAKLyO.AftXe3ER6.H6lXQafVkASKnmUkfmGFslSfe2', 0, 'Mr', 'Orlowski', 'Jonckbloetplein 32', '69', '2523AS', 'Netherland', 'Hague', 31232134, 'Patry', 'mijnemail@gmail.com', '3'),
+('username301', '$2y$10$BOWGV9bGWHJHq4pDs.IX7.zea.FEjPpKZjxO.aZrquTNh4VBD5riW', 0, 'Mr', 'Orlowski', 'Jonckbloetplein 32', '32', '2523AS', 'Belgium', 'Netherlands', 649981444, 'Patry', 'orel971111@gmail.com', '4'),
+('userthatisfalse', '$2y$10$YzAgBftJcOFMr/cWTk84EekOUAqFOVvvN89jnV/Ub4miOgw0/4aJ2', 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '5'),
+('user_name', '$2y$10$tz06MGSw1KFqy1bZLoSymuE1395QZNp5b8ObWRvwkiVrSpxbIxAQ6', 0, 'Mr', 'Orlowski', 'Jonckbloetplein', '32', '2523AS', 'England', 'DEN HAAG', 649981444, 'Patry', 'orel971111@gmail.com', '6'),
+('', '', 0, 'Mr', 'Orlowski', 'Jonckbloetplein 32', '32', '2523AS', 'Belgium', 'Netherlands', 649981444, 'Patryk', 'orel971111@gmail.com', 'a05dff2a-9051-11e9-a096-d8cb8ae722c6'),
+('', '', 0, 'Mrs', 'Orlowski', 'Jonckbloetplein 32', '32', '2523AS', 'Trinidad and Tobago', 'Netherlands', 649981444, 'Patryk', 'orel971111@gmail.com', 'ce1cc657-9051-11e9-a096-d8cb8ae722c6');
 
 --
 -- Indexen voor geëxporteerde tabellen
@@ -369,6 +451,12 @@ INSERT INTO `users` (`name`, `pass`, `isAdmin`, `honorifics`, `surname`, `addres
 ALTER TABLE `category`
   ADD PRIMARY KEY (`category_id`),
   ADD UNIQUE KEY `category_name` (`category_name`);
+
+--
+-- Indexen voor tabel `coupon_code`
+--
+ALTER TABLE `coupon_code`
+  ADD PRIMARY KEY (`coupon_code`);
 
 --
 -- Indexen voor tabel `land`
@@ -389,10 +477,22 @@ ALTER TABLE `shopping_cart`
   ADD PRIMARY KEY (`cart_id`);
 
 --
--- Indexen voor tabel `users`
+-- Indexen voor tabel `shop_client_history`
 --
-ALTER TABLE `users`
-  ADD PRIMARY KEY (`name`);
+ALTER TABLE `shop_client_history`
+  ADD PRIMARY KEY (`history_id`);
+
+--
+-- Indexen voor tabel `shop_order`
+--
+ALTER TABLE `shop_order`
+  ADD PRIMARY KEY (`order_id`);
+
+--
+-- Indexen voor tabel `user`
+--
+ALTER TABLE `user`
+  ADD PRIMARY KEY (`user_id`);
 
 --
 -- AUTO_INCREMENT voor geëxporteerde tabellen
