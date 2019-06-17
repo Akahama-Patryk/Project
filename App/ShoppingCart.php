@@ -63,7 +63,8 @@ class ShoppingCart
             if (strpos($_SERVER['REQUEST_URI'], 'shoppingcart') !== false || strpos($_SERVER['REQUEST_URI'], 'orderingpage')) {
                 echo "<h4>Subtotal: € " . number_format($subtotaldata, 2) . "</h4>";
                 echo "<h4>Delivery cost: € " . number_format($deliverprice, 2) . "</h4>";
-                echo "<h4>Total Price: € " . number_format($totaldata, 2) . "</h4>";
+                echo "<h4>Total Price*: € " . number_format($totaldata, 2) . "</h4>";
+                echo "<h6>* Total Price is counted with 21%BTW.</h6>";
             } else {
                 echo "<br>";
             }

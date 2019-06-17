@@ -12,6 +12,10 @@ if (isset($_GET['ID']) && !empty($_GET['ID'])) {
     $FetchOrder = new Order();
     $ReadUpdate = $FetchOrder->fetchOrder($_GET['ID']);
 }
+$checkadmin = '0';
+$dataClient = new User();
+$result = $dataClient->fetchUserData($checkadmin);
+
 if (isset($_POST['submit'])) {
 }
 ?>
@@ -129,6 +133,20 @@ if (isset($_POST['submit'])) {
                             <div class="card-body bg-light">
                                 <form class="form" role="form" autocomplete="off" id="formLogin" novalidate=""
                                       method="POST">
+                                    <div class="form-group">
+                                        <label for="client">Client</label>
+                                        <select name="client">
+                                            <option value="<?= $data["user_id"] ?>" disabled
+                                                    selected><?= $data["name"] ?></option>
+                                            <?php
+                                            foreach ($result as $land) :
+                                                ?>
+                                                <option value="<?= $land['land_name'] ?>"><?= $land['land_name'] ?></option>
+                                            <?php
+                                            endforeach;
+                                            ?>
+                                        </select>
+                                    </div>
                                     <div class="form-group">
                                         <label for="date">Deadline: </label>
                                         <input min="<?= date("Y-m-d") ?>" type="date" name="date"
