@@ -98,7 +98,7 @@ class Product
     {
         if (!empty($p_name) && !empty($p_quantity) && !empty($p_price) && !empty($p_category) && !empty($description) && !empty($uploadImage)) {
             $params = array(":p_name" => $p_name, ":p_quantity" => $p_quantity, ":p_price" => $p_price, ":p_category" => $p_category, ":description" => $description, ":image" => $uploadImage);
-            $SQL = "INSERT INTO product (name, quantity, price, image, description, category_id, id_product) VALUES (:p_name, :p_quantity, :p_price, :image, :description, :p_category, (SELECT UUID()))";
+            $SQL = "INSERT INTO product (product_name, quantity, price, image, description, category_id, id_product) VALUES (:p_name, :p_quantity, :p_price, :image, :description, :p_category, (SELECT UUID()))";
             $DBQuery = $this->db->Insert($SQL, $params);
             RedirectHandler::HTTP_301('dashboard_admin_product');
         } else {
@@ -109,7 +109,7 @@ class Product
     {
         if (!empty($p_id) && !empty($p_name) && !empty($p_quantity) && !empty($p_price) && !empty($p_category) && !empty($description) && !empty($uploadImage)) {
             $params = array("p_id" => $p_id, ":p_name" => $p_name, ":p_quantity" => $p_quantity, ":p_price" => $p_price, ":p_category" => $p_category, ":description" => $description, ":image" => $uploadImage);
-            $SQL = "Update product set name = :p_name, quantity = :p_quantity, price = :p_price, category_id = :p_category, description = :description, image = :image where id_product = :p_id;";
+            $SQL = "Update product set product_name = :p_name, quantity = :p_quantity, price = :p_price, category_id = :p_category, description = :description, image = :image where id_product = :p_id;";
             $DBQuery = $this->db->Update($SQL, $params);
             RedirectHandler::HTTP_301('dashboard_admin_product');
         } else {

@@ -55,9 +55,16 @@ class Order
         }
     }
 
-    public function UpdateOrder()
+    public function UpdateOrder($order_id, $client_id, $orderdate, $option, $t_price)
     {
-
+        if (!empty($order_id) && !empty($client_id) && !empty($orderdate) && !empty($option) && !empty($t_price)) {
+            $params = array("o_id" => $order_id, "c_id" => $client_id, "o_date" => $orderdate, "option" => $option, "t_price" => $t_price);
+            $SQL = "UPDATE shop_order set user_id = :c_id, orderdate = :o_date, type_delivery = :option, total_price = :t_price WHERE order_id = :o_id";
+            $DBQuery = $this->db->Update($SQL, $params);
+            RedirectHandler::HTTP_301('dashboard_admin_orders');
+        } else {
+            echo "no form sended";
+        }
     }
 
     public function DeleteOrder($o_id)
@@ -65,8 +72,8 @@ class Order
         if (!empty($o_id)) {
             $params = array(":o_id" => $o_id);
             $SQL = "DELETE FROM shop_order WHERE order_id = :o_id;";
-            $DBQuery = $this->db->Select($SQL, $params);
-            }
+            $DBQuery = $this->db->Delete($SQL, $params);
+        }
     }
 
     public function createOrderHistory($order_id, $user_id)
@@ -80,6 +87,26 @@ class Order
             RedirectHandler::HTTP_301('thank-you');
         } else {
             echo "NO ORDER/USER ID";
+        }
+    }
+
+    public function FetchOrderHistory()
+    {
+        $params = null;
+        $SQL = "SELECT * FROM shop_order,shop_client_history,user,product,category where shop_client_history.user_id = user.user_id AND shop_order.user_id = user.user_id AND shop_client_history.order_id = shop_order.order_id AND shop_client_history.id_product = product.id_product and product.category_id = category.category_id";
+        $DBQuery = $this->db->Select($SQL, $params);
+        $result = null;
+        if (count($DBQuery) > 0)
+            $result = $DBQuery;
+        return $result;
+    }
+
+    public function DeleteOrderHistory($oh_id)
+    {
+        if (!empty($oh_id)) {
+            $params = array(":oh_id" => $oh_id);
+            $SQL = "DELETE FROM shop_client_history WHERE history_id = :oh_id;";
+            $DBQuery = $this->db->Delete($SQL, $params);
         }
     }
 }

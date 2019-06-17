@@ -321,7 +321,7 @@ CREATE TABLE `product` (
 -- Gegevens worden geëxporteerd voor tabel `product`
 --
 
-INSERT INTO `product` (`name`, `quantity`, `price`, `image`, `description`, `category_id`, `id_product`) VALUES
+INSERT INTO `product` (product_name, `quantity`, `price`, `image`, `description`, `category_id`, `id_product`) VALUES
 ('Pepsi', 30, '2.05', 'cola.jpg', 'Pepsi 2L cola.', 'F', '1'),
 ('Coca Cola', 12, '0.25', 'cola2.jpg', 'Coca Cola 2L cola', 'F', '2'),
 ('Milk Chocolate', 5000, '1.50', '8bc944dbd052ef51652e70a5104492e3.jpg', 'Milk Chocolate AH', 'L', '3'),

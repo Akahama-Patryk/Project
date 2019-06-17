@@ -17,6 +17,10 @@ $dataClient = new User();
 $result = $dataClient->fetchUserData($checkadmin);
 
 if (isset($_POST['submit'])) {
+    var_dump($_GET['ID']);
+    $update = new Order();
+    $updateData = $update->UpdateOrder($_GET['ID'], $_POST['client'], $_POST['date'], $_POST['option'], $_POST['number']);
+
 }
 ?>
 <html>
@@ -137,18 +141,23 @@ if (isset($_POST['submit'])) {
                                         <label for="client">Client</label>
                                         <select name="client">
                                             <option value="<?= $data["user_id"] ?>" disabled
-                                                    selected><?= $data["name"] ?></option>
+                                                    selected><?php if (empty($data['name']))
+                                                    echo "Non-user"; ?><?= $data["name"] ?></option>
                                             <?php
-                                            foreach ($result as $land) :
+                                            foreach ($result as $row) :
                                                 ?>
-                                                <option value="<?= $land['land_name'] ?>"><?= $land['land_name'] ?></option>
+                                                <option value="<?= $row['user_id'] ?>"><?php if (empty($row['name']))
+                                                        echo "Non-user"; ?>
+                                                    <?= $row['name'] ?>
+                                                    &nbsp<?= $row['first_name'] ?>&nbsp<?= $row['surname'] ?>&nbsp
+                                                </option>
                                             <?php
                                             endforeach;
                                             ?>
                                         </select>
                                     </div>
                                     <div class="form-group">
-                                        <label for="date">Deadline: </label>
+                                        <label for="date">Order date: </label>
                                         <input min="<?= date("Y-m-d") ?>" type="date" name="date"
                                                value="<?= $data['orderdate'] ?>" required>
                                     </div>
