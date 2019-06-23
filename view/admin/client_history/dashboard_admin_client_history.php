@@ -135,7 +135,6 @@ if (isset($_GET['ID']) && !empty($_GET['ID'])) {
                                     <th scope='col'>Order quantity</th>
                                     <th scope='col'>Order date</th>
                                     <th scope='col'>Type delivery</th>
-                                    <th scope='col'>Total Price</th>
                                     <th scope='col'>Delete</th>
                                 </tr>
                                 <tbody>
@@ -153,7 +152,6 @@ if (isset($_GET['ID']) && !empty($_GET['ID'])) {
                                             <td><?= $record['orderdate'] ?></td>
                                             <td><?php if ($record['type_delivery'] === '1') $type = "Producten Afhalen";
                                                 if ($record['type_delivery'] === '2') $type = "Producten Bezorgen" ?><?= $type ?></td>
-                                            <td>€ <?= $record['total_price'] ?></td>
                                             <td><a href="?ID=<?= $record['history_id'] ?>">
                                                     DELETE
                                                 </a></td>

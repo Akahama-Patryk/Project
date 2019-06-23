@@ -180,7 +180,7 @@ $result = $categoryData->FetchCategory();
                                             <input type="text" class="form-control form-control-lg rounded-0"
                                                    name="product_name"
                                                    id="product_name"
-                                                   value="<?= $row['name'] ?>" required>
+                                                   value="<?= $row['product_name'] ?>" required>
                                             <div class="invalid-feedback">Oops, you missed this one.</div>
                                         </div>
                                         <div class="form-group">

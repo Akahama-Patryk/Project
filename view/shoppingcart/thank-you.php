@@ -9,7 +9,8 @@ unset($_SESSION['valid_code']);
     <link rel="icon" href="img/logo.ico">
     <link rel="stylesheet" type="text/css" href="style/bootstrap.css">
 </head>
-<h1>Thank you for ordering in [Project Supermarkt] Shop. You will be redirected shortly.</h1>
+<h1>Thank you for ordering in [Project Supermarkt] Shop. </h1><br>
+<h1>You will be redirected shortly.</h1>
 <progress value="0" max="15" id="progressBar"></progress>
 </html>
 <script>
@@ -22,6 +23,6 @@ unset($_SESSION['valid_code']);
             clearInterval(downloadTimer);
     }, 1000);
     setTimeout(function () {
-        window.location.href= 'home';
-    },17000);
+        window.location.href = 'home';
+    }, 17000);
 </script>

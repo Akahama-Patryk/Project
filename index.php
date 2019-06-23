@@ -107,7 +107,7 @@ $results2 = $products->GetCategory();
                         <img class="img-thumbnail align-self-center" style="width:100px;height:100px;"
                              src="img/<?= $record["image"] ?>" alt="Missing image data">
                         <div class="card-body">
-                            <h5 class="card-title"><?= $record["name"] ?></h5>
+                            <h5 class="card-title"><?= $record["product_name"] ?></h5>
                             <p class="card-text">
                                 Category: <?= $record["category_id"] ?> <?= $record["category_name"] ?></p>
                             <p class="card-text">Description: <?= $record["description"] ?></p>
@@ -117,7 +117,7 @@ $results2 = $products->GetCategory();
                                 <input type="hidden" class="product_id" name="product_id"
                                        value="<?= $record["id_product"] ?>">
                                 <input type="hidden" class="product_name" name="product_name"
-                                       value="<?= $record["name"] ?>">
+                                       value="<?= $record["product_name"] ?>">
                                 <input type="hidden" class="product_description" name="product_desc"
                                        value="<?= $record["description"] ?>">
                                 <input type="hidden" class="product_img" name="product_img"

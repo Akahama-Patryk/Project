@@ -142,11 +142,11 @@ if (isset($_GET['ID']) && !empty($_GET['ID'])) {
                                     foreach ($dataProduct as $record) :
                                         ?>
                                         <tr>
-                                            <td><?= $record['name'] ?></td>
+                                            <td><?= $record['product_name'] ?></td>
                                             <td><?= $record['quantity'] ?></td>
-                                            <td><?= $record['price'] ?></td>
+                                            <td>€  <?= $record['price'] ?></td>
                                             <td><img class="img-thumbnail align-self-center"
-                                                     style="width:100px;height:100px;"
+                                                     style="width:200px;height:100px;"
                                                      src="img/<?= $record["image"] ?>" alt="Missing image data"></td>
                                             <td><?= $record['description'] ?></td>
                                             <td><?= $record['category_name'] ?></td>
