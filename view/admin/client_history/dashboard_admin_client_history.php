@@ -136,61 +136,64 @@ if (!isset($_SESSION['factuurdata'])) {
                 </div>
                 <main class="px-3 mt-3">
                     <div class='col-md-12'>
-                        <form method="get">
-                            <table class='table'>
-                                <thead class='thead-dark'>
-                                <tr>
-                                    <th scope='col'>Client History ID</th>
-                                    <th scope='col'>Order ID</th>
-                                    <th scope='col'>First name</th>
-                                    <th scope='col'>Surname</th>
-                                    <th scope='col'>Product name</th>
-                                    <th scope='col'>Order quantity</th>
-                                    <th scope='col'>Order date</th>
-                                    <th scope='col'>Type delivery</th>
-                                    <th scope='col'>PDF Invoice</th>
-                                    <th scope='col'>Delete</th>
-                                </tr>
-                                <tbody>
-                                <?php
-                                if ($dataClientHistory !== null)
-                                    foreach ($dataClientHistory as $record) :
-                                        ?>
-                                        <tr>
-                                            <td><?= $record['history_id'] ?></td>
-                                            <td><?= $record['order_id'] ?></td>
-                                            <td><?= $record['first_name'] ?></td>
-                                            <td><?= $record['surname'] ?></td>
-                                            <td><?= $record['product_name'] ?></td>
-                                            <td><?= $record['order_quantity'] ?></td>
-                                            <td><?= $record['orderdate'] ?></td>
-                                            <td><?php if ($record['type_delivery'] === '1') $type = "Producten Afhalen";
-                                                if ($record['type_delivery'] === '2') $type = "Producten Bezorgen" ?><?= $type ?></td>
-                                            <form method="post">
-                                                <td hidden><input hidden type="text"
-                                                                  name="o_id"
-                                                                  id="o_id"
-                                                                  value="<?= $record['order_id'] ?>"></td>
-                                                <td hidden><input hidden type="text"
-                                                                  name="u_id"
-                                                                  id="u_id"
-                                                                  value="<?= $record['user_id'] ?>"></td>
-                                                <td hidden><input hidden type="text"
-                                                                  name="invoice_id"
-                                                                  id="invoice_id"
-                                                                  value="<?php $rng = rand(00000000, 99999999999); ?><?= $rng?>"></td>
-                                                <td> <button type="submit" name="submit"
-                                                             class="btn btn-success btn-lg float-right"
-                                                             id="btnLogin">Invoice PDF
-                                                    </button></td>
-                                            </form>
+                        <table class='table'>
+                            <thead class='thead-dark'>
+                            <tr>
+                                <th scope='col'>Client History ID</th>
+                                <th scope='col'>Order ID</th>
+                                <th scope='col'>First name</th>
+                                <th scope='col'>Surname</th>
+                                <th scope='col'>Product name</th>
+                                <th scope='col'>Order quantity</th>
+                                <th scope='col'>Order date</th>
+                                <th scope='col'>Type delivery</th>
+                                <th scope='col'>PDF Invoice</th>
+                                <th scope='col'>Delete</th>
+                            </tr>
+                            <tbody>
+                            <?php
+                            if ($dataClientHistory !== null)
+                                foreach ($dataClientHistory as $record) :
+                                    ?>
+                                    <tr>
+                                        <td><?= $record['history_id'] ?></td>
+                                        <td><?= $record['order_id'] ?></td>
+                                        <td><?= $record['first_name'] ?></td>
+                                        <td><?= $record['surname'] ?></td>
+                                        <td><?= $record['product_name'] ?></td>
+                                        <td><?= $record['order_quantity'] ?></td>
+                                        <td><?= $record['orderdate'] ?></td>
+                                        <td><?php if ($record['type_delivery'] === '1') $type = "Producten Afhalen";
+                                            if ($record['type_delivery'] === '2') $type = "Producten Bezorgen" ?><?= $type ?></td>
+                                        <form method="post">
+                                            <td hidden><input hidden type="text"
+                                                              name="o_id"
+                                                              id="o_id"
+                                                              value="<?= $record['order_id'] ?>"></td>
+                                            <td hidden><input hidden type="text"
+                                                              name="u_id"
+                                                              id="u_id"
+                                                              value="<?= $record['user_id'] ?>"></td>
+                                            <td hidden><input hidden type="text"
+                                                              name="invoice_id"
+                                                              id="invoice_id"
+                                                              value="<?php $rng = rand(00000000, 99999999999); ?><?= $rng ?>">
+                                            </td>
+                                            <td>
+                                                <button type="submit" name="submit"
+                                                        class="btn btn-success btn-lg float-right"
+                                                        id="btnLogin">Invoice PDF
+                                                </button>
+                                            </td>
+                                        </form>
+                                        <form method="get">
                                             <td><a href="?ID=<?= $record['history_id'] ?>">
                                                     DELETE
                                                 </a></td>
-                                        </tr>
-                                    <?php endforeach; ?>
-                            </table>
-                        </form>
+                                        </form>
+                                    </tr>
+                                <?php endforeach; ?>
+                        </table>
                     </div>
                 </main>
             </div>

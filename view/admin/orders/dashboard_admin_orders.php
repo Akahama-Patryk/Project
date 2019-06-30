@@ -189,10 +189,10 @@ if (!isset($_SESSION['factuurdata'])) {
                                             <td><a href="?ID=<?= $record['order_id'] ?>">
                                                     DELETE
                                                 </a></td>
+                                        </form>
                                     </tr>
                                 <?php endforeach; ?>
                         </table>
-                        </form>
                     </div>
                 </main>
             </div>
