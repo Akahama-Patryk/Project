@@ -1,5 +1,4 @@
 <?php
-echo "With PDF files";
 include_once('../../../App/Autoloader.php');
 $dataOrder = array();
 Autoloader::sessionStarter();
@@ -14,6 +13,19 @@ if (isset($_GET['ID']) && !empty($_GET['ID'])) {
     $DeleteOrder = new Order();
     $DeleteOrder->deleteOrder($_GET['ID']);
     RedirectHandler::HTTP_301('dashboard_admin_orders');
+}
+unset($_SESSION['factuurdata']);
+if (!isset($_SESSION['factuurdata'])) {
+    $_SESSION['factuurdata'] = array();
+    if (isset($_POST['submit'])) {
+        $new_item = array(
+            'o_id' => $_POST['o_id'],
+            'u_id' => $_POST['u_id'],
+            'invoice_id' => $_POST['invoice_id']
+        );
+        $_SESSION['factuurdata'][] = $new_item;
+        RedirectHandler::HTTP_301('dashboard_admin_invoice_view');
+    }
 }
 ?>
 <html>
@@ -124,46 +136,62 @@ if (isset($_GET['ID']) && !empty($_GET['ID'])) {
                 </div>
                 <main class="px-3 mt-3">
                     <div class='col-md-12'>
-                        <form method="get">
-                            <table class='table'>
-                                <thead class='thead-dark'>
-                                <tr>
-                                    <th scope='col'>Order ID</th>
-                                    <th scope='col'>Name</th>
-                                    <th scope='col'>Honorifics</th>
-                                    <th scope='col'>Surname</th>
-                                    <th scope='col'>Order Date</th>
-                                    <th scope='col'>Type Delivery</th>
-                                    <th scope='col'>Total Price</th>
-                                    <th scope='col'>PDF Order</th>
-                                    <th scope='col'>Update</th>
-                                    <th scope='col'>Delete</th>
-                                </tr>
-                                <tbody>
-                                <?php
-                                if ($dataOrder !== null)
-                                    foreach ($dataOrder as $record) :
-                                        ?>
-                                        <tr>
-                                            <td><?= $record['order_id'] ?></td>
-                                            <td><?= $record['name'] ?></td>
-                                            <td><?= $record['honorifics'] ?></td>
-                                            <td><?= $record['surname'] ?></td>
-                                            <td><?= $record['orderdate'] ?></td>
-                                            <td><?php if ($record['type_delivery'] === '1') $type = "Producten Afhalen";
-                                                if ($record['type_delivery'] === '2') $type = "Producten Bezorgen" ?><?= $type ?></td>
-                                            <td>€ <?= $record['total_price'] ?></td>
-                                            <td><a href="???">PDF File</a>
-                                                </a></td>
+                        <table class='table'>
+                            <thead class='thead-dark'>
+                            <tr>
+                                <th scope='col'>Order ID</th>
+                                <th scope='col'>Name</th>
+                                <th scope='col'>Honorifics</th>
+                                <th scope='col'>Surname</th>
+                                <th scope='col'>Order Date</th>
+                                <th scope='col'>Type Delivery</th>
+                                <th scope='col'>Total Price</th>
+                                <th scope='col'>PDF Invoice</th>
+                                <th scope='col'>Update</th>
+                                <th scope='col'>Delete</th>
+                            </tr>
+                            <tbody>
+                            <?php
+                            if ($dataOrder !== null)
+                                foreach ($dataOrder as $record) :
+                                    ?>
+                                    <tr>
+                                        <td><?= $record['order_id'] ?></td>
+                                        <td><?= $record['name'] ?></td>
+                                        <td><?= $record['honorifics'] ?></td>
+                                        <td><?= $record['surname'] ?></td>
+                                        <td><?= $record['orderdate'] ?></td>
+                                        <td><?php if ($record['type_delivery'] === '1') $type = "Producten Afhalen";
+                                            if ($record['type_delivery'] === '2') $type = "Producten Bezorgen" ?><?= $type ?></td>
+                                        <td>€ <?= $record['total_price'] ?></td>
+                                        <form method="post">
+                                            <td hidden><input hidden type="text"
+                                                              name="o_id"
+                                                              id="o_id"
+                                                              value="<?= $record['order_id'] ?>"></td>
+                                            <td hidden><input hidden type="text"
+                                                              name="u_id"
+                                                              id="u_id"
+                                                              value="<?= $record['user_id'] ?>"></td>
+                                            <td hidden><input hidden type="text"
+                                                              name="invoice_id"
+                                                              id="invoice_id"
+                                                              value="<?php $rng = rand(00000000, 99999999999); ?><?= $rng?>"></td>
+                                            <td> <button type="submit" name="submit"
+                                                         class="btn btn-success btn-lg float-right"
+                                                         id="btnLogin">Invoice PDF
+                                                </button></td>
+                                        </form>
+                                        <form method="get">
                                             <td><a href="dashboard_admin_orders_edit?ID=<?= $record['order_id'] ?>">
                                                     UPDATE
                                                 </a></td>
                                             <td><a href="?ID=<?= $record['order_id'] ?>">
                                                     DELETE
                                                 </a></td>
-                                        </tr>
-                                    <?php endforeach; ?>
-                            </table>
+                                    </tr>
+                                <?php endforeach; ?>
+                        </table>
                         </form>
                     </div>
                 </main>

@@ -218,7 +218,7 @@ as $data) : ?>
                     </div>
                     <h6>Mr/Mrs or other</h6>
                     <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="checkbox" name="option_user"
+                        <input class="form-check-input" type="checkbox" name="option_user" required
                                id="inlineCheckbox1" value="Mr">
                         <label class="form-check-label" for="inlineCheckbox1">Mr</label>
                     </div>
@@ -304,7 +304,7 @@ as $data) : ?>
                     </div>
                     <h6>Producten afhalen of bezorgen</h6>
                     <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="checkbox" name="option"
+                        <input class="form-check-input" type="checkbox" name="option" required
                                id="inlineCheckbox1" value="1">
                         <label class="form-check-label" for="inlineCheckbox1">Producten Afhalen</label>
                         <input class="form-check-input" type="checkbox" name="option"

@@ -90,15 +90,25 @@ class Order
         }
     }
 
-    public function FetchOrderHistory()
+    public function FetchOrderHistory($user_name)
     {
-        $params = null;
-        $SQL = "SELECT * FROM shop_order,shop_client_history,user,product,category where shop_client_history.user_id = user.user_id AND shop_order.user_id = user.user_id AND shop_client_history.order_id = shop_order.order_id AND shop_client_history.id_product = product.id_product and product.category_id = category.category_id";
-        $DBQuery = $this->db->Select($SQL, $params);
-        $result = null;
-        if (count($DBQuery) > 0)
-            $result = $DBQuery;
-        return $result;
+        if (!empty($user_name)) {
+            $params = array(":user_name" => $user_name);
+            $SQL = "SELECT * FROM shop_order,shop_client_history,user,product,category where shop_client_history.user_id = user.user_id AND shop_order.user_id = user.user_id AND shop_client_history.order_id = shop_order.order_id AND shop_client_history.id_product = product.id_product and product.category_id = category.category_id AND user.name = :user_name";
+            $DBQuery = $this->db->Select($SQL, $params);
+            $result = null;
+            if (count($DBQuery) > 0)
+                $result = $DBQuery;
+            return $result;
+        } else {
+            $params = null;
+            $SQL = "SELECT * FROM shop_order,shop_client_history,user,product,category where shop_client_history.user_id = user.user_id AND shop_order.user_id = user.user_id AND shop_client_history.order_id = shop_order.order_id AND shop_client_history.id_product = product.id_product and product.category_id = category.category_id";
+            $DBQuery = $this->db->Select($SQL, $params);
+            $result = null;
+            if (count($DBQuery) > 0)
+                $result = $DBQuery;
+            return $result;
+        }
     }
 
     public function DeleteOrderHistory($oh_id)
@@ -107,6 +117,22 @@ class Order
             $params = array(":oh_id" => $oh_id);
             $SQL = "DELETE FROM shop_client_history WHERE history_id = :oh_id;";
             $DBQuery = $this->db->Delete($SQL, $params);
+        }
+    }
+
+    public function InvoiceFetchClientInfo($order_id, $client_id)
+    {
+        if (!empty($order_id) && !empty($client_id)) {
+            $params = array(":o_id" => $order_id, ":c_id" => $client_id);
+            $SQL = "SELECT * FROM user,shop_order WHERE user.user_id = :c_id AND shop_order.user_id = :c_id AND shop_order.order_id = :o_id;";
+            $DBQuery = $this->db->Select($SQL, $params);
+            if (count($DBQuery) >= 1) {
+                return $DBQuery;
+            } else {
+                echo "fail";
+            }
+        } else {
+            echo "missing data";
         }
     }
 }

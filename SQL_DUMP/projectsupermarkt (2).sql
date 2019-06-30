@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Gegenereerd op: 16 jun 2019 om 22:19
+-- Gegenereerd op: 30 jun 2019 om 23:06
 -- Serverversie: 10.1.38-MariaDB
 -- PHP-versie: 7.3.3
 
@@ -74,6 +74,9 @@ CREATE TABLE `coupon_code` (
 
 INSERT INTO `coupon_code` (`expire_date`, `coupon_code`) VALUES
 ('2019-06-15', '123testing'),
+('2019-06-29', '2019SUMMER'),
+('2019-06-30', 'SUMMER2019'),
+('2019-06-30', 'TCR2019'),
 ('2019-06-17', 'testing123');
 
 -- --------------------------------------------------------
@@ -308,7 +311,7 @@ INSERT INTO `land` (`id`, `land_name`) VALUES
 --
 
 CREATE TABLE `product` (
-  `name` varchar(181) NOT NULL,
+  `product_name` varchar(181) NOT NULL,
   `quantity` int(225) NOT NULL,
   `price` decimal(10,2) NOT NULL,
   `image` varchar(181) NOT NULL,
@@ -321,7 +324,7 @@ CREATE TABLE `product` (
 -- Gegevens worden geëxporteerd voor tabel `product`
 --
 
-INSERT INTO `product` (product_name, `quantity`, `price`, `image`, `description`, `category_id`, `id_product`) VALUES
+INSERT INTO `product` (`product_name`, `quantity`, `price`, `image`, `description`, `category_id`, `id_product`) VALUES
 ('Pepsi', 30, '2.05', 'cola.jpg', 'Pepsi 2L cola.', 'F', '1'),
 ('Coca Cola', 12, '0.25', 'cola2.jpg', 'Coca Cola 2L cola', 'F', '2'),
 ('Milk Chocolate', 5000, '1.50', '8bc944dbd052ef51652e70a5104492e3.jpg', 'Milk Chocolate AH', 'L', '3'),
@@ -368,6 +371,9 @@ INSERT INTO `shop_client_history` (`history_id`, `order_id`, `user_id`, `id_prod
 ('7a163331-9051-11e9-a096-d8cb8ae722c6', '7a0c196e-9051-11e9-a096-d8cb8ae722c6', '7', '2', 1),
 ('90fa4fc2-9049-11e9-a096-d8cb8ae722c6', '90f0629a-9049-11e9-a096-d8cb8ae722c6', '1', '616cddba-7f2a-11e9-b49e-8c1645254d96', 1),
 ('9105670f-9049-11e9-a096-d8cb8ae722c6', '90f0629a-9049-11e9-a096-d8cb8ae722c6', '1', '7', 3),
+('9148a156-9a85-11e9-ad1f-d8cb8ae722c6', '913da906-9a85-11e9-ad1f-d8cb8ae722c6', '1', '2', 5),
+('914ddef7-9a85-11e9-ad1f-d8cb8ae722c6', '913da906-9a85-11e9-ad1f-d8cb8ae722c6', '1', '7', 199),
+('9151f0ac-9a85-11e9-ad1f-d8cb8ae722c6', '913da906-9a85-11e9-ad1f-d8cb8ae722c6', '1', '3', 1),
 ('a0776baf-9051-11e9-a096-d8cb8ae722c6', 'a06a91f3-9051-11e9-a096-d8cb8ae722c6', 'a', '7', 1),
 ('c37c29c9-904a-11e9-a096-d8cb8ae722c6', 'c36f0a71-904a-11e9-a096-d8cb8ae722c6', '1', '7', 1),
 ('ce2ce6f0-9051-11e9-a096-d8cb8ae722c6', 'ce240003-9051-11e9-a096-d8cb8ae722c6', 'c', '1', 30),
@@ -386,23 +392,17 @@ CREATE TABLE `shop_order` (
   `user_id` varchar(255) NOT NULL,
   `orderdate` date NOT NULL,
   `type_delivery` tinyint(1) NOT NULL,
-  `total_price` decimal(20,2) NOT NULL
+  `total_price` decimal(20,2) NOT NULL,
+  `PDF_invoice` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Gegevens worden geëxporteerd voor tabel `shop_order`
 --
 
-INSERT INTO `shop_order` (`order_id`, `user_id`, `orderdate`, `type_delivery`, `total_price`) VALUES
-('018d0b9a-904b-11e9-a096-d8cb8ae722c6', '1', '2019-06-16', 2, '5.38'),
-('39385612-9038-11e9-a096-d8cb8ae722c6', '1', '2019-06-16', 2, '181.00'),
-('6a40c398-9038-11e9-a096-d8cb8ae722c6', '1', '2019-06-16', 2, '7.13'),
-('7a0c196e-9051-11e9-a096-d8cb8ae722c6', '7a03b0b1-9051-11e9-a096-d8cb8ae722c6', '2019-06-16', 2, '4.95'),
-('90f0629a-9049-11e9-a096-d8cb8ae722c6', '1', '2019-06-16', 2, '8.81'),
-('a06a91f3-9051-11e9-a096-d8cb8ae722c6', 'a05dff2a-9051-11e9-a096-d8cb8ae722c6', '2019-06-16', 1, '4.95'),
-('c36f0a71-904a-11e9-a096-d8cb8ae722c6', '1', '2019-06-16', 2, '4.95'),
-('ce240003-9051-11e9-a096-d8cb8ae722c6', 'ce1cc657-9051-11e9-a096-d8cb8ae722c6', '2019-06-16', 1, '198.86'),
-('d6505f51-9043-11e9-a096-d8cb8ae722c6', '1', '2019-06-16', 2, '7.90');
+INSERT INTO `shop_order` (`order_id`, `user_id`, `orderdate`, `type_delivery`, `total_price`, `PDF_invoice`) VALUES
+('7a0c196e-9051-11e9-a096-d8cb8ae722c6', '7a03b0b1-9051-11e9-a096-d8cb8ae722c6', '2019-06-16', 2, '4.95', NULL),
+('913da906-9a85-11e9-ad1f-d8cb8ae722c6', '1', '2019-06-29', 2, '7.07', NULL);
 
 -- --------------------------------------------------------
 

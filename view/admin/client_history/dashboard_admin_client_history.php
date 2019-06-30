@@ -8,11 +8,24 @@ if ($_SESSION['isAdmin'] == false) {
     RedirectHandler::HTTP_301('dashboard');
 };
 $data = new Order();
-$dataClientHistory = $data->FetchOrderHistory();
+$dataClientHistory = $data->FetchOrderHistory(null);
 if (isset($_GET['ID']) && !empty($_GET['ID'])) {
     $DeleteOrder = new Order();
-    $DeleteOrder->deleteClientHistory($_GET['ID']);
+    $DeleteOrder->DeleteOrderHistory($_GET['ID']);
     RedirectHandler::HTTP_301('dashboard_admin_client_history');
+}
+unset($_SESSION['factuurdata']);
+if (!isset($_SESSION['factuurdata'])) {
+    $_SESSION['factuurdata'] = array();
+    if (isset($_POST['submit'])) {
+        $new_item = array(
+            'o_id' => $_POST['o_id'],
+            'u_id' => $_POST['u_id'],
+            'invoice_id' => $_POST['invoice_id']
+        );
+        $_SESSION['factuurdata'][] = $new_item;
+        RedirectHandler::HTTP_301('dashboard_admin_invoice_view');
+    }
 }
 ?>
 <html>
@@ -135,6 +148,7 @@ if (isset($_GET['ID']) && !empty($_GET['ID'])) {
                                     <th scope='col'>Order quantity</th>
                                     <th scope='col'>Order date</th>
                                     <th scope='col'>Type delivery</th>
+                                    <th scope='col'>PDF Invoice</th>
                                     <th scope='col'>Delete</th>
                                 </tr>
                                 <tbody>
@@ -152,6 +166,24 @@ if (isset($_GET['ID']) && !empty($_GET['ID'])) {
                                             <td><?= $record['orderdate'] ?></td>
                                             <td><?php if ($record['type_delivery'] === '1') $type = "Producten Afhalen";
                                                 if ($record['type_delivery'] === '2') $type = "Producten Bezorgen" ?><?= $type ?></td>
+                                            <form method="post">
+                                                <td hidden><input hidden type="text"
+                                                                  name="o_id"
+                                                                  id="o_id"
+                                                                  value="<?= $record['order_id'] ?>"></td>
+                                                <td hidden><input hidden type="text"
+                                                                  name="u_id"
+                                                                  id="u_id"
+                                                                  value="<?= $record['user_id'] ?>"></td>
+                                                <td hidden><input hidden type="text"
+                                                                  name="invoice_id"
+                                                                  id="invoice_id"
+                                                                  value="<?php $rng = rand(00000000, 99999999999); ?><?= $rng?>"></td>
+                                                <td> <button type="submit" name="submit"
+                                                             class="btn btn-success btn-lg float-right"
+                                                             id="btnLogin">Invoice PDF
+                                                    </button></td>
+                                            </form>
                                             <td><a href="?ID=<?= $record['history_id'] ?>">
                                                     DELETE
                                                 </a></td>

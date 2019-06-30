@@ -15,6 +15,7 @@ RewriteRule ^orderingpage$ /Projects2019/helden/Project/view/shoppingcart/orderi
 RewriteRule ^thank-you$ /Projects2019/helden/Project/view/shoppingcart/thank-you.php [L]
 #user dashboard
 RewriteRule ^dashboard$ /Projects2019/helden/Project/view/user/dashboard.php [L]
+RewriteRule ^dashboard_orderhistory$ /Projects2019/helden/Project/view/user/dashboard_orderhistory.php [L]
 #admin dashboard
 RewriteRule ^dashboard_admin$ /Projects2019/helden/Project/view/admin/dashboard_admin.php [L]
 #admin dashboard category
@@ -28,6 +29,7 @@ RewriteRule ^dashboard_admin_client_editpass$ /Projects2019/helden/Project/view/
 RewriteRule ^dashboard_admin_client_history$ /Projects2019/helden/Project/view/admin/client_history/dashboard_admin_client_history.php [L]
 #admin dashboard QR/coupons codes
 RewriteRule ^dashboard_admin_coupons$ /Projects2019/helden/Project/view/admin/coupons/dashboard_admin_coupon_codes.php [L]
+RewriteRule ^dashboard_admin_coupons_add$ /Projects2019/helden/Project/view/admin/coupons/dashboard_admin_coupon_codes_add.php [L]
 #admin dashboard co-workers
 RewriteRule ^dashboard_admin_coworkers$ /Projects2019/helden/Project/view/admin/coworkers/dashboard_admin_coworkers.php [L]
 RewriteRule ^dashboard_admin_coworkers_add$ /Projects2019/helden/Project/view/admin/coworkers/dashboard_admin_coworkers_add.php [L]
@@ -41,6 +43,10 @@ RewriteRule ^dashboard_admin_orders_edit$ /Projects2019/helden/Project/view/admi
 RewriteRule ^dashboard_admin_product$ /Projects2019/helden/Project/view/admin/product/dashboard_admin_product.php [L]
 RewriteRule ^dashboard_admin_product_add$ /Projects2019/helden/Project/view/admin/product/dashboard_admin_product_add.php [L]
 RewriteRule ^dashboard_admin_product_edit$ /Projects2019/helden/Project/view/admin/product/dashboard_admin_product_edit.php?ID=$1 [QSA,L]
+#PDF view
+RewriteRule ^dashboard_admin_invoice_view$ /Projects2019/helden/Project/view/PDF/view/testpdf.php?orderID=$1&clientID=$2 [QSA,L]
+#QR view
+RewriteRule ^dashboard_admin_QR_view$ /Projects2019/helden/Project/QR-code/QR_code_view.php?Q_ID=$1 [QSA,L]
 #admin dashboard sessionreader
 RewriteRule ^dashboard_admin_sessionreader$ /Projects2019/helden/Project/view/admin/sessionreader/dashboard_admin_sessionreader.php [L]
 #homepage filter

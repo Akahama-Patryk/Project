@@ -26,7 +26,7 @@ class Product
             $search_product = str_replace(' ', '%', $search_product);
             $search_product .= "%";
             $params = array(":search_product" => $search_product);
-            $SQL = "SELECT * FROM `product`,`category` where product.name LIKE :search_product AND product.category_id = category.category_id;";
+            $SQL = "SELECT * FROM `product`,`category` where product.product_name LIKE :search_product AND product.category_id = category.category_id;";
             $DBQuery = $this->db->Select($SQL, $params);
             $result = null;
             if (count($DBQuery) > 0) {
@@ -122,5 +122,15 @@ class Product
         $params = array("ID" => $ID);
         $SQL = "DELETE FROM product WHERE id_product = :ID;";
         $DBQuery = $this->db->Delete($SQL, $params);
+    }
+    public function InvoiceFetchProducts($order_id,$client_id){
+        $params = array("o_id" => $order_id, "c_id" => $client_id);
+        $SQL = "SELECT * FROM product,shop_client_history WHERE shop_client_history.order_id = :o_id AND shop_client_history.user_id = :c_id AND shop_client_history.id_product = product.id_product";
+        $DBQuery = $this->db->Select($SQL, $params);
+        if (count($DBQuery) >= 1){
+            return $DBQuery;
+        } else{
+            echo "fail";
+        }
     }
 }
