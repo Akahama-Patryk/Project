@@ -7,8 +7,9 @@ if (empty($_SESSION['login']))
 if ($_SESSION['isAdmin'] == false) {
     RedirectHandler::HTTP_301('dashboard');
 };
-//$data = new Order();
-//$dataSession = $data->FetchOrder(null);
+if (!empty($_SESSION['marketingsession'])){
+    $dataSession = $_SESSION['marketingsession'];
+}
 ?>
 <html>
 <head>
@@ -134,12 +135,14 @@ if ($_SESSION['isAdmin'] == false) {
                             </tr>
                             <tbody>
                             <?php
-                            if ($dataOrder !== null)
-                                foreach ($dataOrder as $record) :
+                            if ($dataSession !== null)
+                                foreach ($dataSession as $record) :
+                                    foreach ($record['user_data'] as $user_data)
+                                    var_dump($record);
                                     ?>
                                     <tr>
-                                        <td><?= $record['order_id'] ?></td>
-                                        <td><?= $record['name'] ?></td>
+                                        <td><?= $record['ip_address'] ?></td>
+                                        <td><?= $user_data['name'] ?></td>
                                         <td><?= $record['honorifics'] ?></td>
                                         <td><?= $record['surname'] ?></td>
                                         <td><?= $record['orderdate'] ?></td>

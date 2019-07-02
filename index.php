@@ -7,7 +7,7 @@ $items = new ShoppingCart();
 $products = new Product();
 // Add product.
 if (isset($_POST['product_id']) && isset($_POST['product_desc']) && isset($_POST['product_img']) && isset($_POST['product_name']) && isset($_POST['product_price']) && isset($_POST['user_quantity'])) {
-    ShoppingCart::addToCart($_POST['product_id'], $_POST['product_desc'],$_POST['product_img'],$_POST['product_name'], $_POST['product_price'], $_POST['user_quantity']);
+    ShoppingCart::addToCart($_POST['product_id'], $_POST['product_desc'], $_POST['product_img'], $_POST['product_name'], $_POST['product_price'], $_POST['user_quantity']);
 }
 // Remove product.
 if (isset($_GET['RemoveProduct'])) {
@@ -39,26 +39,17 @@ if (!isset($_GET['module'])) {
     }
 }
 $results2 = $products->GetCategory();
-
-function getUserIpAddr()
-{
-    if (!empty($_SERVER['HTTP_CLIENT_IP']))   //check ip from share internet
-    {
-        $ip=$_SERVER['HTTP_CLIENT_IP'];
+if (!empty($_SESSION['login'])) {
+    $call = new MarketingSession();
+    $send = $call->getUserInfo($_SESSION['login']);
+    $status = "1";
+    if ($status === '1') {
+        $call = new MarketingSession();
+        $start = $call->saveDatatoSession($send);
+        var_dump($_SESSION['marketingsession']);
     }
-    elseif (!empty($_SERVER['HTTP_X_FORWARDED_FOR']))   //to check ip is pass from proxy
-    {
-        $ip=$_SERVER['HTTP_X_FORWARDED_FOR'];
-    }
-    else
-    {
-        $ip=$_SERVER['REMOTE_ADDR'];
-    }
-    return $ip;
 }
-$ip = getUserIpAddr();
-var_dump($_SERVER['HTTP_USER_AGENT']);
-var_dump($ip);
+
 ?>
 <!doctype HTML>
 <html lang="nl">
