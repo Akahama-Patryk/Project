@@ -122,33 +122,41 @@ if (!empty($_SESSION['marketingsession'])){
                         <table class='table'>
                             <thead class='thead-dark'>
                             <tr>
-                                <th scope='col'>Order ID</th>
-                                <th scope='col'>Name</th>
+                                <th scope='col'>Username</th>
                                 <th scope='col'>Honorifics</th>
+                                <th scope='col'>First Name</th>
                                 <th scope='col'>Surname</th>
-                                <th scope='col'>Order Date</th>
-                                <th scope='col'>Type Delivery</th>
-                                <th scope='col'>Total Price</th>
-                                <th scope='col'>PDF Invoice</th>
-                                <th scope='col'>Update</th>
-                                <th scope='col'>Delete</th>
+                                <th scope='col'>Address</th>
+                                <th scope='col'>House Number</th>
+                                <th scope='col'>Postcode</th>
+                                <th scope='col'>Land</th>
+                                <th scope='col'>State</th>
+                                <th scope='col'>Mobile Number</th>
+                                <th scope='col'>E-mail</th>
+                                <th scope='col'>Browser</th>
+                                <th scope='col'>IP address</th>
+
                             </tr>
                             <tbody>
                             <?php
                             if ($dataSession !== null)
                                 foreach ($dataSession as $record) :
                                     foreach ($record['user_data'] as $user_data)
-                                    var_dump($record);
                                     ?>
                                     <tr>
-                                        <td><?= $record['ip_address'] ?></td>
                                         <td><?= $user_data['name'] ?></td>
-                                        <td><?= $record['honorifics'] ?></td>
-                                        <td><?= $record['surname'] ?></td>
-                                        <td><?= $record['orderdate'] ?></td>
-                                        <td><?php if ($record['type_delivery'] === '1') $type = "Producten Afhalen";
-                                            if ($record['type_delivery'] === '2') $type = "Producten Bezorgen" ?><?= $type ?></td>
-                                        <td>€ <?= $record['total_price'] ?></td>
+                                        <td><?= $user_data['honorifics'] ?></td>
+                                        <td><?= $user_data['first_name'] ?></td>
+                                        <td><?= $user_data['surname'] ?></td>
+                                        <td><?= $user_data['address'] ?></td>
+                                        <td><?= $user_data['house number'] ?></td>
+                                        <td><?= $user_data['postcode'] ?></td>
+                                        <td><?= $user_data['land'] ?></td>
+                                        <td><?= $user_data['state'] ?></td>
+                                        <td><?= $user_data['mobile number'] ?></td>
+                                        <td><?= $user_data['email'] ?></td>
+                                        <td><?= $record['browser'] ?></td>
+                                        <td><?= $record['ip_address'] ?></td>
                                     </tr>
                                 <?php endforeach; ?>
                         </table>

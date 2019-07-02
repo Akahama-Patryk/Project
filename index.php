@@ -5,6 +5,7 @@ $results = array();
 $results2 = array();
 $items = new ShoppingCart();
 $products = new Product();
+$status = '1';
 // Add product.
 if (isset($_POST['product_id']) && isset($_POST['product_desc']) && isset($_POST['product_img']) && isset($_POST['product_name']) && isset($_POST['product_price']) && isset($_POST['user_quantity'])) {
     ShoppingCart::addToCart($_POST['product_id'], $_POST['product_desc'], $_POST['product_img'], $_POST['product_name'], $_POST['product_price'], $_POST['user_quantity']);
@@ -45,8 +46,10 @@ if (!empty($_SESSION['login'])) {
     $status = "1";
     if ($status === '1') {
         $call = new MarketingSession();
-        $start = $call->saveDatatoSession($send);
-        var_dump($_SESSION['marketingsession']);
+        $start = $call->saveDatatoSession($status,$send);
+    }elseif ($status !== '1'){
+        $call = new MarketingSession();
+        $start = $call->saveDatatoSession($status,null);
     }
 }
 

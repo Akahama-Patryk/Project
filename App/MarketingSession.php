@@ -42,7 +42,7 @@ class MarketingSession
         }
     }
 
-    public function saveDatatoSession($user_data)
+    public function saveDatatoSession($status,$user_data = null)
     {
         if (!empty($user_data)) {
             $ip_address = $this->ip;
@@ -52,10 +52,24 @@ class MarketingSession
                 $new_item = array(
                     'user_data' => $user_data,
                     'ip_address' => $ip_address,
-                    'browser' => $browser
+                    'browser' => $browser,
+                    'loggedin' => $status
                 );
                 $_SESSION['marketingsession'][] = $new_item;
             }
+        }else{
+            $ip_address = $this->ip;
+            $browser = $this->browser;
+            $_SESSION['marketingsession'] = array();
+            if (empty($_SESSION['marketingsession'])) {
+                $new_item = array(
+                    'ip_address' => $ip_address,
+                    'browser' => $browser,
+                    'loggedin' => $status
+                );
+                $_SESSION['marketingsession'][] = $new_item;
+            }
+
         }
     }
 }
