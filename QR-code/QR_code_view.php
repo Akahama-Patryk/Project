@@ -9,7 +9,7 @@ $dataCoupon = $data->GetCoupon($_GET['Q_ID']);
 // how to build raw content - QRCode with simple Business Card (VCard)
 
 $tempDir = $_SERVER['DOCUMENT_ROOT'] . '/Projects2019/helden/Project/QR-code/img/';
-$rng = rand(00000000, 99999999999);
+$rng = rand('00000000', '99999999');
 // here our data
 foreach ($dataCoupon as $data) {
     $couponcode = $data['coupon_code'];

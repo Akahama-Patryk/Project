@@ -176,7 +176,7 @@ if (!isset($_SESSION['factuurdata'])) {
                                             <td hidden><input hidden type="text"
                                                               name="invoice_id"
                                                               id="invoice_id"
-                                                              value="<?php $rng = rand(00000000, 99999999999); ?><?= $rng?>"></td>
+                                                              value="<?php $rng = rand(0000000000, 99999999999); ?><?= $rng?>"></td>
                                             <td> <button type="submit" name="submit"
                                                          class="btn btn-success btn-lg float-right"
                                                          id="btnLogin">Invoice PDF

@@ -24,6 +24,7 @@ $pdf_options = array(
     "file_name" => $filename,
     "omit_images" => 'no',
     "page_size" => 'A3');
+var_dump($filename);
 
 //Code to generate PDF file from options above
-phptopdf($pdf_options);
+//phptopdf($pdf_options);
